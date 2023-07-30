@@ -1,0 +1,9 @@
+.slider-container{
+    padding: 0px 70px;
+}
+
+.title-panel{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

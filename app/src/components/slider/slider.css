@@ -1,0 +1,26 @@
+.mySwiper{
+    padding: 10px 5px;
+    height: 400px;
+}
+
+.swiper-wrapper{
+    align-items: stretch;
+}
+
+.swiper-slide{
+    height: auto;
+}
+
+.swiper-button-prev , .swiper-button-next{
+    color: white;
+    padding: 5px;
+    opacity: 0.5;
+    transition: all 0.3s ease-in-out;
+    border: 2px solid white;
+    border-radius: 5px;
+    background-color: transparent;
+}
+
+.swiper-button-prev:hover , .swiper-button-next:hover{
+    opacity: 1;
+}

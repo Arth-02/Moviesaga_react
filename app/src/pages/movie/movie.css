@@ -1,0 +1,25 @@
+.movie-page{
+    background-color: black;
+    color: white;
+}
+
+.background{
+    width: 100%;
+    height: 100%;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 500px;
+    background-image: linear-gradient(to right, rgb(32 32 32 / 90%) calc((50vw - 170px) - 340px), rgb(32 32 32 / 75%) 50%, rgb(32 32 32 / 72%) 100%);
+}
+
+.movie-box{
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    height: 500px;
+}
+
+.movie-info{
+    padding: 50px;
+}

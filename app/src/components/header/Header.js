@@ -23,7 +23,7 @@ const Header = () => {
 
   const handleSearch = (e) => {
     if ((e.key === "Enter" || e.button === 0) && searchTerm) {
-      setSearchTerm(null);
+      // setSearchTerm(null);
 
       navigate({
         pathname: "/search",
@@ -103,7 +103,6 @@ const Header = () => {
             </IconButton>
             <input
               type="text"
-              value={searchTerm}
               className="search-input"
               placeholder="Search.... "
               name="Search"

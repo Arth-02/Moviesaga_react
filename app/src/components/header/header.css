@@ -81,23 +81,14 @@ header{
 }
 
 
-.search-input:focus , .search-icon:focus ~ .search-input{
+.search-input:focus , .search-input:hover , .search-icon:hover ~ .search-input , .search-icon:focus ~ .search-input{
     width: 250px;
     color: white;
     /* border-bottom: 2px solid yellow; */
 }
 
-/* .search-input:focus::after , .search-icon:focus ~ .search-input::after{
-    content: '';
-    display: block;
-    margin: auto;
-    width: 90%;
-    margin-top: 5px;
-    height: 2px;
-    background-color: yellow;
-} */
 
-.search-input:focus::placeholder , .search-icon:focus ~ .search-input::placeholder{
+.search-input:focus::placeholder , .search-input:hover::placeholder , .search-icon:hover ~ .search-input::placeholder , .search-icon:focus ~ .search-input::placeholder{
     color: white;
 }
 

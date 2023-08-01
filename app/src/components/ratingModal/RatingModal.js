@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useContext } from 'react'
+import React, { useState, useContext } from 'react'
 import './ratingmodal.css'
 import Rating from '@mui/material/Rating';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
@@ -54,10 +54,6 @@ const RatingModal = (props) => {
             
         }
     }
-
-    useEffect(() => {
-        console.log("modal")
-    }, [])
 
     return (
         <>

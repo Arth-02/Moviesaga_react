@@ -120,6 +120,23 @@ header{
     background-color: yellow;
 }
 
+/* Search Preview Css */
+
+.search-preview{
+    display: flex;
+    padding: 15px 10px;
+    flex-direction: column;
+    justify-content: center;
+    gap: 15px;
+    align-items: center;
+    background-color: rgb(26,26,26);
+    position: absolute;
+    top: 180%;
+    min-width: 500px;
+    right: -115px;
+}
+
+
 @media screen and (max-width: 768px){
     .navtabs{
         gap: 20px;

@@ -13,18 +13,21 @@ import Account from "../account/Account";
 import { MyContext } from "../../MyContext";
 import "./header.css";
 import { Button } from "@mui/material";
+import Loading from "../loader/Loading";
 
 const Header = () => {
   const { isAuthenticated } = useContext(MyContext);
   const location = useLocation();
   const navigate = useNavigate();
 
+  const [loading , setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState(null);
 
   const handleSearch = (e) => {
+    setLoading(true);
     if ((e.key === "Enter" || e.button === 0) && searchTerm) {
-      // setSearchTerm(null);
-
+      setSearchTerm(null);
+      setLoading(false);
       navigate({
         pathname: "/search",
         search: `?${createSearchParams({ q: searchTerm })}`,
@@ -34,22 +37,27 @@ const Header = () => {
 
   const [list, setList] = useState([]);
 
-  useEffect(() => {
-    setList([]);
-    const fetchData = async () => {
-      const url = `https://api.themoviedb.org/3/search/multi?api_key=ace3eeed99f6d9d19e61456a520cda0b&&query=${searchTerm}`;
-      await fetch(url)
-        .then((response) => response.json())
-        .then((data) => {
-          console.log("data : ", data);
-          let topresuls = data["results"].slice(0, 5);
-          setList(topresuls);
-          console.log("List : ", list);
-        });
-    };
+  const fetchData = async () => {
+    const url = `https://api.themoviedb.org/3/search/multi?api_key=ace3eeed99f6d9d19e61456a520cda0b&&query=${searchTerm}`;
+    await fetch(url)
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("data : ", data['results']);
+        let topresuls = data["results"].slice(0, 6);
+        setList(topresuls);
+        setLoading(false);
+        console.log("List : ", list);
+      });
+  };
 
-    fetchData();
-  }, [searchTerm]);
+  useEffect(() => {
+    const delay = 1000;
+    const timeoutId = setTimeout(() => {
+      fetchData();
+    }, delay);
+
+    return () => clearTimeout(timeoutId);
+  } , [searchTerm])
 
   return (
     <>
@@ -130,7 +138,7 @@ const Header = () => {
               }}
               onKeyUp={handleSearch}
             />
-            {searchTerm && <SearchPreview list={list} />}
+            {searchTerm && <SearchPreview list={list} loading={loading}/>}
           </div>
           <div className="user-panel">
             <div className="liked-movies">
@@ -158,13 +166,15 @@ const Header = () => {
 
 export default Header;
 
-const SearchPreview = ({ list }) => {
+const SearchPreview = ({ list , loading }) => {
   return (
     <div className="search-preview">
-      {list.length > 0 &&
-        list.map((result) => {
-          return <span>{result.title}</span>; 
-        })}
+      {loading ? <Loading /> : 
+      list.length > 0 &&
+      list.map((result) => {
+        return <span>{result.title || result.name}</span>; 
+      })}
+      {}
     </div>
   );
 };

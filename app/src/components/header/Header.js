@@ -25,6 +25,7 @@ const Header = () => {
 
   const handleSearch = (e) => {
     setLoading(true);
+    setSearchTerm(e.target.value);
     if ((e.key === "Enter" || e.button === 0) && searchTerm) {
       setSearchTerm(null);
       setLoading(false);
@@ -133,10 +134,11 @@ const Header = () => {
               className="search-input"
               placeholder="Search.... "
               name="Search"
-              onChange={(e) => {
-                setSearchTerm(e.target.value);
-              }}
-              onKeyUp={handleSearch}
+              // onChange={(e) => {
+              //   setSearchTerm(e.target.value);
+              // }}
+              // onKeyUp={handleSearch}
+              onChange={handleSearch}
             />
             {searchTerm && <SearchPreview list={list} loading={loading}/>}
           </div>

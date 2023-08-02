@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Link,
   useLocation,
@@ -31,6 +31,25 @@ const Header = () => {
       });
     }
   };
+
+  const [list, setList] = useState([]);
+
+  useEffect(() => {
+    setList([]);
+    const fetchData = async () => {
+      const url = `https://api.themoviedb.org/3/search/multi?api_key=ace3eeed99f6d9d19e61456a520cda0b&&query=${searchTerm}`;
+      await fetch(url)
+        .then((response) => response.json())
+        .then((data) => {
+          console.log("data : ", data);
+          let topresuls = data["results"].slice(0, 5);
+          setList(topresuls);
+          console.log("List : ", list);
+        });
+    };
+
+    fetchData();
+  }, [searchTerm]);
 
   return (
     <>
@@ -111,6 +130,7 @@ const Header = () => {
               }}
               onKeyUp={handleSearch}
             />
+            {searchTerm && <SearchPreview list={list} />}
           </div>
           <div className="user-panel">
             <div className="liked-movies">
@@ -137,3 +157,14 @@ const Header = () => {
 };
 
 export default Header;
+
+const SearchPreview = ({ list }) => {
+  return (
+    <div className="search-preview">
+      {list.length > 0 &&
+        list.map((result) => {
+          return <span>{result.title}</span>; 
+        })}
+    </div>
+  );
+};

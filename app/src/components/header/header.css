@@ -128,12 +128,17 @@ header{
     flex-direction: column;
     justify-content: center;
     gap: 15px;
-    align-items: center;
+    align-items: flex-start;
     background-color: rgb(26,26,26);
     position: absolute;
     top: 180%;
     min-width: 500px;
     right: -115px;
+}
+
+.search-preview-item{
+    display: flex;
+    align-items: center;
 }
 
 

@@ -20,10 +20,13 @@ const Header = () => {
   const location = useLocation();
   const navigate = useNavigate();
 
-  const [loading , setLoading] = useState(false);
+  const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState(null);
 
   const handleSearch = (e) => {
+    if (searchTerm === e.target.value && e.key !== "Enter") {
+      return;
+    }
     setLoading(true);
     setSearchTerm(e.target.value);
     if ((e.key === "Enter" || e.button === 0) && searchTerm) {
@@ -43,26 +46,25 @@ const Header = () => {
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        console.log("data : ", data['results']);
-        let topresuls = data["results"].slice(0, 6);
+        let topresuls = data["results"].slice(0, 5);
         setList(topresuls);
         setLoading(false);
-        console.log("List : ", list);
       });
   };
 
   useEffect(() => {
-    const delay = 1000;
-    const timeoutId = setTimeout(() => {
+    const delay = 500;
+    const debounce = setTimeout(() => {
       fetchData();
     }, delay);
 
-    return () => clearTimeout(timeoutId);
-  } , [searchTerm])
+    return () => clearTimeout(debounce);
+  }, [searchTerm]);
 
   return (
     <>
       <header className="header">
+        {console.log("rendering header")}
         <div className="logo">
           <h3>
             <Link to={".."}>MovieSaga</Link>
@@ -135,12 +137,14 @@ const Header = () => {
               placeholder="Search.... "
               name="Search"
               // onChange={(e) => {
-              //   setSearchTerm(e.target.value);
+              //   if(searchTerm !== e.target.value){
+              //     setSearchTerm(e.target.value);
+              //   }
               // }}
-              // onKeyUp={handleSearch}
-              onChange={handleSearch}
+              onKeyUp={handleSearch}
+              // onChange={handleSearch}
             />
-            {searchTerm && <SearchPreview list={list} loading={loading}/>}
+            {searchTerm && <SearchPreview list={list} loading={loading} />}
           </div>
           <div className="user-panel">
             <div className="liked-movies">
@@ -168,15 +172,32 @@ const Header = () => {
 
 export default Header;
 
-const SearchPreview = ({ list , loading }) => {
+const SearchPreview = ({ list, loading }) => {
+
+  const image_url = "https://image.tmdb.org/t/p/w500";
+
   return (
     <div className="search-preview">
-      {loading ? <Loading /> : 
-      list.length > 0 &&
-      list.map((result) => {
-        return <span>{result.title || result.name}</span>; 
-      })}
-      {}
+      {loading ? (
+        <Loading />
+      ) : list.length <= 0 ? (
+        <span>No results found</span>
+      ) : (
+        list.map((result) => {
+          return (
+            <>
+              <li className="search-preview-item">
+                <div className="search-preview-image">
+                  <img src={image_url + result.poster_path} width='70px' alt="search-preview-result" />
+                </div>
+                <span>
+                  {result.title || result.name}
+                </span>
+              </li>
+            </>
+          );
+        })
+      )}
     </div>
   );
 };

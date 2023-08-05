@@ -124,10 +124,8 @@ header{
 
 .search-preview{
     display: flex;
-    padding: 15px 10px;
     flex-direction: column;
     justify-content: center;
-    gap: 15px;
     align-items: flex-start;
     background-color: rgb(26,26,26);
     position: absolute;
@@ -137,8 +135,46 @@ header{
 }
 
 .search-preview-item{
+    width: 100%;
     display: flex;
+    gap: 15px;
+    padding: 5px 10px;
+    border-bottom: 2px solid black;
+    box-sizing: border-box;
+}
+
+.search-preview-item:hover{
+    background-color: rgb(18,18,18);
+}
+
+.search-preview-description{
+    display: flex;
+    flex-grow: 1;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.search-preview-section{
+    display: flex;
+    gap: 8px;
     align-items: center;
+}
+  
+  /* Custom dot using ::before pseudo-element */
+  .search-preview-dot {
+    position: relative;
+  }
+  
+  .search-preview-dot::before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 0px;
+    width: 4px;
+    height: 4px;
+    background-color: #ccc;
+    border-radius: 50%;
+    transform: translate(-50% , 0%);
 }
 
 

@@ -22,6 +22,8 @@ const Header = () => {
 
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState(null);
+  const [list, setList] = useState([]);
+  const [showPreview, setShowPreview] = useState(false);
 
   const handleSearch = (e) => {
     if (searchTerm === e.target.value && e.key !== "Enter") {
@@ -34,20 +36,23 @@ const Header = () => {
       setLoading(false);
       navigate({
         pathname: "/search",
-        search: `?${createSearchParams({ q: searchTerm })}`,
+        search: `?${createSearchParams({ q: searchTerm.trim() })}`,
       });
     }
   };
-
-  const [list, setList] = useState([]);
 
   const fetchData = async () => {
     const url = `https://api.themoviedb.org/3/search/multi?api_key=ace3eeed99f6d9d19e61456a520cda0b&&query=${searchTerm}`;
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        let topresuls = data["results"].slice(0, 5);
-        setList(topresuls);
+        console.log(data.results);
+        let newData = data.results.filter(
+          (movie) => movie.poster_path !== null && movie?.profile_path !== null
+        );
+        let topresults = newData.slice(0, 5);
+        console.log(topresults);
+        setList(topresults);
         setLoading(false);
       });
   };
@@ -59,6 +64,7 @@ const Header = () => {
     }, delay);
 
     return () => clearTimeout(debounce);
+    // eslint-disable-next-line
   }, [searchTerm]);
 
   return (
@@ -136,15 +142,15 @@ const Header = () => {
               className="search-input"
               placeholder="Search.... "
               name="Search"
-              // onChange={(e) => {
-              //   if(searchTerm !== e.target.value){
-              //     setSearchTerm(e.target.value);
-              //   }
-              // }}
+              onFocus={() => setShowPreview(true)}
+              onBlur={() => {
+                setTimeout(() => {
+                  setShowPreview(false);
+                }, 250);
+              }}
               onKeyUp={handleSearch}
-              // onChange={handleSearch}
             />
-            {searchTerm && <SearchPreview list={list} loading={loading} />}
+            {searchTerm && showPreview && <SearchPreview list={list} loading={loading} />}
           </div>
           <div className="user-panel">
             <div className="liked-movies">
@@ -159,7 +165,6 @@ const Header = () => {
               <Account />
             ) : (
               <Button variant="text" color="inherit">
-                {" "}
                 <Link to={"/login"}>Sign In</Link>
               </Button>
             )}
@@ -173,8 +178,7 @@ const Header = () => {
 export default Header;
 
 const SearchPreview = ({ list, loading }) => {
-
-  const image_url = "https://image.tmdb.org/t/p/w500";
+  const image_url = "https://image.tmdb.org/t/p/w154";
 
   return (
     <div className="search-preview">
@@ -183,18 +187,26 @@ const SearchPreview = ({ list, loading }) => {
       ) : list.length <= 0 ? (
         <span>No results found</span>
       ) : (
-        list.map((result) => {
+        list.map((result, index) => {
           return (
-            <>
-              <li className="search-preview-item">
-                <div className="search-preview-image">
-                  <img src={image_url + result.poster_path} width='70px' alt="search-preview-result" />
+            <Link to={ '/' + result.media_type + '/' + result.id} className="search-preview-item" key={index}>
+              <div className="search-preview-image">
+                <img
+                  src={image_url + result.poster_path}
+                  width="70px"
+                  alt="search-preview-result"
+                />
+              </div>
+              <div className="search-preview-description">
+                <div className="search-preview-title">{result.title || result.name}</div>
+                  <div className="search-preview-date">{result.release_date?.slice(0,4)}</div>
+                <div className="search-preview-section">
+                  <div className="search-preview-type">{result.media_type?.charAt(0).toUpperCase() + result.media_type?.slice(1)}</div>
+                  <div className="search-preview-dot"></div>
+                  <div className="search-preview-rating">{parseFloat(result.vote_average).toFixed(2)}</div>
                 </div>
-                <span>
-                  {result.title || result.name}
-                </span>
-              </li>
-            </>
+              </div>
+            </Link>
           );
         })
       )}

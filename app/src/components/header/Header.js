@@ -13,6 +13,7 @@ import Account from "../account/Account";
 import { MyContext } from "../../MyContext";
 import "./header.css";
 import { Button } from "@mui/material";
+import StarIcon from '@mui/icons-material/Star';
 import Loading from "../loader/Loading";
 
 const Header = () => {
@@ -46,12 +47,10 @@ const Header = () => {
     await fetch(url)
       .then((response) => response.json())
       .then((data) => {
-        console.log(data.results);
         let newData = data.results.filter(
           (movie) => movie.poster_path !== null && movie?.profile_path !== null
         );
         let topresults = newData.slice(0, 5);
-        console.log(topresults);
         setList(topresults);
         setLoading(false);
       });
@@ -70,7 +69,6 @@ const Header = () => {
   return (
     <>
       <header className="header">
-        {console.log("rendering header")}
         <div className="logo">
           <h3>
             <Link to={".."}>MovieSaga</Link>
@@ -183,27 +181,28 @@ const SearchPreview = ({ list, loading }) => {
   return (
     <div className="search-preview">
       {loading ? (
-        <Loading />
+        <div className="loading-wrapper" style={{width: '100%' , height: '175px' , display: 'flex' , justifyContent: 'center' , alignItems: 'center'}}>
+          <Loading />
+        </div>
       ) : list.length <= 0 ? (
-        <span>No results found</span>
+        <span style={{width: '100%' , height: '175px' , display: 'flex' , justifyContent: 'center' , alignItems: 'center'}}>No results found</span>
       ) : (
         list.map((result, index) => {
           return (
             <Link to={ '/' + result.media_type + '/' + result.id} className="search-preview-item" key={index}>
               <div className="search-preview-image">
                 <img
-                  src={image_url + result.poster_path}
-                  width="70px"
+                  src={result.poster_path ? image_url + result.poster_path : image_url + result.profile_path}
                   alt="search-preview-result"
                 />
               </div>
               <div className="search-preview-description">
                 <div className="search-preview-title">{result.title || result.name}</div>
-                  <div className="search-preview-date">{result.release_date?.slice(0,4)}</div>
+                  <div className="search-preview-date">{result.release_date?.slice(0,4) || result.first_air_date?.slice(0,4)}</div>
                 <div className="search-preview-section">
-                  <div className="search-preview-type">{result.media_type?.charAt(0).toUpperCase() + result.media_type?.slice(1)}</div>
+                  <div className="search-preview-rating"><StarIcon sx={{fontSize: '0.8rem' , padding: '0px'}}/>{ result.media_type !== 'person' ? parseFloat(result.vote_average).toFixed(2) : parseFloat(result.popularity).toFixed(2)}</div>
                   <div className="search-preview-dot"></div>
-                  <div className="search-preview-rating">{parseFloat(result.vote_average).toFixed(2)}</div>
+                  <div className="search-preview-type">{result.media_type?.charAt(0).toUpperCase() + result.media_type?.slice(1)}</div>
                 </div>
               </div>
             </Link>

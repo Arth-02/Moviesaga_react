@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import './slidercontainer.css'
 import Slider from '../slider/Slider'
 import { ToggleButtonGroup, ToggleButton, Typography } from '@mui/material';
+import ArrowForwardIosIcon from '@mui/icons-material/ArrowForwardIos';
 
 const SliderContainer = (props) => {
 
@@ -31,7 +32,7 @@ const SliderContainer = (props) => {
   return (
     <section className='slider-container'>
         <div className='title-panel'>
-          <h2>{props.title}</h2>
+          <h2 className='heading'>{props.title} <ArrowForwardIosIcon sx={{fontSize: '26px'}} className="arrow"/></h2>
           <div className='toggle-switch'>
             <ToggleButtonGroup
               value={switchType}

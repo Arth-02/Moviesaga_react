@@ -59,7 +59,7 @@ header{
     font-size: 0.95rem;
     box-sizing: border-box;
     border: none;
-    border-bottom: 2px solid yellow;
+    border-bottom: 2px solid #f5c518;
     background-color: transparent;
     color: transparent;
     transform-origin: right;
@@ -100,7 +100,7 @@ header{
     width: 0px;
     margin-top: 5px;
     height: 2px;
-    background-color: yellow;
+    background-color: #f5c518;
     /* border-bottom: 2px solid yellow; */
 }
 
@@ -117,7 +117,7 @@ header{
     width: 90%;
     margin-top: 5px;
     height: 2px;
-    background-color: yellow;
+    background-color: #f5c518;
 }
 
 /* Search Preview Css */

@@ -32,7 +32,11 @@ const MovieList = (props) => {
     const getData = async () => {
 
       await fetch(url).then((response) => response.json()).then((data) => {
-        setList(prev => [...prev, ...data['results']]);
+        let newData = data.results.filter(
+          (movie) => movie?.poster_path !== null && movie?.media_type !== 'person'
+        );
+        console.log(newData);
+        setList(prev => [...prev, ...newData]);
         setError(false);
       }).catch((error) => {
         setError(true);

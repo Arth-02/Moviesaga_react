@@ -11,7 +11,14 @@ const useFetchData = (url) => {
             setLoading(true)
             const response = await fetch(url);
             const data = await response.json();
-            setData(data);
+
+            let newData = data?.results?.filter((movie) => {
+                return movie?.poster_path !== null && movie?.profile_path !== null
+            })
+            setData(newData ? newData : data);
+            // setTimeout(() => {
+            //     setLoading(false);
+            // } , 500)
             setLoading(false);
         }
         catch (error) {

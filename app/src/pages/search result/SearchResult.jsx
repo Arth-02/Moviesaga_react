@@ -34,7 +34,10 @@ const SearchResult = () => {
         }
         const data = await response.json();
         if (data && data["results"].length > 0) {
-          setList((prevList) => [...prevList, ...data["results"]]);
+
+          let newData = data.results.filter((item) => item?.poster_path !== null && item?.profile_path !== null);
+
+          setList((prevList) => [...prevList, ...newData]);
           setTotalPages(data["total_pages"]); // Set the total number of pages from the API response
           setLoading(false);
           setError(null);

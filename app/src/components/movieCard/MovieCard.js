@@ -22,7 +22,7 @@ const MovieCard = (props) => {
       <div className='movie-card'>
         <Link to={(props.movie.title ? '/movie/' : '/tv/')+ props.movie.id}>
           <div className='movie-img'>
-            <img loading='lazy' src={props.movie.poster_path !== null ? image_url + props.movie.poster_path : img_not_found} alt='movie-poster'/>
+            <img src={props.movie.poster_path !== null ? image_url + props.movie.poster_path : img_not_found} alt='movie-poster'/>
           </div>
         </Link>
         <div className='movie-description'>

@@ -1,0 +1,31 @@
+.carousel-background-img{
+    background-position: center;
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 100%;
+    min-height: 510px;
+}
+
+.backdrop-content{
+    width: 100%;
+    height: 100%;
+    background-image: linear-gradient(to right, rgb(32 32 32 / 90%) calc((50vw - 170px) - 340px), rgb(32 32 32 / 75%) 50%, rgb(32 32 32 / 72%) 100%);
+}
+
+@media (max-width: 1200px) {
+    .carousel-background-img{
+        min-height: 400px;
+    }
+}
+
+@media (max-width: 768px) {
+    .carousel-background-img{
+        min-height: 300px;
+    }
+}
+
+@media (max-width: 400px){
+    .carousel-background-img{
+        min-height: 200px;
+    }
+}

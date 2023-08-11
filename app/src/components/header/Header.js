@@ -72,6 +72,7 @@ const Header = () => {
   return (
     <>
       <header className="header">
+        <div className="header-wrapper">
         <div className="logo">
           <h3>
             <Link to={".."}>MovieSaga</Link>
@@ -177,6 +178,7 @@ const Header = () => {
               </Button>
             )}
           </div>
+        </div>
         </div>
       </header>
     </>

@@ -13,7 +13,7 @@ const useFetchData = (url) => {
             const data = await response.json();
 
             let newData = data?.results?.filter((movie) => {
-                return movie?.poster_path !== null && movie?.profile_path !== null
+                return movie?.poster_path !== null && movie?.profile_path !== null && movie?.backdrop_path !== null;
             })
             setData(newData ? newData : data);
             // setTimeout(() => {

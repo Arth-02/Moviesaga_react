@@ -15,7 +15,7 @@ import { useNavigate } from 'react-router-dom';
 import { MyContext } from '../../MyContext';
 import { useContext } from 'react';
 import {Link} from 'react-router-dom';
-import Cookies from 'js-cookie';
+// import Cookies from 'js-cookie';
 
 function Copyright(props) {
 
@@ -62,9 +62,9 @@ const Login = () => {
 
         setIsAuthenticated(true);
         setUserInfo(data);
-        const c = Cookies.get("connect.sid");
-        console.log(c);
-        Cookies.remove('connect.sid');
+        // const c = Cookies.get("connect.sid");
+        // console.log(c);
+        // Cookies.remove('connect.sid');
 
         navigate('/',{ replace: true });
       }

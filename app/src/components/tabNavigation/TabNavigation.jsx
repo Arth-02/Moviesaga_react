@@ -63,7 +63,7 @@ const TabNavigation = () => {
         Explore what's streaming{" "}
         <ArrowForwardIosIcon sx={{ fontSize: "26px" }} className="arrow" />
       </h2>
-      <Box sx={{ width: "100%", minHeight: "500px" }}>
+      <Box sx={{ width: "100%" , minHeight: '420px'}} className="slider-container">
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={value}
@@ -132,7 +132,7 @@ function CustomTabPanel(props) {
       {...other}
     >
       {
-        <Box sx={{ p: 3 }}>
+        <Box sx={{ pt: 2 }}>
           <Slider url={url} />
         </Box>
       }

@@ -1,27 +1,64 @@
-import React from "react";
+import React , {useContext , useEffect , useState} from "react";
 
 import MovieCard from "../movieCard/MovieCard";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Keyboard, Navigation, Autoplay } from "swiper";
+import { Keyboard, Navigation, Autoplay , FreeMode } from "swiper";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
+import 'swiper/css/free-mode';
 import "swiper/css/navigation";
 
 import "./slider.css";
 import useFetchData from "../../hooks/useFetchData";
 import Loading from "../loader/Loading";
 
+//Contexts
+import WindowSizeContext from "../../contexts/windowSize/WindowSize";
+
 const Slider = (props) => {
 
+  const {windowSize  , setWindowSize} = useContext(WindowSizeContext);
+
   const { data, error, loading } = useFetchData(props.url);
+
+  const [navigation , setNavigation] = useState(false);
+  const [freeMode , setFreeMode] = useState(false);
+  const [slidesPerView , setSlidesPerView] = useState(7);
+
+  useEffect(() => {
+    if(windowSize[0] < 768){
+      setNavigation(false);
+      setFreeMode(true);
+      setSlidesPerView('auto');
+    }
+    else{
+      setNavigation(true);
+      setFreeMode(false);
+      setSlidesPerView(7);
+    }
+  } , [windowSize])
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      console.log(window.innerWidth , window.innerHeight)
+      setWindowSize([window.innerWidth, window.innerHeight]);
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+
 
   return (
     <>
       {error && <h1>Error</h1>}
       {loading ? (
-        <div style={{width : '100%' , height: '500px' , display: 'flex' , justifyContent: 'center' , alignItems: 'center'}}>
+        <div style={{minHeight: '350px' , display: 'flex' , justifyContent: 'center' , alignItems: 'center'}}>
           <Loading />
         </div>
       ) : (
@@ -34,16 +71,6 @@ const Slider = (props) => {
               disableOnInteraction: false,
             }}
             breakpoints={{
-              200: {
-                slidesPerView: 2,
-                spaceBetween: 15,
-                slidesPerGroup: 2,
-              },
-              576: {
-                slidesPerView: 3,
-                spaceBetween: 20,
-                slidesPerGroup: 3,
-              },
               768: {
                 slidesPerView: 4,
                 slidesPerGroup: 4,
@@ -63,14 +90,16 @@ const Slider = (props) => {
             }}
             keyboard={{ enabled: true }}
             rewind={true}
-            navigation={true}
-            modules={[Keyboard, Navigation, Autoplay]}
+            modules={[FreeMode , Keyboard, Navigation, Autoplay]}
+            navigation={navigation}
+            freeMode= {freeMode}
+            slidesPerView={slidesPerView}
             className="mySwiper"
           >
-            {data.map((movie) => {
+            {data.map((movie , index) => {
               return (
                 <SwiperSlide key={movie.id}>
-                  <MovieCard movie={movie} />
+                  <MovieCard movie={movie} lazy={index > 6 ? true : false}/>
                 </SwiperSlide>
               );
             })}

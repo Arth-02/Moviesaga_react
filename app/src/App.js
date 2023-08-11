@@ -12,6 +12,10 @@ import { MyContext } from "./MyContext";
 import MovieList from './pages/listing/MovieList';
 import SearchResult from './pages/search result/SearchResult';
 
+//Contexts
+import WindowSizeProvider from './contexts/windowSize/WindowSizeProvider';
+
+
 function App() {
 
   const [isAuthenticated , setIsAuthenticated] = useState(false);
@@ -20,7 +24,8 @@ function App() {
   return (
     <div className="App">
        <MyContext.Provider value={{ isAuthenticated , setIsAuthenticated , userInfo , setUserInfo}}>
-       <BrowserRouter>
+        <WindowSizeProvider>
+        <BrowserRouter>
           <Header/>
             <Routes>
               <Route path='/' element={<Home/>} ></Route>
@@ -36,6 +41,8 @@ function App() {
             </Routes>
           <Footer/>
         </BrowserRouter>
+        </WindowSizeProvider>
+
        </MyContext.Provider>
     </div>
   );

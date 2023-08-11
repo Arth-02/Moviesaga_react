@@ -2,8 +2,16 @@
     background: black;
     color: white;
     padding: 0px 70px;
+    max-width: 1280px;
+    margin: 0 auto;
 }
 
 .home a{
     color: white;
+}
+
+@media screen and (max-width: 768px){
+    .home{
+        padding: 0px 10px;
+    }
 }

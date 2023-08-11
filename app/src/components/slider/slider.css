@@ -1,6 +1,10 @@
 .mySwiper{
-    padding: 10px 5px;
-    /* height: 400px; */
+    min-height: 350px;
+    width: auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: static;
 }
 
 .swiper-wrapper{
@@ -9,18 +13,43 @@
 
 .swiper-slide{
     height: auto;
+    width: fit-content;
 }
 
 .swiper-button-prev , .swiper-button-next{
     color: white;
-    padding: 5px;
+    padding: 5px 7px;
     opacity: 0.5;
     transition: all 0.3s ease-in-out;
     border: 2px solid white;
     border-radius: 5px;
-    background-color: transparent;
+    background-color: hsla(0,0%,7%,.45);
+}
+
+.swiper-button-next::after , .swiper-button-prev::after{
+    font-size: 25px;
+    font-weight: 900;
 }
 
 .swiper-button-prev:hover , .swiper-button-next:hover{
     opacity: 1;
+    
+}
+
+.swiper-button-prev:hover , .swiper-button-next:hover{
+    color: #f5c518;
+}
+
+.slider-container{
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+}
+.slider-container .swiper-button-prev{
+    left: -20px;
+    top: 50%;
+}
+.slider-container .swiper-button-next{
+    right: -20px;
+    top: 50%;
 }

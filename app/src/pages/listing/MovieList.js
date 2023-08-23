@@ -83,7 +83,7 @@ const MovieList = (props) => {
             {list.map((movie, index) => {
               return (
                 <div className="card" key={index}>
-                  <MovieCard movie={movie} />
+                  <MovieCard movie={movie} width={'100%'}/>
                 </div>
               );
             })}

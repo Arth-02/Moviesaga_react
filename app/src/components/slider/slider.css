@@ -1,5 +1,5 @@
 .mySwiper{
-    min-height: 350px;
+    /* min-height: 350px; */
     width: auto;
     display: flex;
     justify-content: center;
@@ -14,6 +14,7 @@
 .swiper-slide{
     height: auto;
     width: fit-content;
+    overflow: visible;
 }
 
 .swiper-button-prev , .swiper-button-next{
@@ -40,11 +41,6 @@
     color: #f5c518;
 }
 
-.slider-container{
-    position: relative;
-    width: 100%;
-    margin: 0 auto;
-}
 .slider-container .swiper-button-prev{
     left: -20px;
     top: 50%;

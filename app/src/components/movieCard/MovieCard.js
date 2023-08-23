@@ -1,4 +1,4 @@
-import React, { useState , useContext } from "react";
+import React, { useState } from "react";
 import "./moviecard.css";
 import Checkbox from "@mui/material/Checkbox";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
@@ -8,18 +8,18 @@ import RatingModal from "../ratingModal/RatingModal";
 import { Link } from "react-router-dom";
 
 //Contexts
-import WindowSizeContext from "../../contexts/windowSize/WindowSize";
+// import WindowSizeContext from "../../contexts/windowSize/WindowSize";
 
 const MovieCard = (props) => {
 
-  const {windowSize} = useContext(WindowSizeContext);
+  // const {windowSize} = useContext(WindowSizeContext);
   
-  const image_url1 = `https://image.tmdb.org/t/p/w92${props.movie.poster_path}`;
-  const image_url2 = `https://image.tmdb.org/t/p/w154${props.movie.poster_path}`;
+  // const image_url1 = `https://image.tmdb.org/t/p/w92${props.movie.poster_path}`;
+  // const image_url2 = `https://image.tmdb.org/t/p/w154${props.movie.poster_path}`;
   const image_url3 = `https://image.tmdb.org/t/p/w185${props.movie.poster_path}`;
-  const image_url4 = `https://image.tmdb.org/t/p/w342${props.movie.poster_path}`;
-  const image_url5 = `https://image.tmdb.org/t/p/w500${props.movie.poster_path}`;
-  const image_url6 = `https://image.tmdb.org/t/p/w780${props.movie.poster_path}`;
+  // const image_url4 = `https://image.tmdb.org/t/p/w342${props.movie.poster_path}`;
+  // const image_url5 = `https://image.tmdb.org/t/p/w500${props.movie.poster_path}`;
+  // const image_url6 = `https://image.tmdb.org/t/p/w780${props.movie.poster_path}`;
 
   const [checked, setChecked] = useState(false);
 
@@ -29,7 +29,7 @@ const MovieCard = (props) => {
 
   return (
     <>
-      <div className="movie-card" style={windowSize[0] < 768 ? {maxWidth : '130px'} : {} }>
+      <div className="movie-card" style={{maxWidth : props.width , maxHeight: props.height}}>
         <Link to={(props.movie.title ? "/movie/" : "/tv/") + props.movie.id}>
           <div className="movie-img">
             <img
@@ -40,7 +40,7 @@ const MovieCard = (props) => {
               //         (max-width: 1024px) 342px,
               //         500px"
               // loading={props.lazy ? "lazy" : "eager"}
-              src={image_url2}
+              src={image_url3}
               alt="movie-poster"
             />
           </div>

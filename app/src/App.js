@@ -12,6 +12,8 @@ import { MyContext } from "./MyContext";
 import MovieList from './pages/listing/MovieList';
 import SearchResult from './pages/search result/SearchResult';
 
+import { Helmet } from 'react-helmet';
+
 //Contexts
 import WindowSizeProvider from './contexts/windowSize/WindowSizeProvider';
 
@@ -23,6 +25,9 @@ function App() {
 
   return (
     <div className="App">
+       <Helmet>
+       {/* <meta http-equiv="Content-Security-Policy" content="ch-ua-form-factor"/> */}
+       </Helmet>
        <MyContext.Provider value={{ isAuthenticated , setIsAuthenticated , userInfo , setUserInfo}}>
         <WindowSizeProvider>
         <BrowserRouter>

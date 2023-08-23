@@ -1,13 +1,13 @@
-import React , {useContext , useEffect , useState} from "react";
+import React, { useContext, useEffect, useState } from "react";
 
 import MovieCard from "../movieCard/MovieCard";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Keyboard, Navigation, Autoplay , FreeMode } from "swiper";
+import { Keyboard, Navigation, Autoplay, FreeMode } from "swiper";
 
 // Import Swiper styles
 import "swiper/css";
 import "swiper/css/pagination";
-import 'swiper/css/free-mode';
+import "swiper/css/free-mode";
 import "swiper/css/navigation";
 
 import "./slider.css";
@@ -18,47 +18,48 @@ import Loading from "../loader/Loading";
 import WindowSizeContext from "../../contexts/windowSize/WindowSize";
 
 const Slider = (props) => {
-
-  const {windowSize  , setWindowSize} = useContext(WindowSizeContext);
-
+  
   const { data, error, loading } = useFetchData(props.url);
 
-  const [navigation , setNavigation] = useState(false);
-  const [freeMode , setFreeMode] = useState(false);
-  const [slidesPerView , setSlidesPerView] = useState(7);
+  const { windowSize, setWindowSize } = useContext(WindowSizeContext);
 
-  useEffect(() => {
-    if(windowSize[0] < 768){
-      setNavigation(false);
-      setFreeMode(true);
-      setSlidesPerView('auto');
-    }
-    else{
-      setNavigation(true);
-      setFreeMode(false);
-      setSlidesPerView(7);
-    }
-  } , [windowSize])
+  const [navigation, setNavigation] = useState(false);
+  const [freeMode, setFreeMode] = useState(false);
+  const [slidesPerView, setSlidesPerView] = useState(7);
 
   useEffect(() => {
     const handleWindowResize = () => {
-      console.log(window.innerWidth , window.innerHeight)
+      console.log(window.innerWidth, window.innerHeight);
       setWindowSize([window.innerWidth, window.innerHeight]);
     };
 
-    window.addEventListener('resize', handleWindowResize);
+    const isMobile = windowSize[0] < 768;
+    const slidesPerView = isMobile ? "auto" : 7;
+
+    setNavigation(!isMobile);
+    setFreeMode(isMobile);
+    setSlidesPerView(slidesPerView);
+
+    window.addEventListener("resize", handleWindowResize);
 
     return () => {
-      window.removeEventListener('resize', handleWindowResize);
+      window.removeEventListener("resize", handleWindowResize);
     };
-  }, []);
-
+    // eslint-disable-next-line
+  }, [windowSize]);
 
   return (
     <>
       {error && <h1>Error</h1>}
       {loading ? (
-        <div style={{minHeight: '350px' , display: 'flex' , justifyContent: 'center' , alignItems: 'center'}}>
+        <div
+          style={{
+            minHeight: "350px",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
           <Loading />
         </div>
       ) : (
@@ -90,16 +91,21 @@ const Slider = (props) => {
             }}
             keyboard={{ enabled: true }}
             rewind={true}
-            modules={[FreeMode , Keyboard, Navigation, Autoplay]}
+            modules={[FreeMode, Keyboard, Navigation, Autoplay]}
             navigation={navigation}
-            freeMode= {freeMode}
+            freeMode={freeMode}
             slidesPerView={slidesPerView}
             className="mySwiper"
           >
-            {data.map((movie , index) => {
+            {data.map((movie, index) => {
               return (
                 <SwiperSlide key={movie.id}>
-                  <MovieCard movie={movie} lazy={index > 6 ? true : false}/>
+                  <MovieCard
+                    movie={movie}
+                    lazy={index > 7}
+                    width={windowSize[0] < 768 ? "130px" : "100%"}
+                    // height={windowSize[0] < 768 ? "0px" : "auto"}
+                  />
                 </SwiperSlide>
               );
             })}

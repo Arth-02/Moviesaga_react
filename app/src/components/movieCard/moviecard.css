@@ -1,4 +1,5 @@
 .movie-card {
+    margin: auto;
     background-color: rgb(26, 26, 26);
     border-radius: 7px;
     height: 100%;
@@ -8,7 +9,7 @@
     box-shadow: 0 3px 1px -2px rgba(0, 0, 0, 0.2), 0 2px 2px 0 rgba(0, 0, 0, 0.14),
     0 1px 5px 0 rgba(0, 0, 0, 0.12);
     max-height: 340px;
-    min-height: 300px;
+    /* min-height: 300px; */
     /* max-width: 170px; */
 }
 
@@ -37,7 +38,6 @@
 .rating-panel,
 .rate {
   display: flex;
-  padding-top: 3px;
   padding-left: 3px;
   justify-content: space-between;
   align-items: center;
@@ -56,3 +56,21 @@
 .movie-title:hover {
   text-decoration: underline;
 }
+
+/* @media screen and (max-width: 768px) {
+  .movie-card{
+    max-width: 150px;
+  }
+} */
+
+/* @media screen and (max-width: 425px) {
+  .movie-card{
+    max-width: 140px;
+  }
+}
+
+@media screen and (max-width: 375px) {
+  .movie-card{
+    max-width: 130px;
+  }
+} */

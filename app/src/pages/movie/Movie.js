@@ -1,20 +1,20 @@
-import React from 'react';
-import {useParams} from 'react-router-dom';
-import './movie.css';
-import useFetchData from '../../hooks/useFetchData';
-
+import React from "react";
+import { useParams } from "react-router-dom";
+import "./movie.css";
+import useFetchData from "../../hooks/useFetchData";
 
 const Movie = () => {
+  const params = useParams();
 
-    const params = useParams();
+  const { data } = useFetchData(
+    `https://api.themoviedb.org/3/movie/${params.id}?api_key=ace3eeed99f6d9d19e61456a520cda0b`
+  );
 
-    const {data , error , loading} = useFetchData(`https://api.themoviedb.org/3/movie/${params.id}?api_key=ace3eeed99f6d9d19e61456a520cda0b`);
-
-    const image_url = "https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/";
+//   const image_url = "https://image.tmdb.org/t/p/w1920_and_h800_multi_faces/";
 
   return (
     <>
-        {data && <section className='movie-page'>
+      {/* {data && <section className='movie-page'>
             <div className='movie-box' style={{backgroundImage : `url(${image_url + data.backdrop_path})`}}>
                 <div className='background'>
                     <div className='movie-info'>
@@ -22,9 +22,16 @@ const Movie = () => {
                     </div>
                 </div>
             </div>
+        </section>} */}
+      {data && <section className="movie-page">
+        <div className="movie-page-header">
+            <div className="movie-page-header-title">
+                <h1>{console.log(data)}</h1>
+            </div>
+        </div>
         </section>}
     </>
-  )
-}
+  );
+};
 
-export default Movie
+export default Movie;

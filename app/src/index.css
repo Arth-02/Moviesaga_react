@@ -7,8 +7,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   background-color: black;
   color: white;
+  scroll-behavior: smooth;
 }
-  
 
 a{
   text-decoration: none;
@@ -25,8 +25,8 @@ body::-webkit-scrollbar{
 }
 
 section{
-  /* margin: 25px 0px 50px 0px; */
-  padding: 20px 0px 15px 0px;
+  /* margin: 25px 0px 80px 0px; */
+  padding: 35px 0px 35px 0px;
 }
 
 .heading{

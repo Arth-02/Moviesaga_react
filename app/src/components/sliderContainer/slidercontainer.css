@@ -5,6 +5,8 @@
     margin-bottom: 30px;
 }
 
-/* .slider-container{
-    min-height: 500px;
-} */
+.slider-container{
+    position: relative;
+    width: 100%;
+    margin: 0 auto;
+}

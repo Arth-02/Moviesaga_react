@@ -37,6 +37,7 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
 class Watchlist(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='watchlists')
     timestamp = models.DateTimeField(default=timezone.now)
+    name= models.CharField(max_length=255,null=True)
     
     def __str__(self):
         return f"Watchlist for {self.user.username}"

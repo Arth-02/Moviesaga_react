@@ -22,6 +22,13 @@ class AddMovieToWatchlistView(generics.CreateAPIView):
         user=CustomUser.objects.get(id=self.request.user.id)
         serializer.save(user=user)
 
+class MovieDelete(generics.DestroyAPIView):
+    serializer_class = AddmovieSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return Addmovie.objects.filter(user=self.request.user)
+
 class WatchlistDetailView(generics.ListCreateAPIView):
     serializer_class = WatchlistSerializer
     permission_classes = [IsAuthenticated]
@@ -30,6 +37,13 @@ class WatchlistDetailView(generics.ListCreateAPIView):
     def perform_create(self, serializer):
         user=CustomUser.objects.get(id=self.request.user.id)
         serializer.save(user=user)
+    
+    def get_queryset(self):
+        return Watchlist.objects.filter(user=self.request.user)
+    
+class WacthlistDelete(generics.DestroyAPIView):
+    serializer_class = WatchlistSerializer
+    permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
         return Watchlist.objects.filter(user=self.request.user)

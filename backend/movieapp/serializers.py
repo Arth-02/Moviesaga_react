@@ -39,7 +39,7 @@ class WatchlistSerializer(serializers.ModelSerializer):
         super().__init__(*args, **kwargs)
     class Meta:
         model = Watchlist
-        fields = ['id','timestamp','movies']
+        fields = ['id','timestamp','movies','name']
     def get_movies(self, obj):
         movies = Addmovie.objects.filter(watchlistid=obj)
         return AddmovieSerializer(movies, many=True).data    

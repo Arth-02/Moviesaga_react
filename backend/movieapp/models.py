@@ -33,34 +33,25 @@ class CustomUser(AbstractBaseUser, PermissionsMixin):
     def __str__(self):
         return self.email
     
+
+class Watchlist(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='watchlists')
+    timestamp = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return f"Watchlist for {self.user.username}"
+    
 class Addmovie(models.Model):
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='addmovie')
-    movie_id = models.IntegerField(unique=True)
+    movie_id = models.IntegerField()
     title = models.CharField(max_length=255)
     poster_path = models.CharField(max_length=255)
     release_date = models.DateField()
     rating = models.DecimalField(max_digits=2, decimal_places=1)
     timestamp = models.DateTimeField(default=timezone.now)
+    watchlistid = models.ForeignKey(Watchlist, related_name='addmovies', on_delete=models.CASCADE)
     
     def __str__(self):
-        return self.title
+        return f"{self.title} of watchlist {self.watchlistid}"
     
-    def save(self, *args, **kwargs):
-        created = not self.pk  # Check if this is a new instance
-        
-        super().save(*args, **kwargs)  # Call the parent class's save method
-        
-        if created and self.user:
-            watchlist, created = Watchlist.objects.get_or_create(user=self.user)
-            watchlist.movies.add(self)
-    
-#addmovie model array field should be created in watchlist model
 
-class Watchlist(models.Model):
-    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='watchlists')
-    movies = models.ManyToManyField(Addmovie, related_name='watchlists')
-    # Other fields for Watchlist
-    timestamp = models.DateTimeField(default=timezone.now)
-    
-    def __str__(self):
-        return f"Watchlist for {self.user.username}"

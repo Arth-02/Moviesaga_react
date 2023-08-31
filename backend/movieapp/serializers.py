@@ -30,10 +30,16 @@ class UserLoginSerializer(TokenObtainPairSerializer):
 class AddmovieSerializer(serializers.ModelSerializer):
     class Meta:
         model = Addmovie
-        fields = '__all__'
+        fields = ['id','movie_id','title','poster_path','release_date','rating','timestamp','watchlistid']
+        
 
 class WatchlistSerializer(serializers.ModelSerializer):
-    movies = AddmovieSerializer(many=True, read_only=True)
+    movies = serializers.SerializerMethodField()
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
     class Meta:
         model = Watchlist
-        fields = '__all__'
+        fields = ['id','timestamp','movies']
+    def get_movies(self, obj):
+        movies = Addmovie.objects.filter(watchlistid=obj)
+        return AddmovieSerializer(movies, many=True).data    

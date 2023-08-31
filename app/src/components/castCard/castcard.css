@@ -1,0 +1,62 @@
+.movie-page-cast-card{
+    margin: auto;
+    background-color: rgb(26, 26, 26);
+    border-radius: 7px;
+    height: 100%;
+    box-sizing: border-box;
+    overflow: hidden;
+    max-width: 140px;
+    padding-bottom: 5px;
+}
+
+.movie-page-cast-card img{
+    width: 100%;
+    height: 100%;
+    border-top-left-radius: 7px;
+    border-top-right-radius: 7px;
+}
+
+.movie-page-cast-description{
+    padding: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* align-items: center; */
+    gap: 5px;
+    
+}
+
+.cast-title{
+    letter-spacing: 0.045rem;
+}
+
+.cast-title:hover{
+    /* padding-bottom: 1px; */
+    text-decoration: underline;
+}
+
+.movie-page-cast-description h4{
+    padding: 0;
+    margin: 0;
+    font-size: 1rem;
+}
+
+.cast-character{
+    font-size: 0.88rem;
+    font-weight: 300;
+    margin: 0;
+    padding: 0;
+    
+}
+
+@media only screen and (max-width: 768px) {
+    .movie-page-cast-card{
+        max-width: 120px;
+    }
+    .cast-character{
+        font-size: 0.8rem;
+    }
+    .cast-title{
+        font-size: 0.9rem;
+    }
+}

@@ -17,22 +17,21 @@ import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 //Contexts
 import WindowSizeContext from "../../contexts/windowSize/WindowSize";
 
-const TrailerSection = () => {
+const TrailerSection = (props) => {
   const { windowSize } = useContext(WindowSizeContext);
 
-  const url =
-    "https://api.themoviedb.org/3/discover/movie?api_key=ace3eeed99f6d9d19e61456a520cda0b&include_adult=false&include_video=false&language=en-US&page=1&primary_release_date.gte=2023-08-22&sort_by=popularity.desc";
-
-  const { data, loading, error } = useFetchData(url);
+  const { data, loading, error } = useFetchData(props.url);
 
   return (
     <>
       {error && <h1>Error</h1>}
       {!loading ? (
-        <section className="trailer-section slider-container">
-          <div className="title-panel">
+        <section className="trailer-section slider-container" style={props.space ? {padding: '35px 0px 35px 0px'} : {padding: "0px"}}>
+          <div className="title-panel" style={
+            props.space ? {marginBottom: "20px"} : {marginBottom: "8px"}
+          }>
             <h2 className="heading">
-              Upcoming Movie's Trailers
+              {props.title}
               <ArrowForwardIosIcon sx={{ fontSize: "26px" }} className="arrow" />
             </h2>
           </div>
@@ -60,6 +59,7 @@ const TrailerSection = () => {
                       id={movie.id}
                       title={movie.title}
                       index={index}
+                      youtubeKey={movie.key}
                     />
                   </SwiperSlide>
                 );

@@ -1,0 +1,122 @@
+/* Movie Page Body */
+
+.movie-page-body{
+    max-width: 1280px;
+    margin: 0 auto;
+    padding: 50PX 70px;
+    display: flex;
+    gap: 10px;
+}
+
+.movie-page-body-col-1{
+    width: calc(70% - 0.25rem);
+}
+
+.movie-page-body-col-2{
+    width: calc(30% - 0.25rem);
+    margin-left: 30px;
+    padding: 10px;
+    height: fit-content;
+    position: sticky;
+    top: 65px;
+    /* background-color: rgb(38, 38, 38); */
+}
+
+.movie-page-cast-section{
+    padding: 0px 10px 0px 0px;
+}
+
+.movie-page-images-section{
+    padding: 0px 10px 0px 0px;
+    margin-top: 70px;
+}
+
+.movie-page-videos-section{
+    padding: 0px 10px 0px 0px;
+    margin-top: 70px;
+}
+
+.movie-page-social-media-section{
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: white;
+}
+
+.movie-page-social-media-item{
+    cursor: pointer;
+}
+
+.movie-page-stats-section{
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    color: white;
+}
+
+.movie-page-stats-item{
+    display: flex;
+    flex-direction: column;
+    gap: 3px;
+}
+
+.movie-page-stats-title{
+    font-size: 0.95rem;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: 0.04rem;
+    font-weight: 400;
+    margin: 0;
+    color: white;
+}
+
+.movie-page-stats-answer{
+    color: #5799ef;
+    padding-left: 5px;
+    font-size: 1rem;
+}
+
+.movie-page-keywords-section{
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    color: white;
+}
+
+.movie-page-keywords-items{
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.movie-page-keywords-item{
+    font-size: 0.9rem;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+    letter-spacing: 0.04rem;
+    font-weight: 400;
+    margin: 0;
+    border-radius: 5px;
+    padding: 6px 10px;
+    background-color: rgba(255, 255, 255, 0.12);
+    cursor: pointer;
+}
+
+.movie-page-keywords-item:hover{
+    background-color: rgba(255, 255, 255, 0.18);
+}
+
+@media only screen and (max-width: 1024px) {
+    .movie-page-body-col-2{
+        display: none;
+    }
+    .movie-page-body-col-1{
+        width: 100%;
+    }
+}
+
+@media only screen and (max-width: 600px) {
+    .movie-page-body{
+        padding: 50px 10px;
+    }
+}

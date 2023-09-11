@@ -18,9 +18,15 @@ class AddMovieToWatchlistView(generics.CreateAPIView):
     serializer_class = AddmovieSerializer
     permission_classes = [IsAuthenticated]
 
+
+
     def perform_create(self, serializer):
-        user=CustomUser.objects.get(id=self.request.user.id)
-        serializer.save(user=user)
+        user = CustomUser.objects.get(id=self.request.user.id)
+        print(Addmovie.objects.filter(user=user, movie_id=self.request.data['movie_id']))
+    # Check if the movie already exists
+        if Addmovie.objects.filter(user=user, movie_id=self.request.data['movie_id']):
+            return Response({'message': 'Movie already added.'}, status=status.HTTP_400_BAD_REQUEST)
+    
 
 class MovieDelete(generics.DestroyAPIView):
     serializer_class = AddmovieSerializer

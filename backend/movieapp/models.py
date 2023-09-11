@@ -48,7 +48,7 @@ class Addmovie(models.Model):
     title = models.CharField(max_length=255)
     poster_path = models.CharField(max_length=255)
     release_date = models.DateField()
-    rating = models.DecimalField(max_digits=2, decimal_places=1)
+    rating = models.DecimalField(max_digits=3, decimal_places=1)
     timestamp = models.DateTimeField(default=timezone.now)
     watchlistid = models.ForeignKey(Watchlist, related_name='addmovies', on_delete=models.CASCADE)
     

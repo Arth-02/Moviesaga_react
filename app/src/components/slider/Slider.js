@@ -21,12 +21,12 @@ import CastCard from "../castCard/CastCard";
 const Slider = (props) => {
   const { data, error, loading } = useFetchData(props.url);
 
-  const { windowSize, setWindowSize } = useContext(WindowSizeContext);
+  const { windowSize } = useContext(WindowSizeContext);
 
   const [filteredCast, setFilteredCast] = useState([]);
-  const [navigation, setNavigation] = useState(false);
-  const [freeMode, setFreeMode] = useState(false);
-  const [slidesPerView, setSlidesPerView] = useState(7);
+  // const [navigation, setNavigation] = useState(!(windowSize[0] < 768));
+  // const [freeMode, setFreeMode] = useState(windowSize[0] < 768);
+  // const [slidesPerView, setSlidesPerView] = useState(windowSize[0] < 768 ? "auto" : 7);
 
   const [breakpoints, setBreakpoints] = useState({})
 
@@ -152,25 +152,25 @@ const Slider = (props) => {
   //     },
   //   };
 
-  useEffect(() => {
-    const handleWindowResize = () => {
-      setWindowSize([window.innerWidth, window.innerHeight]);
-    };
+  // useEffect(() => {
+  //   const handleWindowResize = () => {
+  //     setWindowSize([window.innerWidth, window.innerHeight]);
+  //   };
 
-    const isMobile = windowSize[0] < 768;
-    const slidesPerView = isMobile ? "auto" : 7;
+  //   const isMobile = windowSize[0] < 768;
+  //   const slidesPerView = isMobile ? "auto" : 7;
 
-    setNavigation(!isMobile);
-    setFreeMode(isMobile);
-    setSlidesPerView(slidesPerView);
+  //   setNavigation(!isMobile);
+  //   setFreeMode(isMobile);
+  //   setSlidesPerView(slidesPerView);
 
-    window.addEventListener("resize", handleWindowResize);
+  //   window.addEventListener("resize", handleWindowResize);
 
-    return () => {
-      window.removeEventListener("resize", handleWindowResize);
-    };
-    // eslint-disable-next-line
-  }, [windowSize]);
+  //   return () => {
+  //     window.removeEventListener("resize", handleWindowResize);
+  //   };
+  //   // eslint-disable-next-line
+  // }, [windowSize]);
 
   useEffect(() => {
     setBreakpointsFunc();
@@ -183,6 +183,10 @@ const Slider = (props) => {
     }
     // eslint-disable-next-line
   }, [data]);
+
+// To rerender component when window size changes
+  useEffect(() => {
+  } , [windowSize])
 
   return (
     <>
@@ -211,9 +215,9 @@ const Slider = (props) => {
             keyboard={{ enabled: true }}
             rewind={true}
             modules={[FreeMode, Keyboard, Navigation, Autoplay]}
-            navigation={navigation}
-            freeMode={freeMode}
-            slidesPerView={slidesPerView}
+            navigation={windowSize[0] < 768 ? false : true}
+            freeMode={windowSize[0] < 768 ? true : false}
+            slidesPerView={windowSize[0] < 768 ? "auto" : 7}
             className="mySwiper"
           >
             {props.type === "cast" &&

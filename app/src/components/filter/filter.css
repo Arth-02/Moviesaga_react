@@ -1,0 +1,43 @@
+.filter-container{
+    width: 250px;
+    background-color: rgba(0, 0, 0, 0.12);
+}
+
+.filter-title{
+    font-size: 1rem;
+    font-weight: 600;
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    color: white;
+}
+
+.MuiAccordionSummary-expandIconWrapper , .css-hfutr2-MuiSvgIcon-root-MuiSelect-icon , .css-bpeome-MuiSvgIcon-root-MuiSelect-icon{
+    color: white !important;
+}
+
+.filter-item.genres , .filter-item.languages{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+.filter-item.genres .genre-item , .filter-item.languages .language-item{
+    border-radius: 15px;
+    padding: 2px 10px 4px 10px;
+    cursor: pointer;
+    color: white;
+    font-size: 0.8rem;
+    letter-spacing: 0.035rem;
+    background-color: rgba(255, 255, 255, 0.12);
+}
+
+.filter-item.genres .genre-item:hover , .filter-item.languages .language-item:hover{
+    background-color: rgba(255, 255, 255, 0.18);
+}
+
+.filter-item.genres .genre-item.selected , .filter-item.languages .language-item.selected{
+    background-color: rgba(255, 255, 255, 0.18);
+    color: #f5c518;
+}

@@ -3,15 +3,18 @@ import IconButton from '@mui/material/IconButton';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import PlaylistPlayOutlinedIcon from '@mui/icons-material/PlaylistPlayOutlined';
 import FavoriteBorderOutlinedIcon from '@mui/icons-material/FavoriteBorderOutlined';
+import LogoutIcon from '@mui/icons-material/Logout';
 import { Avatar, ListItemIcon, Menu, MenuItem } from '@mui/material';
-import { useNavigate } from 'react-router-dom';
-import { MyContext } from '../../MyContext';
+
+// import { MyContext } from '../../MyContext';
+
+import AuthContext from '../../contexts/Auth/AuthContext';
 
 const Account = () => {
 
-    const navigate = useNavigate();
+    // const { setIsAuthenticated } = useContext(MyContext);
 
-    const { setIsAuthenticated } = useContext(MyContext);
+    const { logout , user } = useContext(AuthContext);
 
     const [menu, setMenu] = useState(false);
 
@@ -21,18 +24,6 @@ const Account = () => {
 
     const handleClose = () => {
         setMenu(false);
-    }
-
-    const handleSignOut = async () => {
-        await fetch('http:localhost:8000/auth/logout').then((response) => {
-            if(response.status === 200){
-                setIsAuthenticated(false);
-                navigate('/');
-            }
-            else{
-                console.log("Error while logout");
-            }
-        })
     }
 
     return (
@@ -82,22 +73,28 @@ const Account = () => {
                 anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
             >
                 <MenuItem >
-                    <Avatar /> Profile
+                    <ListItemIcon>
+                        <Avatar> {user?.username[0].toUpperCase()} </Avatar>
+                    </ListItemIcon>
+                        <span>Profile</span>
                 </MenuItem>
                 <MenuItem>
                     <ListItemIcon>
-                        <PlaylistPlayOutlinedIcon fontSize="small" /> Your Watchlist
+                        <PlaylistPlayOutlinedIcon />
                     </ListItemIcon>
+                        <span>Your Watchlist</span>
                 </MenuItem>
                 <MenuItem>
                     <ListItemIcon>
-                        <FavoriteBorderOutlinedIcon fontSize="small" /> Your Favorite
+                        <FavoriteBorderOutlinedIcon />
                     </ListItemIcon>
+                        <span>Your Favourites</span>
                 </MenuItem>
-                <MenuItem onClick={ handleSignOut }>
+                <MenuItem onClick={ logout }>
                     <ListItemIcon>
-                         Sign Out
+                        <LogoutIcon />
                     </ListItemIcon>
+                         <span>Logout</span>
                 </MenuItem>
             </Menu>
         </>

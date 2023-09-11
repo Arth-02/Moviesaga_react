@@ -82,8 +82,8 @@ const SearchResult = () => {
     <>
       {error && <div>{error}</div>}
       <div className="search-result movie-list-container">
-        <div className="hading">Results for '{searchParams.get("q")}'</div>
-        <div className="movie-list">
+        <div className="hading" id="back-to-top-anchor">Results for '{searchParams.get("q")}'</div>
+        <div className="search-movie-list">
           {list.length > 0 ? (
             list.map((item, index) => (
               <div className="card" key={index}>

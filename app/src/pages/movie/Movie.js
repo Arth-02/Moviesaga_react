@@ -52,7 +52,7 @@ const Movie = () => {
           >
             <div className="backdrop">
               {/* Movie Page Header */}
-              <div className="movie-page-header">
+              <div className="movie-page-header" id="back-to-top-anchor">
                 <div className="movie-page-header-left">
                   <h1 className="movie-page-title">
                     {data.title ? data.title : "NA"}

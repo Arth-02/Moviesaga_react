@@ -53,3 +53,65 @@ class WacthlistDelete(generics.DestroyAPIView):
     
     def get_queryset(self):
         return Watchlist.objects.filter(user=self.request.user)
+    
+class RatingView(generics.ListCreateAPIView):
+    queryset = Rating.objects.all()
+    serializer_class = RatingSerializer
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return []
+        else:
+            return [IsAuthenticated()]
+    
+    def perform_create(self, serializer):
+        user=CustomUser.objects.get(id=self.request.user.id)
+        serializer.save(user=user)
+    
+    
+
+class RatingRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = RatingSerializer
+    permission_classes = [IsAuthenticated()]
+    
+    def get_queryset(self):
+        return Rating.objects.filter(user=self.request.user)
+    
+class ReviewView(generics.ListCreateAPIView):
+    queryset = Review.objects.all()
+    serializer_class = ReviewSerializer
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return []
+        else:
+            return [IsAuthenticated()]
+    
+    def perform_create(self, serializer):
+        user=CustomUser.objects.get(id=self.request.user.id)
+        serializer.save(user=user)
+
+class ReviewRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ReviewSerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return Review.objects.filter(user=self.request.user)
+
+class ReviewReplyView(generics.ListCreateAPIView):
+    queryset = ReviewReply.objects.all()
+    serializer_class = ReviewReplySerializer
+    def get_permissions(self):
+        if self.request.method == 'GET':
+            return []
+        else:
+            return [IsAuthenticated()]
+    
+    def perform_create(self, serializer):
+        user=CustomUser.objects.get(id=self.request.user.id)
+        serializer.save(user=user)
+
+class ReviewReplyRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
+    serializer_class = ReviewReplySerializer
+    permission_classes = [IsAuthenticated]
+    
+    def get_queryset(self):
+        return ReviewReply.objects.filter(user=self.request.user)

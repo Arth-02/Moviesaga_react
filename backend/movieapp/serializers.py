@@ -1,4 +1,5 @@
 from rest_framework import serializers
+from rest_framework.fields import empty
 from rest_framework_simplejwt.tokens import RefreshToken
 from .models import *
 from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
@@ -43,3 +44,45 @@ class WatchlistSerializer(serializers.ModelSerializer):
     def get_movies(self, obj):
         movies = Addmovie.objects.filter(watchlistid=obj)
         return AddmovieSerializer(movies, many=True).data    
+    
+class RatingSerializer(serializers.ModelSerializer):
+    def __init__(self, instance=None, data=..., **kwargs):
+        super().__init__(instance, data, **kwargs)
+        if self.context['request'].method == 'GET':
+            self.fields['username'] = serializers.SerializerMethodField()
+    class Meta:
+        model = Rating
+        fields = ['id','movie_id','title','poster_path','release_date','rating','timestamp']
+    def get_username(self, obj):
+        user = CustomUser.objects.get(id=obj.user.id)
+        return user.username
+
+class ReviewSerializer(serializers.ModelSerializer):
+    def __init__(self, instance=None, data=..., **kwargs):
+        super().__init__(instance, data, **kwargs)
+        if self.context['request'].method == 'GET':
+            self.fields['username'] = serializers.SerializerMethodField()
+            self.fields['replies_count']=serializers.SerializerMethodField()
+        
+    class Meta:
+        model = Review
+        fields = ['id','movie_id','title','poster_path','release_date','review','timestamp']
+    def get_username(self, obj):
+        user = CustomUser.objects.get(id=obj.user.id)
+        return user.username
+    def get_replies_count(self, obj):
+        replies = ReviewReply.objects.filter(review=obj.id)
+        return len(replies)
+    
+class ReviewReplySerializer(serializers.ModelSerializer):
+    def __init__(self, instance=None, data=..., **kwargs):
+        super().__init__(instance, data, **kwargs)
+        if self.context['request'].method == 'GET':
+            self.fields['username'] = serializers.SerializerMethodField()
+    class Meta:
+        model = ReviewReply
+        fields = ['id','review','reply','timestamp']
+    def get_username(self, obj):
+        user = CustomUser.objects.get(id=obj.user.id)
+        return user.username
+    

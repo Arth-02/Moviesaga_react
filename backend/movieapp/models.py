@@ -55,4 +55,36 @@ class Addmovie(models.Model):
     def __str__(self):
         return f"{self.title} of watchlist {self.watchlistid}"
     
+class Rating(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='ratings')
+    movie_id = models.IntegerField()
+    title = models.CharField(max_length=255)
+    poster_path = models.CharField(max_length=255)
+    release_date = models.DateField()
+    rating = models.DecimalField(max_digits=3, decimal_places=1)
+    timestamp = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return f"{self.user.username} rated {self.movie_id} with {self.rating}"
+    
+class Review(models.Model):
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE, related_name='reviews')
+    movie_id = models.IntegerField()
+    title = models.CharField(max_length=255)
+    poster_path = models.CharField(max_length=255)
+    release_date = models.DateField()
+    review = models.TextField()
+    timestamp = models.DateTimeField(default=timezone.now)
+    
+    def __str__(self):
+        return f"{self.user.username} rated {self.movie_id} with {self.rating}"
+    
+class ReviewReply(models.Model):
+    review = models.ForeignKey(Review, on_delete=models.CASCADE, related_name='replies')
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    reply = models.TextField()
+    timestamp = models.DateTimeField(default=timezone.now)
+
+    def __str__(self):
+        return f"{self.user.username} replied to {self.review.id}"
 

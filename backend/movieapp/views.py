@@ -115,3 +115,21 @@ class ReviewReplyRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     
     def get_queryset(self):
         return ReviewReply.objects.filter(user=self.request.user)
+    
+class UserRatingView(generics.ListAPIView):
+    serializer_class=RatingSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        if self.request.GET.get('movie_id'):
+            return Rating.objects.filter(user=self.request.user, movie_id=self.request.GET.get('movie_id'))
+        return Rating.objects.filter(user=self.request.user)
+
+class UserReviewView(generics.ListAPIView):
+    serializer_class=ReviewSerializer
+    permission_classes = [IsAuthenticated]
+
+    def get_queryset(self):
+        if self.request.GET.get('movie_id'):
+            return Review.objects.filter(user=self.request.user, movie_id=self.request.GET.get('movie_id'))
+        return Review.objects.filter(user=self.request.user)

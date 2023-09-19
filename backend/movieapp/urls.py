@@ -17,5 +17,7 @@ urlpatterns = [
     path('review/<int:pk>/', ReviewRetrieveUpdateDestroy.as_view(), name='review-update'),
     path('review-reply/', ReviewReplyView.as_view(), name='review-reply'),
     path('review-reply/<int:pk>/', ReviewReplyRetrieveUpdateDestroy.as_view(), name='review-reply-update'),
+    path('userrating/', UserRatingView.as_view(), name='user-rating'),
+    path('userreview/', UserReviewView.as_view(), name='user-review'),
 
 ]

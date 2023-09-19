@@ -4,7 +4,6 @@
   padding: 0px 0px;
   /* max-width: 1280px; */
   margin: 0 auto;
-  margin-top: 62px;
 }
 
 .background {
@@ -13,13 +12,13 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-blend-mode: overlay;
-  /* padding: 0px 70px; */
 }
 
 .backdrop {
   backdrop-filter: blur(50px);
   padding: 20px 70px;
   margin: 0 auto;
+  padding-top: 70px;
 }
 
 .movie-page-header {
@@ -173,6 +172,7 @@
   border-radius: 25px;
   padding: 5px 15px;
   border: 1px solid rgba(255, 255, 255, 0.32);
+  min-width: max-content;
 }
 
 .movie-page-genre-item:hover {
@@ -233,15 +233,19 @@
   width: 100%;
   display: flex;
   justify-content: flex-start;
-  align-items: center;
+  align-items: baseline;
   gap: 10px;
 }
 
 .movie-page-list-items {
   display: flex;
-  justify-content: center;
   align-items: center;
   gap: 10px;
+  overflow-x: scroll;
+}
+
+.movie-page-list-items::-webkit-scrollbar {
+  display: none;
 }
 
 .movie-page-list-title {
@@ -251,10 +255,12 @@
   font-weight: 600;
   margin: 0;
   color: white;
+  min-width: max-content  ;
 }
 
 .movie-page-list-item {
   color: #5799ef;
+  min-width: max-content;
 }
 
 .movie-page-list-item:hover {
@@ -365,6 +371,7 @@
 @media screen and (max-width: 600px) {
   .backdrop {
     padding: 20px 10px;
+    padding-top: 80px;
   }
   .movie-page-poster {
     display: none;
@@ -388,9 +395,6 @@
   .movie-page-overview-responsive-col2 {
     width: calc(100% - 140px);
   }
-  .movie-page-list-section {
-    display: none;
-  }
   .movie-page-genre-item {
     font-size: 0.8rem;
   }
@@ -406,10 +410,10 @@
     overflow: hidden;
     text-overflow: ellipsis;
   }
-  .border-bottom {
+  .movie-page-overview-section.border-bottom{
     padding: 0;
   }
-  .border-bottom::after {
+  .movie-page-overview-section.border-bottom::after {
     content: none;
   }
   .movie-page-genre-section {

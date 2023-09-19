@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react'
+import React, { useState, useContext, useEffect } from 'react'
 import './ratingmodal.css'
 import Rating from '@mui/material/Rating';
 import StarRoundedIcon from '@mui/icons-material/StarRounded';
@@ -10,12 +10,12 @@ import Backdrop from '@mui/material/Backdrop';
 import Fade from '@mui/material/Fade';
 import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
-import { MyContext } from '../../MyContext';
+import AuthContext from '../../contexts/Auth/AuthContext';
 import { useNavigate } from 'react-router-dom';
 
 const RatingModal = (props) => {
 
-    const { isAuthenticated } = useContext(MyContext);
+    const { isAuthenticated , tokens } = useContext(AuthContext);
 
     const mystyle = {
         position: 'absolute',
@@ -42,6 +42,33 @@ const RatingModal = (props) => {
 
     const navigate = useNavigate();
 
+    const submitRating = async () => {
+
+        let data = {
+            rating: rating,
+            movie_id: props.movie.id,
+            title: props.movie.title ? props.movie.title : props.movie.name,
+            poster_path: props.movie.poster_path,
+            release_date: props.movie.release_date,
+        }
+
+        await fetch(`http://127.0.0.1:8000/movieapp/rating/`,{
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${tokens.access}`
+            },
+            body: JSON.stringify(data)
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            props.setChecked(false);
+            setRating(0);
+        })
+        .catch(err => console.log(err))
+    }
+
     const handleSubmit = (e) => {
         e.preventDefault();
         
@@ -51,9 +78,30 @@ const RatingModal = (props) => {
             navigate('/login');
         }
         else{
-            
+            submitRating();
         }
     }
+
+    const getUserRating = async () => {
+        await fetch(`http://127.0.0.1:8000/movieapp/rating/${props.movie.id}/`,{
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${tokens.access}`
+            }
+        })
+        .then(res => res.json())
+        .then(data => {
+            console.log(data);
+            setRating(data.rating);
+        }
+        )
+        .catch(err => console.log(err))
+    }
+
+    useEffect(() => {
+        isAuthenticated && getUserRating();
+    }, [])
 
     return (
         <>

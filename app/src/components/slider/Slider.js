@@ -19,6 +19,7 @@ import WindowSizeContext from "../../contexts/windowSize/WindowSize";
 import CastCard from "../castCard/CastCard";
 
 const Slider = (props) => {
+
   const { data, error, loading } = useFetchData(props.url);
 
   const { windowSize } = useContext(WindowSizeContext);
@@ -183,10 +184,6 @@ const Slider = (props) => {
     }
     // eslint-disable-next-line
   }, [data]);
-
-// To rerender component when window size changes
-  useEffect(() => {
-  } , [windowSize])
 
   return (
     <>

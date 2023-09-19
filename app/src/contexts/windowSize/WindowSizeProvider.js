@@ -9,12 +9,12 @@ const WindowSizeProvider = (props) => {
       ]);
 
     const handleWindowResize = () => {
+        console.log('resize')
         setWindowSize([window.innerWidth, window.innerHeight]);
     }
 
       useEffect(() => {
         window.addEventListener('resize', handleWindowResize);
-        console.log('resize')
         return () => {
           window.removeEventListener('resize', handleWindowResize);
         }

@@ -144,7 +144,7 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    const refreshTime = 1 * 30 * 1000;
+    const refreshTime = 24 * 60 * 1000;
     const refreshInterval = setInterval(() => {
       if (localStorage.getItem("tokens")) {
         refreshToken();

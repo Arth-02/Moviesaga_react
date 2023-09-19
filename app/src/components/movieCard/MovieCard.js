@@ -39,7 +39,7 @@ const MovieCard = (props) => {
               //         (max-width: 768px) 185px,
               //         (max-width: 1024px) 342px,
               //         500px"
-              // loading={props.lazy ? "lazy" : "eager"}
+              loading={props.lazy ? "lazy" : "eager"}
               src={image_url3}
               alt="movie-poster"
             />

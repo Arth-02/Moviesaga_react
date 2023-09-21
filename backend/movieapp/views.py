@@ -70,11 +70,11 @@ class RatingView(generics.ListCreateAPIView):
     
 
 class RatingRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
-    serializer_class = RatingSerializer
     permission_classes = [IsAuthenticated]
+    queryset = Rating.objects.all()
+    serializer_class = RatingSerializer
+
     
-    def get_queryset(self):
-        return Rating.objects.filter(user=self.request.user)
     
 class ReviewView(generics.ListCreateAPIView):
     queryset = Review.objects.all()

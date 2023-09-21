@@ -46,27 +46,21 @@ class WatchlistSerializer(serializers.ModelSerializer):
         return AddmovieSerializer(movies, many=True).data    
     
 class RatingSerializer(serializers.ModelSerializer):
-    def __init__(self, instance=None, data=..., **kwargs):
-        super().__init__(instance, data, **kwargs)
-        if self.context['request'].method == 'GET':
-            self.fields['username'] = serializers.SerializerMethodField()
+    username = serializers.SerializerMethodField()
     class Meta:
         model = Rating
-        fields = ['id','movie_id','title','poster_path','release_date','rating','timestamp']
+        fields = ['id','movie_id','title','poster_path','release_date','rating','timestamp','username']
     def get_username(self, obj):
         user = CustomUser.objects.get(id=obj.user.id)
         return user.username
 
 class ReviewSerializer(serializers.ModelSerializer):
-    def __init__(self, instance=None, data=..., **kwargs):
-        super().__init__(instance, data, **kwargs)
-        if self.context['request'].method == 'GET':
-            self.fields['username'] = serializers.SerializerMethodField()
-            self.fields['replies_count']=serializers.SerializerMethodField()
+    username = serializers.SerializerMethodField()
+    replies_count=serializers.SerializerMethodField()
         
     class Meta:
         model = Review
-        fields = ['id','movie_id','title','poster_path','release_date','review','timestamp']
+        fields = ['id','movie_id','title','poster_path','release_date','review','timestamp','username','replies_count']
     def get_username(self, obj):
         user = CustomUser.objects.get(id=obj.user.id)
         return user.username

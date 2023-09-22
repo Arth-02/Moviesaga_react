@@ -57,16 +57,23 @@ class RatingSerializer(serializers.ModelSerializer):
 class ReviewSerializer(serializers.ModelSerializer):
     username = serializers.SerializerMethodField()
     replies_count=serializers.SerializerMethodField()
+    rating = serializers.SerializerMethodField()
         
     class Meta:
         model = Review
-        fields = ['id','movie_id','title','poster_path','release_date','review','timestamp','username','replies_count']
+        fields = ['id','movie_id','title','poster_path','release_date','review','timestamp','username','replies_count','rating']
     def get_username(self, obj):
         user = CustomUser.objects.get(id=obj.user.id)
         return user.username
     def get_replies_count(self, obj):
         replies = ReviewReply.objects.filter(review=obj.id)
         return len(replies)
+    def get_rating(self, obj):
+        rating = Rating.objects.filter(movie_id=obj.movie_id,user=obj.user.id)
+        if len(rating)>0:
+            return rating[0].rating
+        else:
+            return 0
     
 class ReviewReplySerializer(serializers.ModelSerializer):
     def __init__(self, instance=None, data=..., **kwargs):

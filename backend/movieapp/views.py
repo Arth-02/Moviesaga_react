@@ -57,6 +57,7 @@ class WacthlistDelete(generics.DestroyAPIView):
 class RatingView(generics.ListCreateAPIView):
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
+    filterset_fields = ['movie_id']
     def get_permissions(self):
         if self.request.method == 'GET':
             return []
@@ -73,12 +74,15 @@ class RatingRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     queryset = Rating.objects.all()
     serializer_class = RatingSerializer
+    filterset_fields = ['movie_id']
 
     
     
 class ReviewView(generics.ListCreateAPIView):
     queryset = Review.objects.all()
     serializer_class = ReviewSerializer
+    filterset_fields = ['movie_id']
+
     def get_permissions(self):
         if self.request.method == 'GET':
             return []
@@ -99,6 +103,8 @@ class ReviewRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
 class ReviewReplyView(generics.ListCreateAPIView):
     queryset = ReviewReply.objects.all()
     serializer_class = ReviewReplySerializer
+    filterset_fields = ['movie_id']
+
     def get_permissions(self):
         if self.request.method == 'GET':
             return []

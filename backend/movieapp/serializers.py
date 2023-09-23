@@ -74,6 +74,18 @@ class ReviewSerializer(serializers.ModelSerializer):
             return rating[0].rating
         else:
             return 0
+    def update(self, instance, validated_data):
+        rating_data = self.context['request'].data.get('rating', None)
+
+        print(rating_data)
+        if rating_data is not None:
+            rating = Rating.objects.filter(movie_id=instance.movie_id,user=instance.user.id)
+            if len(rating)>0:
+                rating[0].rating = rating_data
+                rating[0].save()
+            else:
+                Rating.objects.create(movie_id=instance.movie_id,user=instance.user,rating=rating_data)
+        return super().update(instance, validated_data)
     
 class ReviewReplySerializer(serializers.ModelSerializer):
     def __init__(self, instance=None, data=..., **kwargs):

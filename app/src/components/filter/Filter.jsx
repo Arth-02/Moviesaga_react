@@ -1,4 +1,4 @@
-import React , {useState} from "react";
+import React , {useEffect, useState} from "react";
 import "./filter.css";
 
 import Accordion from "@mui/material/Accordion";
@@ -10,17 +10,77 @@ import Select from '@mui/material/Select';
 
 import { movie_genres } from "../../constants/genres";
 
-const Filter = () => {
+const Filter = ({setFilters , filters , selectedGenres , setSelectedGenres}) => {
+
   const [expanded, setExpanded] = React.useState(false);
+  const [selectedLanguage , setSelectedLanguage] = useState(filters.with_original_language);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
   const [sort, setSort] = useState("popularity.desc");
+  const [releaseDateLT, setReleaseDateLT] = useState([]);
+  const [releaseDateGT, setReleaseDateGT] = useState([]);
 
   const handleSortChange = (event) => {
     setSort(event.target.value);
+    setFilters(prev => ({...prev, sort_by: event.target.value}))
+  };
+
+  const handleGenreChange = (event) => {
+    let genre_id = event.target.id;
+    let genre_index = selectedGenres.indexOf(genre_id);
+    if(genre_index === -1){
+        setSelectedGenres(prev => [...prev, genre_id]);
+    }else{
+        let newGenres = selectedGenres.filter((genre, index) => index !== genre_index);
+        setSelectedGenres(newGenres);
+    }
+  };
+
+  useEffect(() => {
+    let ele = document.getElementsByClassName("genre-item");
+    for(let i = 0 ; i < ele.length ; i++){
+      ele[i].classList.remove("selected");
+    }
+
+    selectedGenres.map((genre, index) => {
+      let ele = document.getElementById(genre);
+      ele.classList.add("selected");
+    })
+
+    setFilters(prev => ({...prev, with_genres: selectedGenres.join(",")}))
+  } , [selectedGenres])
+
+    const handleLanguageChange = (event) => {
+      if(selectedLanguage === event.target.id){
+        setSelectedLanguage("");
+        return;
+      }
+      setSelectedLanguage(event.target.id);
+    };
+
+    useEffect(() => {
+      let ele = document.getElementsByClassName("language-item");
+      for(let i = 0 ; i < ele.length ; i++){
+        ele[i].classList.remove("selected");
+      }
+      let ele2 = document.getElementById(selectedLanguage);
+      ele2?.classList.add("selected");
+      setFilters(prev => ({...prev, with_original_language: selectedLanguage}))
+    } , [selectedLanguage])
+
+
+
+  const handleReleaseDateLTChange = (event) => {
+    setReleaseDateLT(event.target.value);
+    setFilters(prev => ({...prev, "release_date.lte": event.target.value}))
+  };
+
+  const handleReleaseDateGTChange = (event) => {
+    setReleaseDateGT(event.target.value);
+    setFilters(prev => ({...prev, "release_date.gte": event.target.value}))
   };
 
   return (
@@ -75,10 +135,9 @@ const Filter = () => {
         </AccordionSummary>
         <AccordionDetails>
           <div className="filter-item genres">
-            {console.log(movie_genres)}
             {movie_genres.map((genre, index) => {
               return (
-                <div key={index} className={`genre-item ${(index % 3 === 0) ? "selected" : ""} `}>
+                <div key={index} onClick={handleGenreChange} id={genre.id}  className={`genre-item `}>
                   {genre.name}
                 </div>
               );
@@ -103,12 +162,12 @@ const Filter = () => {
         </AccordionSummary>
         <AccordionDetails>
           <div className="filter-item languages">
-            <div className="language-item">English</div>
-            <div className="language-item">Hindi</div>
-            <div className="language-item">French</div>
-            <div className="language-item">Spanish</div>
-            <div className="language-item">German</div>
-            <div className="language-item">Italian</div>
+            <div className="language-item" id="en" onClick={handleLanguageChange}>English</div>
+            <div className="language-item" id="hi" onClick={handleLanguageChange}>Hindi</div>
+            <div className="language-item" id="fr" onClick={handleLanguageChange}>French</div>
+            <div className="language-item" id="es" onClick={handleLanguageChange}>Spanish</div>
+            <div className="language-item" id="it" onClick={handleLanguageChange}>Italian</div>
+            <div className="language-item" id="gu" onClick={handleLanguageChange}>Gujarati</div>
           </div>
         </AccordionDetails>
       </Accordion>
@@ -131,7 +190,7 @@ const Filter = () => {
           <div className="filter-item release-date">
             <div className="filter-item-from">
                 From
-                <input type="date" />    
+                <input type="date"  />    
             </div>
             <div className="filter-item-to">
                 To

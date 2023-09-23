@@ -22,6 +22,10 @@ const TrailerSection = (props) => {
 
   const { data, loading, error } = useFetchData(props.url);
 
+  if(data?.length === 0){
+    return null
+  }
+
   return (
     <>
       {error && <h1>Error</h1>}

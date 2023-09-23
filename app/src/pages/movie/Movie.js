@@ -192,10 +192,10 @@ const Movie = () => {
                     <div className="movie-page-list-title">Directors : </div>
                     <div className="movie-page-list-items">
                       {credits &&
-                        credits.crew.map((crew) => {
+                        credits.crew.map((crew , index) => {
                           if (crew.job === "Director") {
                             return (
-                              <>
+                              <div key={index}>
                                 <div
                                   className="movie-page-list-item"
                                   key={crew.id}
@@ -203,7 +203,7 @@ const Movie = () => {
                                   {crew.name}
                                 </div>
                                 <div className="search-preview-dot movie-page-dot"></div>
-                              </>
+                              </div>
                             );
                           } else {
                             return null;
@@ -215,14 +215,14 @@ const Movie = () => {
                     <div className="movie-page-list-title">Writers : </div>
                     <div className="movie-page-list-items">
                       {credits &&
-                        credits.crew.map((crew) => {
+                        credits.crew.map((crew , index) => {
                           if (
                             crew.job === "Screenplay" ||
                             crew.job === "Writer" ||
                             crew.job === "Story"
                           ) {
                             return (
-                              <>
+                              <div key={index}>
                                 <div
                                   className="movie-page-list-item"
                                   key={crew.id}
@@ -230,7 +230,7 @@ const Movie = () => {
                                   {crew.name}
                                 </div>
                                 <div className="search-preview-dot movie-page-dot"></div>
-                              </>
+                              </div>
                             );
                           } else {
                             return null;
@@ -242,10 +242,10 @@ const Movie = () => {
                     <div className="movie-page-list-title">Stars : </div>
                     <div className="movie-page-list-items">
                       {credits &&
-                        credits.cast.map((cast) => {
+                        credits.cast.map((cast , index) => {
                           if (cast.order <= 3) {
                             return (
-                              <>
+                              <div key={index}>
                                 <div
                                   className="movie-page-list-item"
                                   key={cast.id}
@@ -253,7 +253,7 @@ const Movie = () => {
                                   {cast.name}
                                 </div>
                                 <div className="search-preview-dot movie-page-dot"></div>
-                              </>
+                              </div>
                             );
                           } else {
                             return null;

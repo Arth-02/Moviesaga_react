@@ -1,5 +1,5 @@
 import React from "react";
-import "./moviebody.css";
+import "./tvshowbody.css";
 
 import ArrowForwardIosIcon from "@mui/icons-material/ArrowForwardIos";
 
@@ -14,26 +14,26 @@ import IconButton from "@mui/material/IconButton";
 
 import Review from "../../components/review/Review";
 
-const MovieBody = ({ id, credits, data }) => {
+const TVShowBody = ({ id, credits, data }) => {
   //   console.log(credits.cast);
 
-  const similar_movie_url = `https://api.themoviedb.org/3/movie/${id}/similar?api_key=ace3eeed99f6d9d19e61456a520cda0b`;
-  const review_url = `https://api.themoviedb.org/3/movie/${id}/reviews?language=en-US&page=1&api_key=ace3eeed99f6d9d19e61456a520cda0b`;
+  const similar_movie_url = `https://api.themoviedb.org/3/tv/${id}/similar?api_key=ace3eeed99f6d9d19e61456a520cda0b`;
+  const review_url = `https://api.themoviedb.org/3/tv/${id}/reviews?language=en-US&page=1&api_key=ace3eeed99f6d9d19e61456a520cda0b`;
 
   const { data: social } = useFetchData(
-    `https://api.themoviedb.org/3/movie/${id}/external_ids?api_key=ace3eeed99f6d9d19e61456a520cda0b`
+    `https://api.themoviedb.org/3/tv/${id}/external_ids?api_key=ace3eeed99f6d9d19e61456a520cda0b`
   );
 
   const { data: keywords } = useFetchData(
-    `https://api.themoviedb.org/3/movie/${id}/keywords?api_key=ace3eeed99f6d9d19e61456a520cda0b`
+    `https://api.themoviedb.org/3/tv/${id}/keywords?api_key=ace3eeed99f6d9d19e61456a520cda0b`
   );
 
   return (
-    <div className="movie-page-body">
-      <div className="movie-page-col">
-        <div className="movie-page-body-col-1">
+    <div className="tv-page-body">
+      <div className="tv-page-col">
+        <div className="tv-page-body-col-1">
           {/* Cast Section */}
-          <div className="movie-page-cast-section">
+          <div className="tv-page-cast-section">
             <h2
               className="provider-heading heading"
               style={{ marginBottom: "20px" }}
@@ -44,16 +44,16 @@ const MovieBody = ({ id, credits, data }) => {
                 className="arrow"
               />
             </h2>
-            <div className="movie-page-cast-items slider-container">
+            <div className="tv-page-cast-items slider-container">
               <Slider
-                url={`https://api.themoviedb.org/3/movie/${id}/credits?language=en-US&api_key=ace3eeed99f6d9d19e61456a520cda0b`}
+                url={`https://api.themoviedb.org/3/tv/${id}/credits?language=en-US&api_key=ace3eeed99f6d9d19e61456a520cda0b`}
                 type="cast"
               />
             </div>
           </div>
 
           {/* Images Section */}
-          <div className="movie-page-images-section">
+          <div className="tv-page-images-section">
             <h2
               className="provider-heading heading"
               style={{ marginBottom: "20px" }}
@@ -64,26 +64,26 @@ const MovieBody = ({ id, credits, data }) => {
                 className="arrow"
               />
             </h2>
-            <div className="movie-page-images-items slider-container">
+            <div className="tv-page-images-items slider-container">
               <Slider
-                url={`https://api.themoviedb.org/3/movie/${id}/images?api_key=ace3eeed99f6d9d19e61456a520cda0b`}
+                url={`https://api.themoviedb.org/3/tv/${id}/images?api_key=ace3eeed99f6d9d19e61456a520cda0b`}
                 type="images"
               />
             </div>
           </div>
 
           {/* Videos Section */}
-          <div className="movie-page-videos-section">
+          <div className="tv-page-videos-section">
             <TrailerSection
-              url={`https://api.themoviedb.org/3/movie/${id}/videos?api_key=ace3eeed99f6d9d19e61456a520cda0b`}
+              url={`https://api.themoviedb.org/3/tv/${id}/videos?api_key=ace3eeed99f6d9d19e61456a520cda0b`}
               title={"Videos"}
               space={false}
             />
           </div>
 
           {/* Info Section For Small Devices */}
-          <div className="movie-page-stats-section-small">
-            <div className="movie-page-stats-item-title">
+          <div className="tv-page-stats-section-small">
+            <div className="tv-page-stats-item-title">
               <h2
                 className="provider-heading heading"
                 style={{ marginBottom: "15px" }}
@@ -95,45 +95,46 @@ const MovieBody = ({ id, credits, data }) => {
                 />
               </h2>
             </div>
-            <div className="movie-page-stats-item border-bottom border-top">
-              <div className="movie-page-stats-title">Status :</div>
-              <span className="movie-page-stats-answer">
+            <div className="tv-page-stats-item border-bottom border-top">
+              <div className="tv-page-stats-title">Status :</div>
+              <span className="tv-page-stats-answer">
                 {data.status ? data.status : "Not Available"}
               </span>
             </div>
-            <div className="movie-page-stats-item border-bottom">
-              <div className="movie-page-stats-title">Original Language :</div>
-              <span className="movie-page-stats-answer">
+            <div className="tv-page-stats-item border-bottom">
+              <div className="tv-page-stats-title">Original Language :</div>
+              <span className="tv-page-stats-answer">
                 {data.original_language
                   ? data.original_language
                   : "Not Available"}
               </span>
             </div>
-            <div className="movie-page-stats-item border-bottom">
-              <div className="movie-page-stats-title">Budget :</div>
-              <span className="movie-page-stats-answer">
+            <div className="tv-page-stats-item border-bottom">
+              <div className="tv-page-stats-title">Total Seasons :</div>
+              <span className="tv-page-stats-answer">
                 {" "}
-                {data.budget !== 0 ? "$" + data.budget : "Not Available"}
+                {data.number_of_seasons}
               </span>
             </div>
-            <div className="movie-page-stats-item border-bottom">
-              <div className="movie-page-stats-title">Revenue :</div>
-              <span className="movie-page-stats-answer">
-                {data.revenue !== 0 ? "$" + data.revenue : "Not Available"}
+            <div className="tv-page-stats-item border-bottom">
+              <div className="tv-page-stats-title">Total Episodes :</div>
+              <span className="tv-page-stats-answer">
+                {" "}
+                {data.number_of_episodes}
               </span>
             </div>
-            <div className="movie-page-stats-item border-bottom">
-              <div className="movie-page-stats-title">Runtime :</div>
-              <span className="movie-page-stats-answer">
+            <div className="tv-page-stats-item border-bottom">
+              <div className="tv-page-stats-title">Runtime :</div>
+              <span className="tv-page-stats-answer">
                 {data.runtime ? data.runtime + "min" : "Not Available"}
               </span>
             </div>
           </div>
 
           {/* Keyword for Small devices */}
-          {keywords && keywords.keywords.length > 0 && (
-            <div className="movie-page-keywords-section-small">
-              <div className="movie-page-keywords-title">
+          {keywords && keywords?.length > 0 && (
+            <div className="tv-page-keywords-section-small">
+              <div className="tv-page-keywords-title">
                 <h2
                   className="provider-heading heading"
                   style={{ marginBottom: "5px" }}
@@ -145,10 +146,10 @@ const MovieBody = ({ id, credits, data }) => {
                   />
                 </h2>
               </div>
-              <div className="movie-page-keywords-items">
-                {keywords.keywords.map((keyword) => {
+              <div className="tv-page-keywords-items">
+                {keywords.map((keyword) => {
                   return (
-                    <div className="movie-page-keywords-item" key={keyword.id}>
+                    <div className="tv-page-keywords-item" key={keyword.id}>
                       {keyword.name}
                     </div>
                   );
@@ -158,8 +159,8 @@ const MovieBody = ({ id, credits, data }) => {
           )}
 
           {/* Social Media Section For Small Devices */}
-          <div className="movie-page-social-media-section-small">
-            <div className="movie-page-social-media-title">
+          <div className="tv-page-social-media-section-small">
+            <div className="tv-page-social-media-title">
               <h2
                 className="provider-heading heading"
                 style={{ marginBottom: "5px" }}
@@ -171,15 +172,15 @@ const MovieBody = ({ id, credits, data }) => {
                 />
               </h2>
             </div>
-            <div className="movie-page-social-media-items-container-small">
-              <div className="movie-page-social-media-items">
+            <div className="tv-page-social-media-items-container-small">
+              <div className="tv-page-social-media-items">
                 {social && social.facebook_id && (
                   <a
                     href={`https://www.facebook.com/${social.facebook_id}`}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <div className="movie-page-social-media-item">
+                    <div className="tv-page-social-media-item">
                       <IconButton
                         aria-label="facebook"
                         sx={{
@@ -200,14 +201,14 @@ const MovieBody = ({ id, credits, data }) => {
                   </a>
                 )}
               </div>
-              <div className="movie-page-social-media-items">
+              <div className="tv-page-social-media-items">
                 {social && social.instagram_id && (
                   <a
                     href={`https://www.instagram.com/${social.instagram_id}`}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <div className="movie-page-social-media-item">
+                    <div className="tv-page-social-media-item">
                       <IconButton
                         aria-label="instagram"
                         sx={{
@@ -228,14 +229,14 @@ const MovieBody = ({ id, credits, data }) => {
                   </a>
                 )}
               </div>
-              <div className="movie-page-social-media-items">
+              <div className="tv-page-social-media-items">
                 {social && social.twitter_id && (
                   <a
                     href={`https://www.twitter.com/${social.twitter_id}`}
                     target="_blank"
                     rel="noreferrer"
                   >
-                    <div className="movie-page-social-media-item">
+                    <div className="tv-page-social-media-item">
                       <IconButton
                         aria-label="twitter"
                         sx={{
@@ -260,19 +261,18 @@ const MovieBody = ({ id, credits, data }) => {
           </div>
 
           {/* Review Section */}
-          <Review url={review_url} movie={data}/>
-          
+          <Review url={review_url} movie={data} />
         </div>
-        <div className="movie-page-body-col-2">
+        <div className="tv-page-body-col-2">
           {/* Social Media Section */}
-          <div className="movie-page-social-media-section">
+          <div className="tv-page-social-media-section">
             {social && social.facebook_id && (
               <a
                 href={`https://www.facebook.com/${social.facebook_id}`}
                 target="_blank"
                 rel="noreferrer"
               >
-                <div className="movie-page-social-media-item">
+                <div className="tv-page-social-media-item">
                   <IconButton
                     aria-label="facebook"
                     sx={{
@@ -299,7 +299,7 @@ const MovieBody = ({ id, credits, data }) => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <div className="movie-page-social-media-item">
+                <div className="tv-page-social-media-item">
                   <IconButton
                     aria-label="instagram"
                     sx={{
@@ -326,7 +326,7 @@ const MovieBody = ({ id, credits, data }) => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <div className="movie-page-social-media-item">
+                <div className="tv-page-social-media-item">
                   <IconButton
                     aria-label="twitter"
                     sx={{
@@ -349,42 +349,48 @@ const MovieBody = ({ id, credits, data }) => {
           </div>
 
           {/* Info Section */}
-          <div className="movie-page-stats-section">
-            <div className="movie-page-stats-item">
-              <div className="movie-page-stats-title">Status </div>
-              <span className="movie-page-stats-answer">{data.status}</span>
+          <div className="tv-page-stats-section">
+            <div className="tv-page-stats-item">
+              <div className="tv-page-stats-title">Status </div>
+              <span className="tv-page-stats-answer">{data.status}</span>
             </div>
-            <div className="movie-page-stats-item">
-              <div className="movie-page-stats-title">Original Language </div>
-              <span className="movie-page-stats-answer">
+            <div className="tv-page-stats-item">
+              <div className="tv-page-stats-title">Original Language </div>
+              <span className="tv-page-stats-answer">
                 {data.original_language}
               </span>
             </div>
-            <div className="movie-page-stats-item">
-              <div className="movie-page-stats-title">Budget </div>
-              <span className="movie-page-stats-answer"> ${data.budget}</span>
+            <div className="tv-page-stats-item">
+              <div className="tv-page-stats-title">Total Seasons </div>
+              <span className="tv-page-stats-answer">
+                {" "}
+                {data.number_of_seasons}
+              </span>
             </div>
-            <div className="movie-page-stats-item">
-              <div className="movie-page-stats-title">Revenue </div>
-              <span className="movie-page-stats-answer">${data.revenue}</span>
+            <div className="tv-page-stats-item">
+              <div className="tv-page-stats-title">Total Episodes </div>
+              <span className="tv-page-stats-answer">
+                {" "}
+                {data.number_of_episodes}
+              </span>
             </div>
-            <div className="movie-page-stats-item">
-              <div className="movie-page-stats-title">Runtime </div>
-              <span className="movie-page-stats-answer">
-                {data.runtime} min
+            <div className="tv-page-stats-item">
+              <div className="tv-page-stats-title">Runtime </div>
+              <span className="tv-page-stats-answer">
+                {" "}
+                {data.runtime ? data.runtime + "min" : "Not Available"}
               </span>
             </div>
           </div>
 
           {/* KeyWords Section */}
-
-          {keywords && keywords.keywords.length > 0 && (
-            <div className="movie-page-keywords-section">
-              <div className="movie-page-keywords-title">Keywords</div>
-              <div className="movie-page-keywords-items">
-                {keywords.keywords.map((keyword) => {
+          {keywords && keywords?.length > 0 && (
+            <div className="tv-page-keywords-section">
+              <div className="tv-page-keywords-title">Keywords</div>
+              <div className="tv-page-keywords-items">
+                {keywords.map((keyword) => {
                   return (
-                    <div className="movie-page-keywords-item" key={keyword.id}>
+                    <div className="tv-page-keywords-item" key={keyword.id}>
                       {keyword.name}
                     </div>
                   );
@@ -395,7 +401,7 @@ const MovieBody = ({ id, credits, data }) => {
         </div>
       </div>
       {/* Similar Movie Section */}
-      <div className="movie-page-similar-movie-section slider-container">
+      <div className="tv-page-similar-tv-section slider-container">
         <h2
           className="provider-heading heading"
           style={{ marginBottom: "20px" }}
@@ -410,4 +416,4 @@ const MovieBody = ({ id, credits, data }) => {
   );
 };
 
-export default MovieBody;
+export default TVShowBody;

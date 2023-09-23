@@ -13,26 +13,25 @@ import "swiper/css/navigation";
 import "./slider.css";
 import useFetchData from "../../hooks/useFetchData";
 import Loading from "../loader/Loading";
+import GeneralModal from "../generalModal/GeneralModal";
+import { Grow, Zoom } from "@mui/material";
 
 //Contexts
 import WindowSizeContext from "../../contexts/windowSize/WindowSize";
 import CastCard from "../castCard/CastCard";
 
 const Slider = (props) => {
-
   const { data, error, loading } = useFetchData(props.url);
 
   const { windowSize } = useContext(WindowSizeContext);
 
   const [filteredCast, setFilteredCast] = useState([]);
-  // const [navigation, setNavigation] = useState(!(windowSize[0] < 768));
-  // const [freeMode, setFreeMode] = useState(windowSize[0] < 768);
-  // const [slidesPerView, setSlidesPerView] = useState(windowSize[0] < 768 ? "auto" : 7);
+  const [openImage , setOpenImage] = useState(null);
 
-  const [breakpoints, setBreakpoints] = useState({})
+  const [breakpoints, setBreakpoints] = useState({});
 
   const setBreakpointsFunc = () => {
-    if(props.type === "cast"){
+    if (props.type === "cast") {
       setBreakpoints({
         768: {
           slidesPerView: 5,
@@ -50,9 +49,8 @@ const Slider = (props) => {
           slidesPerView: 6,
           slidesPerGroup: 6,
         },
-      })
-    }
-    else if(!props.type){
+      });
+    } else if (!props.type) {
       setBreakpoints({
         768: {
           slidesPerView: 4,
@@ -70,9 +68,8 @@ const Slider = (props) => {
           slidesPerView: 7,
           slidesPerGroup: 7,
         },
-      })
-    }
-    else if(props.type === "images"){
+      });
+    } else if (props.type === "images") {
       setBreakpoints({
         768: {
           slidesPerView: 3,
@@ -91,10 +88,9 @@ const Slider = (props) => {
           slidesPerView: 4,
           slidesPerGroup: 4,
         },
-      })
+      });
     }
-  }
-
+  };
 
   // const breakpoints =
   //   (props.type === "cast")
@@ -185,8 +181,33 @@ const Slider = (props) => {
     // eslint-disable-next-line
   }, [data]);
 
+  // Functions For Modal
+  const [modalopen, setModalOpen] = useState(false);
+  const handleModalOpen = (e) => {
+    setOpenImage(e.currentTarget.id)
+    setModalOpen(true);
+  };
+  const handleModalClose = () => setModalOpen(false);
+
+  if (data?.length === 0) {
+    return null;
+  }
+
   return (
     <>
+      <GeneralModal
+        open={modalopen}
+        handleClose={handleModalClose}
+        title="Images"
+      >
+        <Zoom in={modalopen} timeout={600}>
+        <img src={`https://image.tmdb.org/t/p/w780${openImage}`} alt="open Image" style={{
+          objectFit: "contain",
+          width: "100%",
+        }} />
+        </Zoom>
+      </GeneralModal>
+
       {error && <h1>Error</h1>}
       {loading ? (
         <div
@@ -226,30 +247,30 @@ const Slider = (props) => {
                 );
               })}
 
-              {
-                (props.type === "images") && 
-                data.backdrops.map((image, index) => {
-                  return (
-                    <SwiperSlide key={image.file_path}>
-                      <img
-                        src={`https://image.tmdb.org/t/p/w342${image.file_path}`}
-                        alt="movie"
-                        loading="lazy"
-                        style={{
-                          maxWidth: '250px',
-                          minHeight: '145px',
-                          width: "100%",
-                          height: "100%",
-                          objectFit: "cover",
-                        }}
-                      />
-                    </SwiperSlide>
-                  );
-                }
-              )
-              }
-              
-              {(!props.type) &&
+            {props.type === "images" &&
+              data.backdrops.map((image, index) => {
+                return (
+                  <SwiperSlide key={image.file_path} >
+                    <img
+                      src={`https://image.tmdb.org/t/p/w342${image.file_path}`}
+                      alt="movie"
+                      id={image.file_path}
+                      loading="lazy"
+                      style={{
+                        maxWidth: "250px",
+                        minHeight: "145px",
+                        width: "100%",
+                        height: "100%",
+                        objectFit: "cover",
+                        cursor: "pointer"
+                      }}
+                      onClick={handleModalOpen}
+                    />
+                  </SwiperSlide>
+                );
+              })}
+
+            {!props.type &&
               data.map((movie, index) => {
                 return (
                   <SwiperSlide key={movie.id}>

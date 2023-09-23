@@ -51,7 +51,7 @@ const TrailerCard = (props) => {
             }}
           >
             <iframe
-              src={`https://www.youtube-nocookie.com/embed/${props.youtubeKey || trailer[0].key}?autoplay=${play}&mute=1&controls=0&showinfo=0&autohide=1&loop=1`}
+              src={`https://www.youtube.com/embed/${props.youtubeKey || trailer[0].key}?autoplay=${play}&mute=1&controls=0&showinfo=0&autohide=1&loop=1`}
               width={windowSize[0] < 768 ? '300px' : '350px'}
               height={windowSize[0] < 768 ? '180px' : '200px'}
               title={props.title}

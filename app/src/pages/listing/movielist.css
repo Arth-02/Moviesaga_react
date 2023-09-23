@@ -16,18 +16,10 @@
     margin: 0;
     font-weight: 500;
     text-transform: uppercase;
+    width: fit-content;
     letter-spacing: 2px;
     font-family: 'Montserrat', sans-serif;
 }
-
-/* .movie-list{
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: stretch;
-    width: 100%;
-    gap: 20px;
-} */
 
 .movie-list{
     display: flex;

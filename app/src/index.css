@@ -23,6 +23,10 @@ a{
   color: white;
 }
 
+.link{
+  color: black;
+}
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
@@ -44,6 +48,7 @@ section{
     padding-left: 10px;
     display: flex;
     gap: 5px;
+    padding-bottom: 3px;
     cursor: pointer;
     align-items: self-end;
 }

@@ -11,11 +11,9 @@ import { useState } from 'react';
 import { MyContext } from "./MyContext";
 import MovieList from './pages/listing/MovieList';
 import SearchResult from './pages/search result/SearchResult';
-
+import Watchlist from './pages/watchlist/Watchlist';
 
 import NewHeader from './components/header/NewHeader';
-
-import { Helmet } from 'react-helmet';
 
 //Contexts
 import WindowSizeProvider from './contexts/windowSize/WindowSizeProvider';
@@ -29,9 +27,6 @@ function App() {
 
   return (
     <div className="App">
-       <Helmet>
-       {/* <meta http-equiv="Content-Security-Policy" content="ch-ua-form-factor"/> */}
-       </Helmet>
        <MyContext.Provider value={{ isAuthenticated , setIsAuthenticated , userInfo , setUserInfo}}>
         <WindowSizeProvider>
         
@@ -47,6 +42,7 @@ function App() {
               <Route path='/popular/movie' element={<MovieList type={'movie'} title={'Movies'} />} ></Route>
               <Route path='/popular/tv' element={<MovieList type={'tv'} title={'Tv Shows'} />} ></Route>
               <Route path='/trending/all' element={<MovieList type={'all'} title={null} />} ></Route>
+              <Route path='/watchlist' element={<Watchlist />} ></Route>
               {/* <Route path='/search' element={<MovieList type={'search'} title={'Search Results for'}/>} ></Route> */}
             </Routes>
           <Footer/>

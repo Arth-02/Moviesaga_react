@@ -7,10 +7,17 @@ const style = {
     top: '50%',
     left: '50%',
     transform: 'translate(-50%, -50%)',
-    // width: 400,
+    // minWidth: 400,
     borderRadius: "10px",
     boxShadow: 24,
     p: 4,
+    backgroundColor: "rgb(26,26,26)",
+    '@media (maxWidth: 600px)': {
+      width: '100%',
+      minWidth: '100%',
+      margin: 0,
+      borderRadius: 0,
+    },
   };
 
 

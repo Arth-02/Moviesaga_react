@@ -99,6 +99,9 @@ div.header{
     color: white;
 }
 
+.mobile-logo{
+    display: none;
+}
 
 .tabs::after{
     content: '';
@@ -329,6 +332,9 @@ div.header{
     /* .header{
         display: none;
     } */
+    .mobile-logo{
+        display: flex;
+    }
     .header-wrapper{
         display: none !important;
     }

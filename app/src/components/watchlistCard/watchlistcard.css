@@ -1,0 +1,58 @@
+.watchlist-card{
+    display: flex;
+    gap: 10px;
+    width: 100%;
+    height: 100%;
+    background-color: #282828;
+    padding: 10px;
+    border-radius: 8px;
+    transition: all 0.3s ease-in-out;
+    max-width: 350px;
+}
+
+.watchlist-card-img{
+    /* width: 150px; */
+    height: 170px;
+}
+
+.watchlist-card-img img{
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+.watchlist-card-body{
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    flex: 1;
+}
+
+.watchlist-card-body p,.watchlist-card-body h3{
+    margin: 0;
+}
+
+.wl-start-rating{
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.wl-movie-title{
+    font-size: 1.1rem;
+    font-weight: 500;
+    letter-spacing: 0.025rem;
+    font-family: Roboto, Helvetica, Arial, sans-serif;
+}
+
+@media screen and (max-width: 768px){
+    .watchlist-card{
+        /* max-width: 100%; */
+        width: 100%;
+        /* height: 135px; */
+    }
+    .watchlist-card-img{
+        height: 135px;
+    }
+}

@@ -10,17 +10,18 @@ import Select from '@mui/material/Select';
 
 import { movie_genres } from "../../constants/genres";
 
-const Filter = ({setFilters , filters , selectedGenres , setSelectedGenres}) => {
+const Filter = ({setFilters , filters}) => {
 
   const [expanded, setExpanded] = React.useState(false);
   const [selectedLanguage , setSelectedLanguage] = useState(filters.with_original_language);
+  const [selectedGenres , setSelectedGenres] = useState(filters.with_genres);
 
   const handleChange = (panel) => (event, isExpanded) => {
     setExpanded(isExpanded ? panel : false);
   };
 
   const [sort, setSort] = useState("popularity.desc");
-  const [releaseDateLT, setReleaseDateLT] = useState([]);
+  const [releaseDateLT, setReleaseDateLT] = useState(filters);
   const [releaseDateGT, setReleaseDateGT] = useState([]);
 
   const handleSortChange = (event) => {
@@ -30,11 +31,11 @@ const Filter = ({setFilters , filters , selectedGenres , setSelectedGenres}) => 
 
   const handleGenreChange = (event) => {
     let genre_id = event.target.id;
-    let genre_index = selectedGenres.indexOf(genre_id);
+    let genre_index = selectedGenres?.indexOf(genre_id);
     if(genre_index === -1){
         setSelectedGenres(prev => [...prev, genre_id]);
     }else{
-        let newGenres = selectedGenres.filter((genre, index) => index !== genre_index);
+        let newGenres = selectedGenres?.filter((genre, index) => index !== genre_index);
         setSelectedGenres(newGenres);
     }
   };
@@ -44,13 +45,13 @@ const Filter = ({setFilters , filters , selectedGenres , setSelectedGenres}) => 
     for(let i = 0 ; i < ele.length ; i++){
       ele[i].classList.remove("selected");
     }
-
-    selectedGenres.map((genre, index) => {
+    console.log("selected : " , selectedGenres)
+    selectedGenres && selectedGenres?.map((genre, index) => {
       let ele = document.getElementById(genre);
       ele.classList.add("selected");
     })
 
-    setFilters(prev => ({...prev, with_genres: selectedGenres.join(",")}))
+    selectedGenres && setFilters(prev => ({...prev, with_genres: selectedGenres?.join(",")}))
   } , [selectedGenres])
 
     const handleLanguageChange = (event) => {
@@ -135,7 +136,7 @@ const Filter = ({setFilters , filters , selectedGenres , setSelectedGenres}) => 
         </AccordionSummary>
         <AccordionDetails>
           <div className="filter-item genres">
-            {movie_genres.map((genre, index) => {
+            {movie_genres?.map((genre, index) => {
               return (
                 <div key={index} onClick={handleGenreChange} id={genre.id}  className={`genre-item `}>
                   {genre.name}

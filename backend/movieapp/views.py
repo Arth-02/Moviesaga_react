@@ -25,7 +25,9 @@ class AddMovieToWatchlistView(generics.CreateAPIView):
         print(Addmovie.objects.filter(user=user, movie_id=self.request.data['movie_id']))
     # Check if the movie already exists
         if Addmovie.objects.filter(user=user, movie_id=self.request.data['movie_id']):
+            print("Already Added")
             return Response({'message': 'Movie already added.'}, status=status.HTTP_400_BAD_REQUEST)
+        serializer.save(user=user)
     
 
 class MovieDelete(generics.DestroyAPIView):

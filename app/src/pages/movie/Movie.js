@@ -1,5 +1,5 @@
-import React, { useEffect , useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useContext, useEffect , useState } from "react";
+import { useParams , useNavigate } from "react-router-dom";
 import "./movie.css";
 import useFetchData from "../../hooks/useFetchData";
 import StarIcon from "@mui/icons-material/Star";
@@ -11,9 +11,15 @@ import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
 import AddIcon from "@mui/icons-material/Add";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import MovieBody from "./MovieBody";
+import AddToWatchList from "../../components/addToWatchList/AddToWatchList";
+import GeneralModal from "../../components/generalModal/GeneralModal";
+import AuthContext from "../../contexts/Auth/AuthContext";
 
 const Movie = () => {
   const params = useParams();
+  const navigate = useNavigate();
+
+  const {isAuthenticated } = useContext(AuthContext)
 
   const [trailerKey, setTrailerKey] = useState("");
 
@@ -30,6 +36,17 @@ const Movie = () => {
   const { data: trailer } = useFetchData(
     `https://api.themoviedb.org/3/movie/${params.id}/videos?api_key=ace3eeed99f6d9d19e61456a520cda0b`
   );
+
+    // Functions For Modal
+    const [modalopen, setModalOpen] = useState(false);
+    const handleModalOpen = () => setModalOpen(true);
+    const handleModalClose = () => setModalOpen(false);
+
+    const handleRedirect = () => {
+      if (!isAuthenticated) {
+        navigate("/login");
+      }
+    };
 
   useEffect(() => {
     console.log(trailer)
@@ -345,6 +362,7 @@ const Movie = () => {
                         },
                       }}
                       endIcon={<AddIcon />}
+                      onClick={isAuthenticated ? handleModalOpen : handleRedirect}
                       className="movie-page-btns"
                     >
                       Add To Watchlist
@@ -360,6 +378,11 @@ const Movie = () => {
           {
             credits && <MovieBody id={params.id} credits={credits} data={data} />
           }
+
+          {/* Add To WatchList Model */}
+          <GeneralModal open={modalopen} handleClose={handleModalClose}>
+            <AddToWatchList movie={data} handleClose={handleModalClose} />
+          </GeneralModal>
           
         </section>
       )}

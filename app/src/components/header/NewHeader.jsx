@@ -163,7 +163,7 @@ const NewHeader = (props) => {
       <ElevationScroll {...props}>
         <AppBar sx={{backgroundColor: "transparent"}}>
           <div className="header">
-            <div className="logo">
+          <div className="mobile-logo">
               <h3>
                 <Link to={".."}>MovieSaga</Link>
               </h3>
@@ -225,6 +225,11 @@ const NewHeader = (props) => {
             </IconButton>
               </div>
             <div className="header-wrapper">
+            <div className="logo">
+              <h3>
+                <Link to={".."}>MovieSaga</Link>
+              </h3>
+            </div>
               <div className="navtabs">
                 <span>
                   <Link
@@ -378,9 +383,9 @@ const NewHeader = (props) => {
               <span>Home</span>
             </Link>
             <Link
-              to={"../trending/movie"}
+              to={"../popular/movie"}
               className={
-                location.pathname === "/trending/movie"
+                location.pathname === "/popular/movie"
                   ? "drawer-navs active-drawer-navs"
                   : "drawer-navs"
               }
@@ -389,9 +394,9 @@ const NewHeader = (props) => {
               <span>Trending Movies</span>
             </Link>
             <Link
-              to={"../trending/tv"}
+              to={"../popular/tv"}
               className={
-                location.pathname === "/trending/tv"
+                location.pathname === "/popular/tv"
                   ? "drawer-navs active-drawer-navs"
                   : "drawer-navs"
               }

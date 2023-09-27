@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useEffect, useContext } from "react";
+import { useNavigate } from "react-router-dom";
 import "./review.css";
 import useFetchData from "../../hooks/useFetchData";
 import Rating from "@mui/material/Rating";
@@ -12,10 +13,12 @@ import IconButton from "@mui/material/IconButton";
 import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
-
 import AuthContext from "../../contexts/Auth/AuthContext";
 
 const Review = React.memo(({ url, movie }) => {
+
+  const navigate = useNavigate();
+
   const { isAuthenticated, tokens } = useContext(AuthContext);
 
   const { data, error } = useFetchData(url);
@@ -135,7 +138,7 @@ const Review = React.memo(({ url, movie }) => {
           const responseData = await res.json();
           console.log(responseData);
 
-          responseData[0].review &&
+          responseData.length!==0 && responseData[0].review &&
             setUserReview({
               author: responseData[0]?.username,
               content: responseData[0]?.review,
@@ -143,7 +146,7 @@ const Review = React.memo(({ url, movie }) => {
               created_at: responseData[0]?.timestamp,
             });
 
-          responseData[0].review && setReviewId(responseData[0]?.id);
+          responseData.length!==0 && responseData[0].review && setReviewId(responseData[0]?.id);
         } else {
           console.log("Error");
         }
@@ -170,6 +173,12 @@ const Review = React.memo(({ url, movie }) => {
         console.log(err);
       });
     setLoading(false);
+  };
+
+  const handleRedirect = () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
   };
 
   useEffect(() => {
@@ -215,7 +224,8 @@ const Review = React.memo(({ url, movie }) => {
           <span>Reviews</span>
           <ArrowForwardIosIcon sx={{ fontSize: "26px" }} className="arrow" />
         </h2>
-        <button onClick={handleModalOpen} className="give-review-btn">
+        {console.log(userReview?.author)}
+        <button onClick={isAuthenticated ? handleModalOpen : handleRedirect} className="give-review-btn">
           Give Review
         </button>
       </div>
@@ -277,7 +287,7 @@ const UserReview = ({
     userReview?.content ? userReview?.content : ""
   );
 
-  const { isAuthenticated, tokens } = useContext(AuthContext);
+  const { tokens , user } = useContext(AuthContext);
 
   const handelChange = (event) => {
     setRating(event.target.value);
@@ -328,6 +338,8 @@ const UserReview = ({
       title: movie.title,
     };
 
+    console.log("DATA : ", data)
+
     await fetch("http://127.0.0.1:8000/movieapp/review/", {
       method: "POST",
       headers: {
@@ -371,9 +383,10 @@ const UserReview = ({
         <div className="review-user-name">
           <div className="review-user-left">
             <Avatar sx={{ bgcolor: "#f5c518" }}>
-              {userReview.author[0].toUpperCase()}
+              {console.log(user)}
+              {user?.username?.toUpperCase()}
             </Avatar>
-            <span>{userReview.author}</span>
+            <span>{user?.username}</span>
           </div>
           <div className="review-user-right">
             <span className="user-rating">{rating}/10</span>

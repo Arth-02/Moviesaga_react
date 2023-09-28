@@ -11,13 +11,13 @@ const TrailerCard = (props) => {
 
     const url = `https://api.themoviedb.org/3/movie/${props.id}/videos?api_key=ace3eeed99f6d9d19e61456a520cda0b`;
   
-    const { data } = useFetchData(url);
+    const { data } = useFetchData(props.youtubeKey ? null : url);
   
     const [trailer, setTrailer] = useState([]);
     const [play, setPlay] = useState(false);
   
     useEffect(() => {
-      data &&
+      data && !props.youtubeKey &&
         setTrailer(
           data.filter(
             (item) =>
@@ -38,7 +38,7 @@ const TrailerCard = (props) => {
   
     return (
       <>
-        {trailer.length > 0 && trailer[0].key && (
+        {((trailer.length > 0 && trailer[0].key ) || (props.youtubeKey)) && (
           <div
             className="trailer-card"
             onMouseEnter={handlePlay}
@@ -50,9 +50,8 @@ const TrailerCard = (props) => {
               width: "fit-content",
             }}
           >
-            {console.log(trailer)}
             <iframe
-              src={`https://www.youtube-nocookie.com/embed/${trailer[0].key}?autoplay=${play}&mute=1&controls=0&showinfo=0&autohide=1&loop=1`}
+              src={`https://www.youtube.com/embed/${props.youtubeKey || trailer[0].key}?autoplay=${play}&mute=1&controls=0&showinfo=0&autohide=1&loop=1`}
               width={windowSize[0] < 768 ? '300px' : '350px'}
               height={windowSize[0] < 768 ? '180px' : '200px'}
               title={props.title}

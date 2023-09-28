@@ -1,0 +1,51 @@
+.watchlist-page{
+    max-width: 1280px;
+    margin: 0 auto;
+    margin-top: 90px;
+}
+
+.watchlist-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 1rem;
+}
+
+.watchlist-movies{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 1rem;
+    max-width: 1150px;
+    margin: auto;
+}
+
+.wl-title{
+    font-size: 1.5rem;
+    font-weight: 500;
+    letter-spacing: 0.035rem;
+    margin: 0;
+}
+
+.watchlist-body{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 2rem;
+}
+
+.watchlist-container{
+    padding: 20px;
+}
+
+.watchlist-name{
+    margin-bottom: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    max-width: 1140px;
+    margin: auto;
+    margin-bottom: 15px;
+}

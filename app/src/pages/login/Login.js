@@ -12,9 +12,15 @@ import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { useNavigate } from 'react-router-dom';
 
-import { MyContext } from '../../MyContext';
+// import { MyContext } from '../../MyContext';
 import { useContext } from 'react';
 import {Link} from 'react-router-dom';
+
+import Loading from '../../components/loader/Loading';
+
+import AuthContext from '../../contexts/Auth/AuthContext'; 
+
+
 // import Cookies from 'js-cookie';
 
 function Copyright(props) {
@@ -37,70 +43,25 @@ const Login = () => {
 
   const navigate = useNavigate();
 
-  const { setIsAuthenticated , setUserInfo} = useContext(MyContext);
+  // const { setIsAuthenticated , setUserInfo} = useContext(MyContext);
 
-  const handleSubmit = async (event) => {
-      event.preventDefault();
+  let {login , loading} = useContext(AuthContext);
 
-      const data = new FormData(event.currentTarget);
-
-      try {
-        const response = await fetch("http://localhost:8000/auth/login", {
-          method : 'POST',
-          body : JSON.stringify({
-            username: data.get('username'),
-            password: data.get('password'),
-            }),
-          headers : { 'Content-type' : 'application/json; charset=UTF-8' },
-          credentials: 'include'
-      });
-
-      console.log(response);
-
-      if(response.status === 200){
-        const data = await response.json();
-
-        setIsAuthenticated(true);
-        setUserInfo(data);
-        // const c = Cookies.get("connect.sid");
-        // console.log(c);
-        // Cookies.remove('connect.sid');
-
-        navigate('/',{ replace: true });
-      }
-      else{
-        console.log("Data not found");
-      }
-      }
-
-      catch(error) {
-        console.log(error);
-      }
-
-
-      // .then((response) => response.json()).then((data) => {
-      
-      //   console.log(data);
-      //     if(data === 200){
-
-      //       setIsAuthenticated(true);
-
-      //       setUserInfo()
-
-      //       navigate('/',{ replace: true });
-      //     }
-      //     else{
-      //       console.log("Data not found");
-      //     }
-
-      // }).catch((err) => {
-      //     console.log(err);
-      // })
-      
-  }
+  // loading = true
 
   return (
-      <Container component="main" maxWidth="xs">
+      <>
+        {
+          loading ? <div style={{
+            height: '100vh',
+            width: '100vw',
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center',
+          }}>
+            <Loading />
+          </div> :
+          <Container component="main" maxWidth="xs">
         <CssBaseline />
         <Box
           sx={{
@@ -116,7 +77,7 @@ const Login = () => {
           <Typography component="h1" variant="h5">
             Sign in
           </Typography>
-          <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
+          <Box component="form" onSubmit={login} noValidate sx={{ mt: 1 }}>
             <TextField
               margin="normal"
               required
@@ -167,6 +128,8 @@ const Login = () => {
         </Box>
         <Copyright sx={{ mt: 8, mb: 4 }} />
       </Container>
+        }
+      </>
   );
 }
 

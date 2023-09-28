@@ -7,6 +7,7 @@ const useFetchData = (url) => {
     const [loading , setLoading] = useState(false);
 
     const getData = async (url) => {
+        if(!url) return;
         try {
             setLoading(true)
             const response = await fetch(url);

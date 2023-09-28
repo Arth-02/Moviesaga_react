@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./moviecard.css";
 import Checkbox from "@mui/material/Checkbox";
 import StarOutlineIcon from "@mui/icons-material/StarOutline";
@@ -6,11 +6,14 @@ import StarIcon from "@mui/icons-material/Star";
 import RatingModal from "../ratingModal/RatingModal";
 // import img_not_found from '../../accets/img_not_found.jpg';
 import { Link } from "react-router-dom";
+import { Grow } from "@mui/material";
 
 //Contexts
 // import WindowSizeContext from "../../contexts/windowSize/WindowSize";
 
 const MovieCard = (props) => {
+
+  const [show , setShow] = useState(false);
 
   // const {windowSize} = useContext(WindowSizeContext);
   
@@ -27,8 +30,16 @@ const MovieCard = (props) => {
     setChecked(event.target.checked);
   };
 
+  useEffect(() => {
+    setShow(true);
+    return () => setShow(false);
+  }, []);
+
   return (
     <>
+      <Grow in={show} timeout={1000} style={{
+        transformOrigin: '50% 50% '
+      }}>
       <div className="movie-card" style={{maxWidth : props.width , maxHeight: props.height}}>
         <Link to={(props.movie.title ? "/movie/" : "/tv/") + props.movie.id}>
           <div className="movie-img">
@@ -39,7 +50,7 @@ const MovieCard = (props) => {
               //         (max-width: 768px) 185px,
               //         (max-width: 1024px) 342px,
               //         500px"
-              // loading={props.lazy ? "lazy" : "eager"}
+              loading={props.lazy ? "lazy" : "eager"}
               src={image_url3}
               alt="movie-poster"
             />
@@ -76,6 +87,7 @@ const MovieCard = (props) => {
           </Link>
         </div>
       </div>
+      </Grow>
       {checked && (
         <RatingModal
           movie={props.movie}

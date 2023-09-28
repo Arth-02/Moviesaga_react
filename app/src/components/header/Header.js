@@ -24,6 +24,7 @@ const Header = () => {
   const [loading, setLoading] = useState(false);
   const [searchTerm, setSearchTerm] = useState(null);
   const [list, setList] = useState([]);
+  //eslint-disable-next-line
   const [showPreview, setShowPreview] = useState(false);
   const [hasMore, setHasMore] = useState(false);
 
@@ -152,7 +153,7 @@ const Header = () => {
               }}
               onKeyUp={handleSearch}
             />
-            {searchTerm && showPreview && (
+            {searchTerm && (
               <SearchPreview
                 list={list}
                 loading={loading}

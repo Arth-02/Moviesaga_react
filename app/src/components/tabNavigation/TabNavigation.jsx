@@ -59,11 +59,14 @@ const TabNavigation = () => {
 
   return (
     <section>
-        <h2 className="provider-heading heading" style={{marginBottom: '20px'}}>
+      <h2 className="provider-heading heading" style={{ marginBottom: "20px" }}>
         Explore what's streaming{" "}
         <ArrowForwardIosIcon sx={{ fontSize: "26px" }} className="arrow" />
       </h2>
-      <Box sx={{ width: "100%" , minHeight: '420px'}} className="slider-container">
+      <Box
+        sx={{ width: "100%", minHeight: "420px" }}
+        className="slider-container"
+      >
         <Box sx={{ borderBottom: 1, borderColor: "divider" }}>
           <Tabs
             value={value}

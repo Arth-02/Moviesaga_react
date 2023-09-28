@@ -5,29 +5,34 @@
     box-sizing: border-box;
     max-width: 1280px;
     margin: 0 auto;
+    margin-top: 50px;
 }
 
 .hading{
+    width: 100%;
     font-size: 1.5rem;
     color: white;
     padding: 20px;
     margin: 0;
     font-weight: 500;
     text-transform: uppercase;
+    width: fit-content;
     letter-spacing: 2px;
     font-family: 'Montserrat', sans-serif;
 }
 
-/* .movie-list{
+.movie-list{
     display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: stretch;
-    width: 100%;
     gap: 20px;
-} */
+}
 
-.movie-list {
+.movie-list-col1{
+    position: sticky;
+    top: 70px;
+    height: fit-content;
+}
+
+.movie-list-col2 {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* Adjust minmax values as needed */
     gap: 20px;
@@ -41,8 +46,11 @@
     .hading{
         font-size: 1.3rem;
     }
-    .movie-list{
+    .movie-list-col2{
         grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    }
+    .movie-list-col1{
+        display: none;
     }
 }  
 
@@ -53,7 +61,7 @@
     .hading{
         font-size: 1.2rem;
     }
-    .movie-list{
+    .movie-list-col2{
         grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
     }
 }
@@ -65,7 +73,7 @@
     .hading{
         font-size: 1rem;
     }
-    .movie-list{
+    .movie-list-col2{
         grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
     }
 }
@@ -77,7 +85,7 @@
     .hading{
         font-size: 0.8rem;
     }
-    .movie-list{
+    .movie-list-col2{
         grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
     }
 }

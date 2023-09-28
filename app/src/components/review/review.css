@@ -1,0 +1,151 @@
+.review-container {
+  margin-top: 70px;
+}
+
+/* Set styles for the review wrapper */
+.review-wrapper {
+  max-height: 550px;
+  overflow-y: scroll;
+  max-width: 800px;
+}
+
+/* Set styles for the scrollbar */
+.review-wrapper::-webkit-scrollbar {
+  width: var(--scrollbar-width);
+}
+
+.review-wrapper::-webkit-scrollbar-track {
+  background-color: transparent;
+}
+
+.review-wrapper::-webkit-scrollbar-thumb {
+  background-color: var(--scrollbar-thumb-color);
+  border-radius: calc(var(--scrollbar-width) / 2);
+  max-height: var(--scrollbar-thumb-height);
+}
+
+.review-wrapper::-webkit-scrollbar-thumb:hover {
+  background-color: var(--scrollbar-thumb-hover-color);
+}
+
+.review {
+  padding: 1rem 0px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  width: 98%;
+  max-width: 780px;
+}
+
+.review-main-header{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 780px;
+}
+
+.review-header {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+
+.review-header-info {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.review-header-info p,
+.review-header-info h3,
+.review-body p {
+  margin: 0;
+  padding: 0;
+}
+
+.review-author {
+  font-size: 1rem;
+  font-weight: 400;
+  letter-spacing: 0.025rem;
+}
+
+.review-date {
+  font-size: 0.85rem;
+  color: darkgray;
+  font-weight: 200;
+  letter-spacing: 0.025rem;
+}
+
+.review.border-bottom:last-child::after {
+  content: none;
+}
+
+.review.border-bottom::after {
+  opacity: 0.5;
+}
+
+.review-body {
+  font-size: 0.95rem;
+  font-weight: 300;
+  letter-spacing: 0.025rem;
+}
+
+.review-more-btn,
+.review-less-btn {
+  font-size: 0.85rem;
+  font-weight: 400;
+  letter-spacing: 0.025rem;
+  color: #007bff;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.review-user-name{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: space-between;
+  width: 310px;
+}
+
+.review-user-left{
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: flex-start;
+}
+
+textarea{
+  font-size: 1rem;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
+  border: none;
+  outline: none;
+  border-radius: 10px;
+  padding: 10px;
+  margin-bottom: 20px;
+  background-color: whitesmoke;
+  color: black;
+}
+
+.post-review-btn{
+  margin-bottom: 10px !important;
+}
+
+.review-movie-name{
+  margin-bottom: 5px;
+  font-size: 1.4rem;
+  font-weight: 500;
+  letter-spacing: 0.025rem;
+}
+
+.give-review-btn{
+    padding: 7px 10px ;
+    border: none;
+    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out;
+    font-size: 0.87rem;
+}

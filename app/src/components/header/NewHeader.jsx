@@ -24,6 +24,7 @@ import MenuIcon from "@mui/icons-material/Menu";
 import Box from "@mui/material/Box";
 import KeyboardArrowUpIcon from "@mui/icons-material/KeyboardArrowUp";
 import Fade from "@mui/material/Fade";
+import { InputBase } from "@mui/material";
 
 import HomeIcon from "@mui/icons-material/Home";
 import TheatersIcon from "@mui/icons-material/Theaters";
@@ -31,9 +32,7 @@ import TvIcon from "@mui/icons-material/Tv";
 import MovieIcon from "@mui/icons-material/Movie";
 import CloseIcon from "@mui/icons-material/Close";
 
-
-import AuthContext from '../../contexts/Auth/AuthContext'; 
-
+import AuthContext from "../../contexts/Auth/AuthContext";
 
 // ScrollTop is a functional component that scrolls the page to the top when triggered.
 function ScrollTop(props) {
@@ -92,11 +91,7 @@ function ElevationScroll(props) {
 }
 
 const NewHeader = (props) => {
-  
-  // const { isAuthenticated } = useContext(MyContext);
-
-  const { isAuthenticated} = useContext(AuthContext);
-
+  const { isAuthenticated } = useContext(AuthContext);
 
   const location = useLocation();
   const navigate = useNavigate();
@@ -106,6 +101,15 @@ const NewHeader = (props) => {
   const [list, setList] = useState([]);
   const [showPreview, setShowPreview] = useState(false);
   const [hasMore, setHasMore] = useState(false);
+  const [isSearchOpen, setIsSearchOpen] = useState(false);
+
+  const handleSearchClick = () => {
+    setIsSearchOpen(true);
+  };
+
+  const handleSearchClose = () => {
+    setIsSearchOpen(false);
+  };
 
   const handleSearch = (e) => {
     if (searchTerm === e.target.value && e.key !== "Enter") {
@@ -142,7 +146,7 @@ const NewHeader = (props) => {
   useEffect(() => {
     const delay = 500;
     const debounce = setTimeout(() => {
-     searchTerm && fetchData();
+      searchTerm && fetchData();
     }, delay);
 
     return () => clearTimeout(debounce);
@@ -161,9 +165,9 @@ const NewHeader = (props) => {
   return (
     <>
       <ElevationScroll {...props}>
-        <AppBar sx={{backgroundColor: "transparent"}}>
+        <AppBar sx={{ backgroundColor: "transparent" }}>
           <div className="header">
-          <div className="mobile-logo">
+            <div className="mobile-logo">
               <h3>
                 <Link to={".."}>MovieSaga</Link>
               </h3>
@@ -203,90 +207,92 @@ const NewHeader = (props) => {
               </div>
             </div>
             <div className="mobile-user-panel">
-                {isAuthenticated ? (
-                  <Account />
-                ) : (
-                  <Button variant="text" color="inherit" 
-                    sx={{
-                      padding: "0px"
-                    }}
-                  >
-                    <Link to={"/login"} style={{paddingBottom: '0px'}}>Sign In</Link>
-                  </Button>
-                )}
-                <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              edge="start"
-              onClick={handleDrawerToggle}
-              sx={{display: { md: "none" }  , padding : '0px'}}
-            >
-              <MenuIcon />
-            </IconButton>
-              </div>
-            <div className="header-wrapper">
-            <div className="logo">
-              <h3>
-                <Link to={".."}>MovieSaga</Link>
-              </h3>
+            <IconButton onClick={handleSearchClick} sx={{
+                padding: '0',
+                color: 'white',
+              }}>
+                <SearchIcon isSearchOpen={isSearchOpen} handleSearchClose={handleSearchClose} />
+              </IconButton>
+              {isAuthenticated ? (
+                <Account />
+              ) : (
+                <Button
+                  variant="text"
+                  color="inherit"
+                  sx={{
+                    padding: "0px",
+                  }}
+                >
+                  <Link to={"/login"} style={{ paddingBottom: "0px" }}>
+                    Sign In
+                  </Link>
+                </Button>
+              )}
+              <IconButton
+                color="inherit"
+                aria-label="open drawer"
+                edge="start"
+                onClick={handleDrawerToggle}
+                sx={{ display: { md: "none" }, padding: "0px" , marginLeft: '12px' }}
+              >
+                <MenuIcon />
+              </IconButton>
             </div>
-              <div className="navtabs">
-                <span>
-                  <Link
-                    to={".."}
-                    className={
-                      location.pathname === "/" ? "active tabs" : "tabs"
-                    }
-                  >
-                    Home
-                  </Link>
-                </span>
-                <span>
-                  <Link
-                    to={"/popular/movie"}
-                    className={
-                      location.pathname === "/popular/movie"
-                        ? "active tabs"
-                        : "tabs"
-                    }
-                  >
-                    Movies
-                  </Link>
-                </span>
-                <span>
-                  <Link
-                    to={"/popular/tv"}
-                    className={
-                      location.pathname === "/popular/tv"
-                        ? "active tabs"
-                        : "tabs"
-                    }
-                  >
-                    Tv Shows
-                  </Link>
-                </span>
-                <span>
-                  <Link
-                    to={".."}
-                    className={
-                      window.pathname === "/categories" ? "active tabs" : "tabs"
-                    }
-                  >
-                    Categories
-                  </Link>
-                </span>
-                <span>
-                  <Link
-                    to={"/trending/all"}
-                    className={
-                      location.pathname === "/trending/all"
-                        ? "active tabs"
-                        : "tabs"
-                    }
-                  >
-                    Trending
-                  </Link>
-                </span>
+            <div className="header-wrapper">
+              <div className="header-window-left">
+                <div className="logo">
+                  <h3>
+                    <Link to={".."}>MovieSaga</Link>
+                  </h3>
+                </div>
+                <div className="navtabs">
+                  <span>
+                    <Link
+                      to={".."}
+                      className={
+                        location.pathname === "/" ? "active tabs" : "tabs"
+                      }
+                    >
+                      Home
+                    </Link>
+                  </span>
+                  <span>
+                    <Link
+                      to={"/popular/movie"}
+                      className={
+                        location.pathname === "/popular/movie"
+                          ? "active tabs"
+                          : "tabs"
+                      }
+                    >
+                      Movies
+                    </Link>
+                  </span>
+                  <span>
+                    <Link
+                      to={"/popular/tv"}
+                      className={
+                        location.pathname === "/popular/tv"
+                          ? "active tabs"
+                          : "tabs"
+                      }
+                    >
+                      Tv Shows
+                    </Link>
+                  </span>
+                  <span>
+                    <Link
+                      to={"/trending/all"}
+                      className={
+                        location.pathname === "/trending/all"
+                          ? "active tabs"
+                          : "tabs"
+                      }
+                    >
+                      Trending
+                    </Link>
+                  </span>
+                </div>
               </div>
               <div className="right-navbar">
                 <div className="search-box">
@@ -326,7 +332,7 @@ const NewHeader = (props) => {
                     {" "}
                     <IconButton color="inherit">
                       {" "}
-                      <FavoriteBorderIcon  />{" "}
+                      <FavoriteBorderIcon />{" "}
                     </IconButton>{" "}
                   </div>
 
@@ -334,7 +340,9 @@ const NewHeader = (props) => {
                     <Account />
                   ) : (
                     <Button variant="text" color="inherit">
-                      <Link to={"/login"} style={{paddingBottom: '0px'}} >Sign In</Link>
+                      <Link to={"/login"} style={{ paddingBottom: "0px" }}>
+                        Sign In
+                      </Link>
                     </Button>
                   )}
                 </div>
@@ -343,6 +351,9 @@ const NewHeader = (props) => {
           </div>
         </AppBar>
       </ElevationScroll>
+      <div className="search-box-modal">
+        <SearchBox />
+      </div>
       <Drawer
         container={container}
         variant="temporary"
@@ -430,8 +441,6 @@ const NewHeader = (props) => {
         </div>
       </Drawer>
       <ScrollTop {...props}>
-        {/* <Fab size="small" aria-label="scroll back to top"> */}
-        {/* </Fab> */}
         <div className="back-to-top-btn">
           <KeyboardArrowUpIcon />
           <span>Back To Top</span>
@@ -536,5 +545,36 @@ const SearchPreview = ({ list, loading, searchTerm, hasMore }) => {
         </Link>
       )}
     </div>
+  );
+};
+
+const SearchBox = ({isSearchOpen , handleSearchClose}) => {
+  return (
+    <>
+      {isSearchOpen && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+            zIndex: 9999,
+          }}
+        >
+          <InputBase
+            placeholder="Search..."
+            style={{ backgroundColor: "white", padding: "10px" }}
+          />
+          <IconButton onClick={handleSearchClose}>
+            <CloseIcon />
+          </IconButton>
+        </div>
+      )}
+    </>
   );
 };

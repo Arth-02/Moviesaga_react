@@ -7,9 +7,12 @@ import CreateWatchList from "./CreateWatchList";
 import IconButton from "@mui/material/IconButton";
 import AddIcon from "@mui/icons-material/Add";
 import Loading from "../loader/Loading";
+import snackbarContext from "../../contexts/Snackbar/snackbarContext";
 
 const AddToWatchList = ({ movie, handleClose }) => {
   const { isAuthenticated, tokens } = useContext(AuthContext);
+  const { setOpen , setMessage , setStatus } = useContext(snackbarContext);
+
   const navigate = useNavigate();
 
   const [watchList, setWatchList] = useState([]);
@@ -35,9 +38,15 @@ const AddToWatchList = ({ movie, handleClose }) => {
       body: JSON.stringify(data),
     });
     if (response.status === 201) {
+      setOpen(true);
+      setMessage("Movie Added to WatchList");
+      setStatus("success");
       handleClose();
     }
     else{
+      setOpen(true);
+      setMessage("Movie Already Exists in WatchList");
+      setStatus("error");
       console.log("Error");
     }
   }
@@ -126,7 +135,7 @@ const AddToWatchList = ({ movie, handleClose }) => {
         open={showCreateWLModal}
         handleClose={handleCloseCreateWLModal}
       >
-        <CreateWatchList handleClose={handleCloseCreateWLModal} />
+        <CreateWatchList handleClose={handleCloseCreateWLModal} getWatchList={getWatchList} />
       </GeneralModal>
     </>
   );

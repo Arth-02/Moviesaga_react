@@ -6,9 +6,11 @@ import { Link } from "react-router-dom";
 import AuthContext from "../../contexts/Auth/AuthContext";
 import StarIcon from "@mui/icons-material/Star";
 import { Button } from "@mui/material";
+import SnackbarContext from "../../contexts/Snackbar/snackbarContext";
 
 const WatchListCard = ({ movie }) => {
   const { tokens } = useContext(AuthContext);
+  const { setOpen, setMessage, setStatus } = useContext(SnackbarContext);
 
   const image_url = `https://image.tmdb.org/t/p/w342${movie.poster_path}`;
 
@@ -24,9 +26,14 @@ const WatchListCard = ({ movie }) => {
       }
     );
     if (response.status === 204) {
-      alert("Success");
+      setOpen(true);
+      setMessage("Movie Removed from WatchList");
+      setStatus("success");
+      // getWatchList();
     } else {
-      console.log("Error");
+      setOpen(true);
+      setMessage("Error During Removing Movie from WatchList");
+      setStatus("error");
     }
   };
 

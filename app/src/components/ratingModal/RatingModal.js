@@ -12,9 +12,12 @@ import Button from "@mui/material/Button";
 import Typography from "@mui/material/Typography";
 import AuthContext from "../../contexts/Auth/AuthContext";
 import { useNavigate } from "react-router-dom";
+import snackbarContext from "../../contexts/Snackbar/snackbarContext";
+import Loading from "../loader/Loading";
 
 const RatingModal = (props) => {
   const { isAuthenticated, tokens } = useContext(AuthContext);
+  const { setOpen, setMessage, setStatus } = useContext(snackbarContext);
 
   const mystyle = {
     position: "absolute",
@@ -30,6 +33,7 @@ const RatingModal = (props) => {
 
   const [rating, setRating] = useState(0);
   const [ratingID, setRatingID] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handelChange = (event) => {
     setRating(event.target.value);
@@ -58,10 +62,18 @@ const RatingModal = (props) => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setOpen(true);
+        setMessage("Rating Updated Successfully");
+        setStatus("success");
         props.setChecked(false);
         setRating(0);
       })
-      .catch((err) => console.log(err));
+      .catch((err) => {
+        setOpen(true);
+        setMessage("Something went wrong");
+        setStatus("error");
+        console.log(err);
+      });
   };
 
   const submitRating = async () => {
@@ -83,8 +95,16 @@ const RatingModal = (props) => {
       .then((res) => res.json())
       .then((data) => {
         console.log(data);
+        setOpen(true);
+        setMessage("Rating Added Successfully");
+        setStatus("success");
       })
-      .catch((error) => console.log(error));
+      .catch((error) => {
+        setOpen(true);
+        setMessage("Error During Posting Rating");
+        setStatus("error");
+        console.log(error);
+      });
   };
 
   const handleSubmit = (e) => {
@@ -98,6 +118,7 @@ const RatingModal = (props) => {
   };
 
   const getUserRating = async () => {
+    setLoading(true);
     await fetch(
       `http://127.0.0.1:8000/movieapp/userrating/?movie_id=${props.movie.id}`,
       {
@@ -115,15 +136,12 @@ const RatingModal = (props) => {
         setRatingID(data[0].id);
       })
       .catch((err) => console.log(err));
+    setLoading(false);
   };
 
   useEffect(() => {
     isAuthenticated && getUserRating();
   }, []);
-
-  useEffect(() => {
-    console.log("Rating : ", rating);
-  }, [rating]);
 
   return (
     <>
@@ -153,8 +171,8 @@ const RatingModal = (props) => {
                   <span
                     className="rate-text"
                     style={{
-                        left: "50%",
-                        transform: 'translate(-55% , 0%)'
+                      left: "50%",
+                      transform: "translate(-55% , 0%)",
                     }}
                   >
                     {" "}
@@ -173,7 +191,9 @@ const RatingModal = (props) => {
                   <CloseIcon sx={{ fontSize: 30, color: "white" }} />
                 </IconButton>
               </div>
-              <div className="modal-body">
+              {
+                !loading ? (
+                  <div className="modal-body">
                 <div className="rate-this-label">RATE THIS</div>
                 <div className="movie-name">
                   {props.movie.title ? props.movie.title : props.movie.name}
@@ -200,6 +220,12 @@ const RatingModal = (props) => {
                   />
                 </div>
               </div>
+                ) : (
+                  <div style={{display: 'flex' , minHeight: '123px', justifyContent: 'center', alignItems: 'center', height: '100%'}}>
+                    <Loading />  
+                  </div>
+                )
+              }
               <div className="modal-footer">
                 <Button
                   variant="contained"

@@ -49,6 +49,12 @@ const SliderContainer = (props) => {
             size="small"
             className="toggle-switch"
             color="info"
+            sx={{
+              padding: 0,
+              borderRadius: 5,
+              borderColor: "white",
+              margin: 0,
+            }}
           >
             <ToggleButton
               aria-label="movie"
@@ -59,9 +65,13 @@ const SliderContainer = (props) => {
                 color: "white",
                 borderRadius: 5,
                 borderColor: "white",
+                '@media (max-width: 600px)': {
+                  padding: 0.2,
+                  fontSize: '0.8rem',
+                }
               }}
             >
-              <Typography variant="button" ml={1} mr={1}>
+              <Typography variant="button" ml={1} mr={1} fontSize={'inherit'} sx={{minWidth : 'max-content'}}>
                 Movie
               </Typography>
             </ToggleButton>
@@ -74,9 +84,13 @@ const SliderContainer = (props) => {
                 color: "white",
                 borderRadius: 5,
                 borderColor: "white",
+                '@media (max-width: 600px)': {
+                  padding: 0.2,
+                  fontSize: '0.8rem',
+                }
               }}
             >
-              <Typography variant="button" ml={1} mr={1}>
+              <Typography variant="button" ml={1} mr={1} fontSize={'inherit'} sx={{minWidth : 'max-content'}}>
                 Tv Show
               </Typography>
             </ToggleButton>

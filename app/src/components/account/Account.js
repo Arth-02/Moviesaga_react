@@ -34,6 +34,7 @@ const Account = () => {
         aria-controls={menu ? "account-menu" : undefined}
         aria-haspopup="true"
         aria-expanded={menu ? "true" : undefined}
+        sx={{ padding: 0 , marginLeft: '12px' }}
       >
         <AccountCircleIcon />
       </IconButton>

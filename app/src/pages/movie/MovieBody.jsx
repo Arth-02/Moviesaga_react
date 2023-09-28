@@ -44,7 +44,7 @@ const MovieBody = ({ id, credits, data }) => {
                 className="arrow"
               />
             </h2>
-            <div className="movie-page-cast-items slider-container">
+            <div className="movie-page-cast-items slider-container removeminheight">
               <Slider
                 url={`https://api.themoviedb.org/3/movie/${id}/credits?language=en-US&api_key=ace3eeed99f6d9d19e61456a520cda0b`}
                 type="cast"
@@ -53,7 +53,7 @@ const MovieBody = ({ id, credits, data }) => {
           </div>
 
           {/* Images Section */}
-          <div className="movie-page-images-section">
+          <div className="movie-page-images-section ">
             <h2
               className="provider-heading heading"
               style={{ marginBottom: "20px" }}
@@ -64,7 +64,7 @@ const MovieBody = ({ id, credits, data }) => {
                 className="arrow"
               />
             </h2>
-            <div className="movie-page-images-items slider-container">
+            <div className="movie-page-images-items slider-container removeminheight">
               <Slider
                 url={`https://api.themoviedb.org/3/movie/${id}/images?api_key=ace3eeed99f6d9d19e61456a520cda0b`}
                 type="images"
@@ -73,7 +73,7 @@ const MovieBody = ({ id, credits, data }) => {
           </div>
 
           {/* Videos Section */}
-          <div className="movie-page-videos-section">
+          <div className="movie-page-videos-section removeminheight">
             <TrailerSection
               url={`https://api.themoviedb.org/3/movie/${id}/videos?api_key=ace3eeed99f6d9d19e61456a520cda0b`}
               title={"Videos"}
@@ -158,110 +158,114 @@ const MovieBody = ({ id, credits, data }) => {
           )}
 
           {/* Social Media Section For Small Devices */}
-          <div className="movie-page-social-media-section-small">
-            <div className="movie-page-social-media-title">
-              <h2
-                className="provider-heading heading"
-                style={{ marginBottom: "5px" }}
-              >
-                Social Media
-                <ArrowForwardIosIcon
-                  sx={{ fontSize: "26px" }}
-                  className="arrow"
-                />
-              </h2>
-            </div>
-            <div className="movie-page-social-media-items-container-small">
-              <div className="movie-page-social-media-items">
-                {social && social.facebook_id && (
-                  <a
-                    href={`https://www.facebook.com/${social.facebook_id}`}
-                    target="_blank"
-                    rel="noreferrer"
+          {social &&
+            (social.facebook_id ||
+              social.instagram_id ||
+              social.twitter_id) && (
+              <div className="movie-page-social-media-section-small">
+                <div className="movie-page-social-media-title">
+                  <h2
+                    className="provider-heading heading"
+                    style={{ marginBottom: "5px" }}
                   >
-                    <div className="movie-page-social-media-item">
-                      <IconButton
-                        aria-label="facebook"
-                        sx={{
-                          color: "#1877F2",
-                          "&:hover": {
-                            color: "#1877F2",
-                            backgroundColor: "rgba(255,255,255,0.15);",
-                          },
-                        }}
+                    Social Media
+                    <ArrowForwardIosIcon
+                      sx={{ fontSize: "26px" }}
+                      className="arrow"
+                    />
+                  </h2>
+                </div>
+                <div className="movie-page-social-media-items-container-small">
+                  <div className="movie-page-social-media-items">
+                    {social && social.facebook_id && (
+                      <a
+                        href={`https://www.facebook.com/${social.facebook_id}`}
+                        target="_blank"
+                        rel="noreferrer"
                       >
-                        <FacebookIcon
-                          sx={{
-                            fontSize: "25px",
-                          }}
-                        />
-                      </IconButton>
-                    </div>
-                  </a>
-                )}
-              </div>
-              <div className="movie-page-social-media-items">
-                {social && social.instagram_id && (
-                  <a
-                    href={`https://www.instagram.com/${social.instagram_id}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <div className="movie-page-social-media-item">
-                      <IconButton
-                        aria-label="instagram"
-                        sx={{
-                          color: "#C13584",
-                          "&:hover": {
-                            color: "#C13584",
-                            backgroundColor: "rgba(255,255,255,0.15);",
-                          },
-                        }}
+                        <div className="movie-page-social-media-item">
+                          <IconButton
+                            aria-label="facebook"
+                            sx={{
+                              color: "#1877F2",
+                              "&:hover": {
+                                color: "#1877F2",
+                                backgroundColor: "rgba(255,255,255,0.15);",
+                              },
+                            }}
+                          >
+                            <FacebookIcon
+                              sx={{
+                                fontSize: "25px",
+                              }}
+                            />
+                          </IconButton>
+                        </div>
+                      </a>
+                    )}
+                  </div>
+                  <div className="movie-page-social-media-items">
+                    {social && social.instagram_id && (
+                      <a
+                        href={`https://www.instagram.com/${social.instagram_id}`}
+                        target="_blank"
+                        rel="noreferrer"
                       >
-                        <InstagramIcon
-                          sx={{
-                            fontSize: "25px",
-                          }}
-                        />
-                      </IconButton>
-                    </div>
-                  </a>
-                )}
-              </div>
-              <div className="movie-page-social-media-items">
-                {social && social.twitter_id && (
-                  <a
-                    href={`https://www.twitter.com/${social.twitter_id}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <div className="movie-page-social-media-item">
-                      <IconButton
-                        aria-label="twitter"
-                        sx={{
-                          color: "#1DA1F2",
-                          "&:hover": {
-                            color: "#1DA1F2",
-                            backgroundColor: "rgba(255,255,255,0.15);",
-                          },
-                        }}
+                        <div className="movie-page-social-media-item">
+                          <IconButton
+                            aria-label="instagram"
+                            sx={{
+                              color: "#C13584",
+                              "&:hover": {
+                                color: "#C13584",
+                                backgroundColor: "rgba(255,255,255,0.15);",
+                              },
+                            }}
+                          >
+                            <InstagramIcon
+                              sx={{
+                                fontSize: "25px",
+                              }}
+                            />
+                          </IconButton>
+                        </div>
+                      </a>
+                    )}
+                  </div>
+                  <div className="movie-page-social-media-items">
+                    {social && social.twitter_id && (
+                      <a
+                        href={`https://www.twitter.com/${social.twitter_id}`}
+                        target="_blank"
+                        rel="noreferrer"
                       >
-                        <TwitterIcon
-                          sx={{
-                            fontSize: "25px",
-                          }}
-                        />
-                      </IconButton>
-                    </div>
-                  </a>
-                )}
+                        <div className="movie-page-social-media-item">
+                          <IconButton
+                            aria-label="twitter"
+                            sx={{
+                              color: "#1DA1F2",
+                              "&:hover": {
+                                color: "#1DA1F2",
+                                backgroundColor: "rgba(255,255,255,0.15);",
+                              },
+                            }}
+                          >
+                            <TwitterIcon
+                              sx={{
+                                fontSize: "25px",
+                              }}
+                            />
+                          </IconButton>
+                        </div>
+                      </a>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            )}
 
           {/* Review Section */}
-          <Review url={review_url} movie={data}/>
-          
+          <Review url={review_url} movie={data} />
         </div>
         <div className="movie-page-body-col-2">
           {/* Social Media Section */}

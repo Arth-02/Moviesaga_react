@@ -159,106 +159,111 @@ const TVShowBody = ({ id, credits, data }) => {
           )}
 
           {/* Social Media Section For Small Devices */}
-          <div className="tv-page-social-media-section-small">
-            <div className="tv-page-social-media-title">
-              <h2
-                className="provider-heading heading"
-                style={{ marginBottom: "5px" }}
-              >
-                Social Media
-                <ArrowForwardIosIcon
-                  sx={{ fontSize: "26px" }}
-                  className="arrow"
-                />
-              </h2>
-            </div>
-            <div className="tv-page-social-media-items-container-small">
-              <div className="tv-page-social-media-items">
-                {social && social.facebook_id && (
-                  <a
-                    href={`https://www.facebook.com/${social.facebook_id}`}
-                    target="_blank"
-                    rel="noreferrer"
+          {social &&
+            (social.instagram_id ||
+              social.twitter_id ||
+              social.facebook_id) && (
+              <div className="tv-page-social-media-section-small">
+                <div className="tv-page-social-media-title">
+                  <h2
+                    className="provider-heading heading"
+                    style={{ marginBottom: "5px" }}
                   >
-                    <div className="tv-page-social-media-item">
-                      <IconButton
-                        aria-label="facebook"
-                        sx={{
-                          color: "#1877F2",
-                          "&:hover": {
-                            color: "#1877F2",
-                            backgroundColor: "rgba(255,255,255,0.15);",
-                          },
-                        }}
+                    Social Media
+                    <ArrowForwardIosIcon
+                      sx={{ fontSize: "26px" }}
+                      className="arrow"
+                    />
+                  </h2>
+                </div>
+                <div className="tv-page-social-media-items-container-small">
+                  <div className="tv-page-social-media-items">
+                    {social && social.facebook_id && (
+                      <a
+                        href={`https://www.facebook.com/${social.facebook_id}`}
+                        target="_blank"
+                        rel="noreferrer"
                       >
-                        <FacebookIcon
-                          sx={{
-                            fontSize: "25px",
-                          }}
-                        />
-                      </IconButton>
-                    </div>
-                  </a>
-                )}
-              </div>
-              <div className="tv-page-social-media-items">
-                {social && social.instagram_id && (
-                  <a
-                    href={`https://www.instagram.com/${social.instagram_id}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <div className="tv-page-social-media-item">
-                      <IconButton
-                        aria-label="instagram"
-                        sx={{
-                          color: "#C13584",
-                          "&:hover": {
-                            color: "#C13584",
-                            backgroundColor: "rgba(255,255,255,0.15);",
-                          },
-                        }}
+                        <div className="tv-page-social-media-item">
+                          <IconButton
+                            aria-label="facebook"
+                            sx={{
+                              color: "#1877F2",
+                              "&:hover": {
+                                color: "#1877F2",
+                                backgroundColor: "rgba(255,255,255,0.15);",
+                              },
+                            }}
+                          >
+                            <FacebookIcon
+                              sx={{
+                                fontSize: "25px",
+                              }}
+                            />
+                          </IconButton>
+                        </div>
+                      </a>
+                    )}
+                  </div>
+                  <div className="tv-page-social-media-items">
+                    {social && social.instagram_id && (
+                      <a
+                        href={`https://www.instagram.com/${social.instagram_id}`}
+                        target="_blank"
+                        rel="noreferrer"
                       >
-                        <InstagramIcon
-                          sx={{
-                            fontSize: "25px",
-                          }}
-                        />
-                      </IconButton>
-                    </div>
-                  </a>
-                )}
-              </div>
-              <div className="tv-page-social-media-items">
-                {social && social.twitter_id && (
-                  <a
-                    href={`https://www.twitter.com/${social.twitter_id}`}
-                    target="_blank"
-                    rel="noreferrer"
-                  >
-                    <div className="tv-page-social-media-item">
-                      <IconButton
-                        aria-label="twitter"
-                        sx={{
-                          color: "#1DA1F2",
-                          "&:hover": {
-                            color: "#1DA1F2",
-                            backgroundColor: "rgba(255,255,255,0.15);",
-                          },
-                        }}
+                        <div className="tv-page-social-media-item">
+                          <IconButton
+                            aria-label="instagram"
+                            sx={{
+                              color: "#C13584",
+                              "&:hover": {
+                                color: "#C13584",
+                                backgroundColor: "rgba(255,255,255,0.15);",
+                              },
+                            }}
+                          >
+                            <InstagramIcon
+                              sx={{
+                                fontSize: "25px",
+                              }}
+                            />
+                          </IconButton>
+                        </div>
+                      </a>
+                    )}
+                  </div>
+                  <div className="tv-page-social-media-items">
+                    {social && social.twitter_id && (
+                      <a
+                        href={`https://www.twitter.com/${social.twitter_id}`}
+                        target="_blank"
+                        rel="noreferrer"
                       >
-                        <TwitterIcon
-                          sx={{
-                            fontSize: "25px",
-                          }}
-                        />
-                      </IconButton>
-                    </div>
-                  </a>
-                )}
+                        <div className="tv-page-social-media-item">
+                          <IconButton
+                            aria-label="twitter"
+                            sx={{
+                              color: "#1DA1F2",
+                              "&:hover": {
+                                color: "#1DA1F2",
+                                backgroundColor: "rgba(255,255,255,0.15);",
+                              },
+                            }}
+                          >
+                            <TwitterIcon
+                              sx={{
+                                fontSize: "25px",
+                              }}
+                            />
+                          </IconButton>
+                        </div>
+                      </a>
+                    )}
+                  </div>
+                </div>
               </div>
-            </div>
-          </div>
+            )}
 
           {/* Review Section */}
           <Review url={review_url} movie={data} />
@@ -400,13 +405,13 @@ const TVShowBody = ({ id, credits, data }) => {
           )}
         </div>
       </div>
-      {/* Similar Movie Section */}
+      {/* Similar Tv Show Section */}
       <div className="tv-page-similar-tv-section slider-container">
         <h2
           className="provider-heading heading"
           style={{ marginBottom: "20px" }}
         >
-          Similar Movies
+          Similar Tv Shows
           <ArrowForwardIosIcon sx={{ fontSize: "26px" }} className="arrow" />
         </h2>
 

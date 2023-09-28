@@ -1,10 +1,12 @@
 import React , {useEffect, useState , useContext} from 'react'
 import AuthContext from "../../contexts/Auth/AuthContext";
 import './createwatchlist.css'
+import snackbarContext from '../../contexts/Snackbar/snackbarContext';
 
-const CreateWatchList = ({handleClose}) => {
+const CreateWatchList = ({handleClose , getWatchList}) => {
 
     const {isAuthenticated , tokens} = useContext(AuthContext);
+    const {setOpen , setMessage , setStatus} = useContext(snackbarContext);
 
     const [watchListName , setWatchListName] = useState("")
 
@@ -25,10 +27,15 @@ const CreateWatchList = ({handleClose}) => {
             body: JSON.stringify(data)
         });
         if (response.status === 201) {
-            const data = await response.json();
-            handleClose()
-            console.log(data);
+            setOpen(true);
+            setMessage("WatchList Created");
+            setStatus("success");
+            handleClose();
+            getWatchList();
         } else {
+            setOpen(true);
+            setMessage("Error During Creating WatchList");
+            setStatus("error");
             console.log("Error");
         }
     };

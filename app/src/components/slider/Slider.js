@@ -212,7 +212,7 @@ const Slider = (props) => {
       {loading ? (
         <div
           style={{
-            minHeight: "350px",
+            minHeight: "308px",
             display: "flex",
             justifyContent: "center",
             alignItems: "center",

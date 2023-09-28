@@ -1,3 +1,7 @@
+.carousel-container{
+  min-height: auto;
+}
+
 .carousel-background-img {
   background-position: center;
   background-size: cover;
@@ -160,10 +164,19 @@
   .carousel-background-img {
     min-height: 200px;
   }
+  .carousel-genre{
+    display: none;
+  }
   .carousel-loading{
     min-height: 200px;
   }
   .autoplay-progress{
     bottom: 15%;
+  }
+  .backdrop-content{
+    transform: scale(0.8);
+    left: 2px;
+    gap: 5px;
+    padding: 0;
   }
 }

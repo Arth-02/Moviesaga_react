@@ -7,8 +7,6 @@ import Filter from "../../components/filter/Filter";
 
 import Fab from "@mui/material/Fab";
 import FilterAltIcon from "@mui/icons-material/FilterAlt";
-import GeneralModal from "../../components/generalModal/GeneralModal";
-
 import WindowSizeContext from "../../contexts/windowSize/WindowSize";
 
 const MovieList = (props) => {
@@ -22,9 +20,9 @@ const MovieList = (props) => {
   const [filters, setFilters] = useState({
     with_original_language: "",
     sort_by: "popularity.desc",
-    with_genres: [],
-    "release_date.gte": "",
-    "release_date.lte": "",
+    with_genres: "",
+    "primary_release_date.gte": "",
+    "primary_release_date.lte": "",
   });
 
   let url = `https://api.themoviedb.org/3/discover/${props.type}?include_adult=false&include_video=false&language=en-US&page=${page}&api_key=ace3eeed99f6d9d19e61456a520cda0b`;
@@ -49,8 +47,6 @@ const MovieList = (props) => {
   };
 
   const getData = async () => {
-    console.log("Getting Data", page);
-
     url = handleFilter();
     setLoading(true);
 
@@ -61,7 +57,6 @@ const MovieList = (props) => {
           (movie) =>
             movie?.poster_path !== null && movie?.media_type !== "person"
         );
-        console.log(newData);
         setList((prev) => [...prev, ...newData]);
         setTotalPages(data["total_pages"]);
         setError(false);
@@ -76,7 +71,6 @@ const MovieList = (props) => {
     // url += `&language=${filters.language}&sort_by=${filters.sort_by}&with_genres=${filters.with_genres.join(',')}&release_date.gte=${filters["release_date.gte"]}&release_date.lte=${filters["release_date.lte"]}`;
 
     if (filters.with_original_language !== "") {
-      console.log(filters.with_original_language);
       url += `&with_original_language=${filters.with_original_language}`;
     }
     if (filters.sort_by !== "popularity.desc") {
@@ -85,31 +79,25 @@ const MovieList = (props) => {
     if (filters?.with_genres?.length > 0) {
       url += `&with_genres=${filters.with_genres}`;
     }
-    if (filters["release_date.gte"] !== "") {
-      url += `&release_date.gte=${filters["release_date.gte"]}`;
+    if (filters["primary_release_date.gte"] !== "") {
+      url += `&primary_release_date.gte=${filters["primary_release_date.gte"]}`;
     }
-    if (filters["release_date.lte"] !== "") {
-      url += `&release_date.lte=${filters["release_date.lte"]}`;
+    if (filters["primary_release_date.lte"] !== "") {
+      url += `&primary_release_date.lte=${filters["primary_release_date.lte"]}`;
     }
 
     return url;
   };
 
   useEffect(() => {
-    console.log("Filters Changed", page, list);
-
     // page !== 1 && setPage(1);
 
     setList([]);
     setPage(1);
     getData();
-
   }, [filters]);
 
-
   useEffect(() => {
-    console.log("Page Changed");
-
     getData();
     // eslint-disable-next-line
   }, [page]);
@@ -118,11 +106,10 @@ const MovieList = (props) => {
     document.addEventListener("scroll", handleScroll);
 
     return () => {
-      console.log("Clean Up");
       document.removeEventListener("scroll", handleScroll);
     };
     // eslint-disable-next-line
-  }, [loading, page, totalPages]);
+  }, [loading]);
 
   useEffect(() => {
     setList([]);
@@ -131,9 +118,9 @@ const MovieList = (props) => {
     setFilters({
       with_original_language: "",
       sort_by: "popularity.desc",
-      with_genres: [],
-      "release_date.gte": "",
-      "release_date.lte": "",
+      with_genres: "",
+      "primary_release_date.gte": "",
+      "primary_release_date.lte": "",
     });
 
     // eslint-disable-next-line
@@ -146,9 +133,6 @@ const MovieList = (props) => {
 
   return (
     <>
-      <GeneralModal open={modalopen} handleClose={handleModalClose}>
-        <Filter setList={setList} setFilters={setFilters} filters={filters} />
-      </GeneralModal>
       {error && <h1>Error</h1>}
       {windowSize[0] < 1024 && (
         <Fab
@@ -163,7 +147,7 @@ const MovieList = (props) => {
 
       <div className="movie-list-container">
         <div className="hading" id="back-to-top-anchor">
-          Trending {props.title && props.title}
+          Expore {props.title && props.title}
         </div>
         <div className="movie-list">
           <div className="movie-list-col1">
@@ -171,17 +155,37 @@ const MovieList = (props) => {
               setList={setList}
               setFilters={setFilters}
               filters={filters}
+              modalopen={modalopen}
+              handleModalOpen={handleModalOpen}
+              handleModalClose={handleModalClose}
             />
           </div>
-          <div className="movie-list-col2">
-            {list?.map((movie, index) => (
-              <MovieCard key={index} movie={movie} />
-            ))}
-          </div>
+          {list?.length > 0 ? (
+            <div className="movie-list-col2">
+              {list?.map((movie, index) => (
+                <MovieCard key={index} movie={movie} />
+              ))}
+            </div>
+          ) : (
+            <h2
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                alignItems: "center",
+                width: "100%",
+              }}
+            >
+              {props.type === "tv" ? "No TV Shows Found" : "No Movies Found"}
+            </h2>
+          )}
         </div>
       </div>
 
-      {loading && <Loading />}
+      {loading && (
+        <div style={{marginBottom: '20px' , minHeight:'20px'}}>
+          <Loading />
+        </div>
+      )}
     </>
   );
 };

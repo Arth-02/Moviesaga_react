@@ -8,9 +8,11 @@ import DeleteIcon from "@mui/icons-material/Delete";
 import AddIcon from "@mui/icons-material/Add";
 import GeneralModal from "../../components/generalModal/GeneralModal";
 import CreateWatchList from "../../components/addToWatchList/CreateWatchList";
+import SnackbarContext from "../../contexts/Snackbar/snackbarContext";
 
 const Watchlist = () => {
   const { isAuthenticated, tokens } = useContext(AuthContext);
+  const { setOpen, setMessage, setStatus } = useContext(SnackbarContext);
 
   const [loading, setLoading] = useState(false);
   const [watchList, setWatchList] = useState([]);
@@ -29,9 +31,14 @@ const Watchlist = () => {
       }
     );
     if (response.status === 204) {
-      alert("Success");
+      setOpen(true);
+      setMessage("WatchList Deleted");
+      setStatus("success");
       getWatchList();
     } else {
+      setOpen(true);
+      setMessage("Error During Deleting WatchList");
+      setStatus("error");
       console.log("Error");
     }
     // setLoading(false);
@@ -137,7 +144,7 @@ const Watchlist = () => {
         open={showCreateWLModal}
         handleClose={handleCloseCreateWLModal}
       >
-        <CreateWatchList handleClose={handleCloseCreateWLModal} />
+        <CreateWatchList handleClose={handleCloseCreateWLModal} getWatchList={getWatchList} />
       </GeneralModal>
     </>
   );

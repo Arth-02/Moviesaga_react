@@ -33,6 +33,11 @@ div.header{
     font-size: 1.05em;
 }
 
+.header-window-left{
+    display: flex;
+    gap: 35px;
+}
+
 .right-navbar , .search-panel , .user-panel{
     display: flex;
     justify-content: center;
@@ -300,9 +305,8 @@ div.header{
 .mobile-user-panel{
     padding-top: 10px;
     display: none;
-    justify-content: center;
     align-items: center;
-    gap: 25px;
+    padding-bottom: 10px;
 }
 
 .mobile-search-box{
@@ -325,6 +329,10 @@ div.header{
     color: white;
 }
 
+.search-box-modal{
+    display: none;
+}
+
 @media screen and (max-width: 768px){
     .navtabs{
         gap: 20px;
@@ -344,6 +352,15 @@ div.header{
     .mobile-user-panel{
         display: flex;
         /* align-items: center; */
+    }
+}
+
+@media screen and (max-width: 540px){
+    .mobile-search{
+        display: none;
+    }
+    .search-box-modal{
+        display: block;
     }
 }
 

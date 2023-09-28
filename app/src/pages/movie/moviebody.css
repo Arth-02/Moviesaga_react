@@ -166,8 +166,8 @@
     margin-top: 70px;
 }
 
-.movie-page-similar-movie-section .swiper-button-prev , .movie-page-similar-movie-section .swiper-button-next{
-    transform: translateY(-50%);
+.removeminheight{
+    min-height: auto;
 }
 
 

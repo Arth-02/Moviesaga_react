@@ -66,7 +66,7 @@ const Carousel = () => {
   return (
     <>
       {error && <h1>{error}</h1>}
-      <section className="slider-container" id="back-to-top-anchor">
+      <section className="slider-container carousel-container" id="back-to-top-anchor">
         {loading ? (
           <div className="carousel-loading">
             <Loading />

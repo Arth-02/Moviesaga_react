@@ -117,6 +117,8 @@
 }
 
 textarea{
+  font-size: 1rem;
+  font-family: Roboto, Helvetica, Arial, sans-serif;
   border: none;
   outline: none;
   border-radius: 10px;

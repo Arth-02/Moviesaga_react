@@ -30,7 +30,7 @@ const TrailerSection = (props) => {
     <>
       {error && <h1>Error</h1>}
       {!loading ? (
-        <section className="trailer-section slider-container" style={props.space ? {padding: '35px 0px 35px 0px'} : {padding: "0px"}}>
+        <section className="trailer-section slider-container removeminheight" style={props.space ? {padding: '35px 0px 35px 0px'} : {padding: "0px"}}>
           <div className="title-panel" style={
             props.space ? {marginBottom: "20px"} : {marginBottom: "8px"}
           }>

@@ -14,6 +14,7 @@ import CloseIcon from "@mui/icons-material/Close";
 import Typography from "@mui/material/Typography";
 import Button from "@mui/material/Button";
 import AuthContext from "../../contexts/Auth/AuthContext";
+import SnackbarContext from '../../contexts/Snackbar/snackbarContext';
 
 const Review = React.memo(({ url, movie }) => {
 
@@ -83,10 +84,10 @@ const Review = React.memo(({ url, movie }) => {
 
   function getReviewContent(review) {
     const words = review?.content?.split(" ");
-    if (words?.length > 50) {
-      const truncatedWords = words.slice(0, 50);
+    if (words?.length > 20) {
+      const truncatedWords = words.slice(0, 20);
       const truncatedContent = truncatedWords.join(" ");
-      const remainingWords = words.slice(50);
+      const remainingWords = words.slice(20);
       const remainingContent = remainingWords.join(" ");
       return (
         <>
@@ -280,6 +281,9 @@ const UserReview = ({
   reviewId,
   getUserReview,
 }) => {
+
+  const {setOpen , setMessage , setStatus} = useContext(SnackbarContext);
+
   const [rating, setRating] = useState(
     userReview?.rating ? userReview?.rating : 0
   );
@@ -310,12 +314,15 @@ const UserReview = ({
     })
       .then((res) => {
         if (res.status === 200) {
-          const responseData = res.json();
-          console.log(responseData);
+          setOpen(true);
+          setMessage("Review Updated");
+          setStatus("success");
           handleClose();
           getUserReview();
         } else {
-          console.log("Error");
+          setOpen(true);
+          setMessage("Error During Updating Review");
+          setStatus("error");
         }
       })
       .catch((err) => {
@@ -350,8 +357,9 @@ const UserReview = ({
     })
       .then((res) => {
         if (res.status === 201) {
-          const responseData = res.json();
-          console.log(responseData);
+          setOpen(true);
+          setMessage("Review Posted");
+          setStatus("success");
           handleClose();
           getUserReview();
         } else {
@@ -359,7 +367,9 @@ const UserReview = ({
         }
       })
       .catch((err) => {
-        console.log(err);
+        setOpen(true);
+        setMessage("Error During Posting Review");
+        setStatus("error");
       });
   };
 
@@ -384,7 +394,7 @@ const UserReview = ({
           <div className="review-user-left">
             <Avatar sx={{ bgcolor: "#f5c518" }}>
               {console.log(user)}
-              {user?.username?.toUpperCase()}
+              {user?.username[0]?.toUpperCase()}
             </Avatar>
             <span>{user?.username}</span>
           </div>

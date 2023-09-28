@@ -186,7 +186,7 @@ const TVShow = () => {
                     </div>
                     <div className="tvshow-page-overview-responsive-col2">
                       <div className="tvshow-page-genre-section">
-                        {data.genres.map((genre) => (
+                        {data?.genres?.map((genre) => (
                           <div
                             className="tvshow-page-genre-item"
                             key={genre.id}
@@ -203,7 +203,7 @@ const TVShow = () => {
                   <div className="tvshow-page-list-section border-bottom">
                     <div className="tvshow-page-list-title">Creators : </div>
                     <div className="tvshow-page-list-items">
-                      {data.created_by.length > 0
+                      {data?.created_by.length > 0
                         ? data?.created_by?.map((creator, index) => {
                             return (
                               <div key={index}>

@@ -162,7 +162,6 @@ const NewHeader = (props) => {
   const container =
     window !== undefined ? () => window.document.body : undefined;
 
-
   return (
     <>
       <ElevationScroll {...props}>
@@ -208,12 +207,20 @@ const NewHeader = (props) => {
               </div>
             </div>
             <div className="mobile-user-panel">
-            <IconButton onClick={handleSearchClick} sx={{
-                padding: '0',
-                color: 'white',
-              }}>
-                <SearchIcon isSearchOpen={isSearchOpen} handleSearchClose={handleSearchClose} />
+              <div className="small-mobile-search">
+              <IconButton
+                onClick={handleSearchClick}
+                sx={{
+                  padding: "0",
+                  color: "white",
+                }}
+              >
+                <SearchIcon
+                  isSearchOpen={isSearchOpen}
+                  handleSearchClose={handleSearchClose}
+                />
               </IconButton>
+              </div>
               {isAuthenticated ? (
                 <Account />
               ) : (
@@ -234,7 +241,11 @@ const NewHeader = (props) => {
                 aria-label="open drawer"
                 edge="start"
                 onClick={handleDrawerToggle}
-                sx={{ display: { md: "none" }, padding: "0px" , marginLeft: '12px' }}
+                sx={{
+                  display: { md: "none" },
+                  padding: "0px",
+                  marginLeft: "12px",
+                }}
               >
                 <MenuIcon />
               </IconButton>
@@ -329,14 +340,6 @@ const NewHeader = (props) => {
                   )}
                 </div>
                 <div className="user-panel">
-                  <div className="liked-movies">
-                    {" "}
-                    <IconButton color="inherit">
-                      {" "}
-                      <FavoriteBorderIcon />{" "}
-                    </IconButton>{" "}
-                  </div>
-
                   {isAuthenticated ? (
                     <Account />
                   ) : (
@@ -415,17 +418,6 @@ const NewHeader = (props) => {
             >
               <TvIcon />
               <span>Trending TV Shows</span>
-            </Link>
-            <Link
-              to={"../categories"}
-              className={
-                location.pathname === "/categories"
-                  ? "drawer-navs active-drawer-navs"
-                  : "drawer-navs"
-              }
-            >
-              <HomeIcon />
-              <span>Categories</span>
             </Link>
             <Link
               to={"../trending/all"}
@@ -549,7 +541,7 @@ const SearchPreview = ({ list, loading, searchTerm, hasMore }) => {
   );
 };
 
-const SearchBox = ({isSearchOpen , handleSearchClose}) => {
+const SearchBox = ({ isSearchOpen, handleSearchClose }) => {
   return (
     <>
       {isSearchOpen && (

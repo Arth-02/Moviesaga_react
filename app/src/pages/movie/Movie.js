@@ -100,7 +100,7 @@ const Movie = () => {
                     </div>
                   </div>
                   <div className="movie-page-user-rating">
-                    <Button
+                    {/* <Button
                       variant="text"
                       color="primary"
                       size="large"
@@ -123,7 +123,7 @@ const Movie = () => {
                       startIcon={<StarOutlineIcon />}
                     >
                       Rate
-                    </Button>
+                    </Button> */}
                   </div>
                 </div>
               </div>

@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import AuthContext from "./AuthContext";
 import { useNavigate } from "react-router-dom";
 import jwtDecode from "jwt-decode";
+import snackbarContext from "../Snackbar/snackbarContext";
 
 const AuthProvider = ({ children }) => {
   const navigate = useNavigate();
+  const {setOpen , setMessage , setStatus} = useContext(snackbarContext);
 
   const [isAuthenticated, setIsAuthenticated] = useState(
     localStorage.getItem("tokens") ? true : false
@@ -21,10 +23,8 @@ const AuthProvider = ({ children }) => {
   );
   const [loading , setLoading] = useState(false);
 
-  const register = async (event) => {
-    event.preventDefault();
-
-    const data = new FormData(event.currentTarget);
+  const register = async (username, email, password) => {
+    // event.preventDefault();
 
     try {
       setLoading(true);
@@ -33,9 +33,9 @@ const AuthProvider = ({ children }) => {
         {
           method: "POST",
           body: JSON.stringify({
-            username: data.get("username"),
-            password: data.get("password"),
-            email: data.get("email"),
+            username: username,
+            password: password,
+            email: email,
           }),
           headers: { "Content-type": "application/json" },
         }
@@ -43,12 +43,17 @@ const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const user = await response.json();
-
+        setOpen(true);
+        setMessage("Registration Successful");
+        setStatus("success");
         setLoading(false);
         navigate("/login");
 
       } else {
-        alert("Something went wrong");
+        setOpen(true);
+        setMessage("Something went wrong");
+        setStatus("error");
+
       }
     } catch (error) {
       console.error("An error occurred:", error);
@@ -56,10 +61,10 @@ const AuthProvider = ({ children }) => {
     setLoading(false);
   };
 
-  const login = async (event) => {
-    event.preventDefault();
-
-    const data = new FormData(event.currentTarget);
+  const login = async (username, password) => {
+    // event.preventDefault();
+    console.log("Logging in");
+    console.log(username, password);
 
     try {
       setLoading(true);
@@ -68,8 +73,8 @@ const AuthProvider = ({ children }) => {
         {
           method: "POST",
           body: JSON.stringify({
-            username: data.get("username"),
-            password: data.get("password"),
+            username: username,
+            password: password,
           }),
           headers: { "Content-type": "application/json" },
         }
@@ -87,11 +92,16 @@ const AuthProvider = ({ children }) => {
         console.log(responseData);
         setTokens(responseData);
         localStorage.setItem("tokens", JSON.stringify(responseData));
-
+        setOpen(true);
+        setMessage("Login Successful");
+        setStatus("success");
         setLoading(false);
 
         navigate("/");
       } else {
+        setOpen(true);
+        setMessage("Something went wrong while login");
+        setStatus("error");
         alert("Something went wrong while login");
       }
     } catch (error) {
@@ -104,6 +114,9 @@ const AuthProvider = ({ children }) => {
     console.log("Logging out");
     localStorage.removeItem("tokens");
     setIsAuthenticated(false);
+    setOpen(true);
+    setMessage("Logout Successful");
+    setStatus("success");
     setUser(null);
     setTokens(null);
     navigate("/");

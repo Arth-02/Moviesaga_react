@@ -31,8 +31,8 @@ function App() {
         value={{ isAuthenticated, setIsAuthenticated, userInfo, setUserInfo }}
       >
         <WindowSizeProvider>
-          <AuthProvider>
-            <SnackbarContextProvider>
+          <SnackbarContextProvider>
+            <AuthProvider>
               <NewHeader />
               <CustomSnackbar />
               <Routes>
@@ -58,8 +58,8 @@ function App() {
                 {/* <Route path='/search' element={<MovieList type={'search'} title={'Search Results for'}/>} ></Route> */}
               </Routes>
               <Footer />
-            </SnackbarContextProvider>
-          </AuthProvider>
+            </AuthProvider>
+          </SnackbarContextProvider>
         </WindowSizeProvider>
       </MyContext.Provider>
     </div>

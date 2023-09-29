@@ -11,6 +11,21 @@
     color: white;
 }
 
+.filter-item-from{
+    font-size: medium;
+    display: flex;
+    font-weight: bold;
+    justify-content: space-between;
+}
+
+.filter-item-to{
+    font-size: medium;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 10px;
+}
+
 .MuiAccordionSummary-expandIconWrapper , .css-hfutr2-MuiSvgIcon-root-MuiSelect-icon , .css-bpeome-MuiSvgIcon-root-MuiSelect-icon{
     color: white !important;
 }

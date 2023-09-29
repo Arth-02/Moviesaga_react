@@ -54,7 +54,7 @@ const Filter = ({ setFilters, filters, modalopen, handleModalClose }) => {
         ...prev,
         with_genres: selectedGenres?.join(","),
       }));
-  }, [selectedGenres]);
+  }, [selectedGenres, setFilters]);
 
   const handleLanguageChange = (event) => {
     if (selectedLanguage === event.target.id) {
@@ -69,7 +69,7 @@ const Filter = ({ setFilters, filters, modalopen, handleModalClose }) => {
       ...prev,
       with_original_language: selectedLanguage,
     }));
-  }, [selectedLanguage]);
+  }, [selectedLanguage, setFilters]);
 
   const handleReleaseDateLTChange = (event) => {
     setReleaseDateLT(event.target.value);
@@ -448,11 +448,11 @@ const Filter = ({ setFilters, filters, modalopen, handleModalClose }) => {
             <AccordionDetails>
               <div className="filter-item release-date">
                 <div className="filter-item-from">
-                  From
+                  From Date :
                   <input type="date" onChange={handleReleaseDateGTChange} />
                 </div>
                 <div className="filter-item-to">
-                  To
+                  Upto Date :
                   <input type="date" onChange={handleReleaseDateLTChange} />
                 </div>
               </div>

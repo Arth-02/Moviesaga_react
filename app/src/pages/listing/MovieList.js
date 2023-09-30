@@ -16,6 +16,7 @@ const MovieList = (props) => {
   const [page, setPage] = useState(1);
   const [error, setError] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [mainloading, setMainLoading] = useState(true);
   const [totalPages, setTotalPages] = useState(0);
   const [filters, setFilters] = useState({
     with_original_language: "",
@@ -65,6 +66,7 @@ const MovieList = (props) => {
         setError(true);
       });
     setLoading(false);
+    setMainLoading(false);
   };
 
   const handleFilter = () => {
@@ -134,7 +136,7 @@ const MovieList = (props) => {
   return (
     <>
       {error && <h1>Error</h1>}
-      {windowSize[0] < 1024 && (
+      {windowSize[0] < 1024 && props.type !== "all" && (
         <Fab
           color="primary"
           aria-label="add"
@@ -150,7 +152,9 @@ const MovieList = (props) => {
           Expore {props.title && props.title}
         </div>
         <div className="movie-list">
-          <div className="movie-list-col1">
+          {
+            props.type !== "all" && (
+              <div className="movie-list-col1">
             <Filter
               setList={setList}
               setFilters={setFilters}
@@ -160,13 +164,9 @@ const MovieList = (props) => {
               handleModalClose={handleModalClose}
             />
           </div>
-          {list?.length > 0 ? (
-            <div className="movie-list-col2">
-              {list?.map((movie, index) => (
-                <MovieCard key={index} movie={movie} />
-              ))}
-            </div>
-          ) : (
+            )
+          }
+          {list?.length <= 0 && !mainloading && !loading ? (
             <h2
               style={{
                 display: "flex",
@@ -177,15 +177,32 @@ const MovieList = (props) => {
             >
               {props.type === "tv" ? "No TV Shows Found" : "No Movies Found"}
             </h2>
+          ) : (
+            <div className="movie-list-col2" style={{ position: "relative" }}>
+              {loading && (
+                <div
+                  style={{
+                    position: "absolute",
+                    bottom: "-100px",
+                    left: "0",
+                    right: "0",
+                    display: "flex",
+                    justifyContent: "center",
+                    alignItems: "center",
+                    width: "100%",
+                    height: "100px",
+                  }}
+                >
+                  <Loading />
+                </div>
+              )}
+              {list?.map((movie, index) => (
+                <MovieCard key={index} movie={movie} />
+              ))}
+            </div>
           )}
         </div>
       </div>
-
-      {loading && (
-        <div style={{marginBottom: '20px' , minHeight:'20px'}}>
-          <Loading />
-        </div>
-      )}
     </>
   );
 };

@@ -1,5 +1,5 @@
-import React, { useContext, useEffect , useState } from "react";
-import { useParams , useNavigate } from "react-router-dom";
+import React, { useContext, useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 import "./movie.css";
 import useFetchData from "../../hooks/useFetchData";
 import StarIcon from "@mui/icons-material/Star";
@@ -14,12 +14,13 @@ import MovieBody from "./MovieBody";
 import AddToWatchList from "../../components/addToWatchList/AddToWatchList";
 import GeneralModal from "../../components/generalModal/GeneralModal";
 import AuthContext from "../../contexts/Auth/AuthContext";
+import RatingModal from "../../components/ratingModal/RatingModal";
 
 const Movie = () => {
   const params = useParams();
   const navigate = useNavigate();
 
-  const {isAuthenticated } = useContext(AuthContext)
+  const { isAuthenticated } = useContext(AuthContext);
 
   const [trailerKey, setTrailerKey] = useState("");
 
@@ -37,30 +38,38 @@ const Movie = () => {
     `https://api.themoviedb.org/3/movie/${params.id}/videos?api_key=ace3eeed99f6d9d19e61456a520cda0b`
   );
 
-    // Functions For Modal
-    const [modalopen, setModalOpen] = useState(false);
-    const handleModalOpen = () => setModalOpen(true);
-    const handleModalClose = () => setModalOpen(false);
+  // Functions For Rating Modal
+  const [checked, setChecked] = useState(false);
+  const handleChecked = () => setChecked(!checked);
 
-    const handleRedirect = () => {
-      if (!isAuthenticated) {
-        navigate("/login");
-      }
-    };
+  // Functions For Modal
+  const [modalopen, setModalOpen] = useState(false);
+  const handleModalOpen = () => setModalOpen(true);
+  const handleModalClose = () => setModalOpen(false);
+
+  const handleRedirect = () => {
+    if (!isAuthenticated) {
+      navigate("/login");
+    }
+  };
 
   useEffect(() => {
-    console.log(trailer)
-    trailer && setTrailerKey(
-      trailer.filter((video) => video.type === "Trailer" && video.site === "YouTube" && video.official === true)[0]?.key
-    )
+    console.log(trailer);
+    trailer &&
+      setTrailerKey(
+        trailer.filter(
+          (video) =>
+            video.type === "Trailer" &&
+            video.site === "YouTube" &&
+            video.official === true
+        )[0]?.key
+      );
   }, [trailer]);
 
   return (
     <>
       {data && (
         <section className="movie-page">
-          {console.log(data)}
-
           <div
             className="background"
             style={{
@@ -100,10 +109,11 @@ const Movie = () => {
                     </div>
                   </div>
                   <div className="movie-page-user-rating">
-                    {/* <Button
+                    <Button
                       variant="text"
                       color="primary"
                       size="large"
+                      onClick={handleChecked}
                       sx={{
                         fontSize: "1.2rem",
                         fontWeight: "bold",
@@ -123,7 +133,7 @@ const Movie = () => {
                       startIcon={<StarOutlineIcon />}
                     >
                       Rate
-                    </Button> */}
+                    </Button>
                   </div>
                 </div>
               </div>
@@ -138,9 +148,7 @@ const Movie = () => {
                       alt="movie-poster"
                     />
                   </div>
-                  <div
-                    className="movie-page-trailer"
-                  >
+                  <div className="movie-page-trailer">
                     <iframe
                       width="100%"
                       height="100%"
@@ -209,7 +217,7 @@ const Movie = () => {
                     <div className="movie-page-list-title">Directors : </div>
                     <div className="movie-page-list-items">
                       {credits &&
-                        credits.crew.map((crew , index) => {
+                        credits.crew.map((crew, index) => {
                           if (crew.job === "Director") {
                             return (
                               <div key={index}>
@@ -232,7 +240,7 @@ const Movie = () => {
                     <div className="movie-page-list-title">Writers : </div>
                     <div className="movie-page-list-items">
                       {credits &&
-                        credits.crew.map((crew , index) => {
+                        credits.crew.map((crew, index) => {
                           if (
                             crew.job === "Screenplay" ||
                             crew.job === "Writer" ||
@@ -259,7 +267,7 @@ const Movie = () => {
                     <div className="movie-page-list-title">Stars : </div>
                     <div className="movie-page-list-items">
                       {credits &&
-                        credits.cast.map((cast , index) => {
+                        credits.cast.map((cast, index) => {
                           if (cast.order <= 3) {
                             return (
                               <div key={index}>
@@ -317,6 +325,7 @@ const Movie = () => {
                           },
                         }}
                         startIcon={<StarOutlineIcon />}
+                        onClick={handleChecked}
                       >
                         Rate
                       </Button>
@@ -362,7 +371,9 @@ const Movie = () => {
                         },
                       }}
                       endIcon={<AddIcon />}
-                      onClick={isAuthenticated ? handleModalOpen : handleRedirect}
+                      onClick={
+                        isAuthenticated ? handleModalOpen : handleRedirect
+                      }
                       className="movie-page-btns"
                     >
                       Add To Watchlist
@@ -373,17 +384,20 @@ const Movie = () => {
             </div>
           </div>
 
-
           {/* Body Section */}
-          {
-            credits && <MovieBody id={params.id} credits={credits} data={data} />
-          }
+          {credits && (
+            <MovieBody id={params.id} credits={credits} data={data} />
+          )}
 
           {/* Add To WatchList Model */}
           <GeneralModal open={modalopen} handleClose={handleModalClose}>
             <AddToWatchList movie={data} handleClose={handleModalClose} />
           </GeneralModal>
-          
+
+          {/* Rating Modal */}
+          {
+            checked && <RatingModal movie={data} setChecked={setChecked} checked={checked} />
+          }
         </section>
       )}
     </>

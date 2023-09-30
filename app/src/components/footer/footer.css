@@ -1,6 +1,8 @@
 .footer_class {
   background: #000000;
   font-family: sans-serif;
+  max-width: 1280px;
+  margin: auto;
 }
 .footer {
   width: 100%;
@@ -17,17 +19,20 @@
   text-align: center;
 }
 .footer-content h3 {
-  font-size: 2.1rem;
+  font-size: 2rem;
   font-weight: 500;
   text-transform: capitalize;
-  line-height: 3rem;
+  line-height: 2rem;
+  font-family: Poppins;
+  color: #fff;
+  margin-bottom: 10px;
 }
 .footer-content p {
-  max-width: 500px;
+  max-width: 550px;
   margin: 10px auto;
   line-height: 28px;
-  font-size: 14px;
   color: #cacdd2;
+  font-family: Popins;
 }
 .socials {
   list-style: none;
@@ -35,6 +40,8 @@
   align-items: center;
   justify-content: center;
   margin: 1rem 0 3rem 0;
+  padding-inline-start: 0px
+
 }
 .socials li {
   margin: 0 10px;
@@ -46,9 +53,8 @@
 
 .footer-bottom {
   background: #000;
-  width: 100%;
-  padding-bottom: 40px;
   text-align: center;
+  padding: 0px 10px 40px 10px;
 }
 .footer-bottom p {
   float: left;

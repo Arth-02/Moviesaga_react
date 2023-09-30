@@ -1,5 +1,5 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation , Link } from "react-router-dom";
 import "./footer.css";
 import FacebookIcon from "@mui/icons-material/Facebook";
 import TwitterIcon from "@mui/icons-material/Twitter";
@@ -19,6 +19,11 @@ const Footer = () => {
         <footer>
           <div className="footer-content">
             <h3>Movie Saga</h3>
+            <div className="footer-para">
+              <p>
+              "Whether you're a cinephile or a TV series fanatic, our website caters to all genres and interests, making it a one-stop destination for entertainment enthusiasts looking to enhance their viewing experiences."
+              </p>
+            </div>
             <ul className="socials">
               <li>
                 <a href="https://www.facebook.com/"><FacebookIcon /></a>
@@ -39,21 +44,21 @@ const Footer = () => {
           </div>
           <div className="footer-bottom">
             <p>
-              copyright &copy; <a href="/">Movie Saga</a>
+              copyright &copy; <Link to="/">Movie Saga</Link>
             </p>
             <div className="footer-menu">
               <ul className="f-menu">
                 <li>
-                  <a href="/">Home</a>
+                  <Link to="/">Home</Link>
                 </li>
                 <li>
-                  <a href="/">About</a>
+                  <Link to="/">About</Link>
                 </li>
                 <li>
-                  <a href="/">Contact</a>
+                  <Link to="/">Contact</Link>
                 </li>
                 <li>
-                  <a href="/">Blog</a>
+                  <Link to="/">Blog</Link>
                 </li>
               </ul>
             </div>

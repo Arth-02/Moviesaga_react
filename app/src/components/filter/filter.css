@@ -14,13 +14,11 @@
 .filter-item-from{
     font-size: medium;
     display: flex;
-    font-weight: bold;
     justify-content: space-between;
 }
 
 .filter-item-to{
     font-size: medium;
-    font-weight: bold;
     display: flex;
     justify-content: space-between;
     margin-top: 10px;
@@ -56,3 +54,17 @@
     background-color: rgba(255, 255, 255, 0.18);
     color: #f5c518;
 }
+
+input[type="date"]{
+    background-color: rgba(255, 255, 255, 0.12);
+    border-radius: 5px;
+    border: none;
+    padding: 7px 5px;
+    color: white;
+    font-size: 0.8rem;
+    letter-spacing: 0.035rem;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: invert(1);
+  }

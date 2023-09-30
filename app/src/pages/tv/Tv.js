@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import React, { useEffect, useState , useContext } from "react";
+import { useParams  , useNavigate} from "react-router-dom";
 import "./tv.css";
 import useFetchData from "../../hooks/useFetchData";
 import StarIcon from "@mui/icons-material/Star";
@@ -11,9 +11,16 @@ import PhotoLibraryIcon from "@mui/icons-material/PhotoLibrary";
 import AddIcon from "@mui/icons-material/Add";
 import OpenInNewIcon from "@mui/icons-material/OpenInNew";
 import TVShowBody from "./TVShowBody";
+import AuthContext from "../../contexts/Auth/AuthContext";
+import AddToWatchList from "../../components/addToWatchList/AddToWatchList";
+import GeneralModal from "../../components/generalModal/GeneralModal";
+import RatingModal from "../../components/ratingModal/RatingModal";
 
 const TVShow = () => {
   const params = useParams();
+  const navigate = useNavigate();
+
+  const { isAuthenticated } = useContext(AuthContext);
 
   const [trailerKey, setTrailerKey] = useState("");
 
@@ -31,8 +38,22 @@ const TVShow = () => {
     `https://api.themoviedb.org/3/tv/${params.id}/videos?api_key=ace3eeed99f6d9d19e61456a520cda0b`
   );
 
+    // Functions For Rating Modal
+    const [checked, setChecked] = useState(false);
+    const handleChecked = () => setChecked(!checked);
+  
+    // Functions For Modal
+    const [modalopen, setModalOpen] = useState(false);
+    const handleModalOpen = () => setModalOpen(true);
+    const handleModalClose = () => setModalOpen(false);
+  
+    const handleRedirect = () => {
+      if (!isAuthenticated) {
+        navigate("/login");
+      }
+    };
+
   useEffect(() => {
-    console.log(trailer);
     trailer &&
       setTrailerKey(
         trailer.filter(
@@ -48,7 +69,6 @@ const TVShow = () => {
     <>
       {data && (
         <section className="tvshow-page">
-          {console.log(data)}
 
           <div
             className="background"
@@ -98,6 +118,7 @@ const TVShow = () => {
                       variant="text"
                       color="primary"
                       size="large"
+                      onClick={handleChecked}
                       sx={{
                         fontSize: "1.2rem",
                         fontWeight: "bold",
@@ -289,6 +310,7 @@ const TVShow = () => {
                         variant="text"
                         color="primary"
                         size="large"
+                        onClick={handleChecked}
                         sx={{
                           fontSize: "1.2rem",
                           fontWeight: "bold",
@@ -337,6 +359,7 @@ const TVShow = () => {
                     </Button>
                     <Button
                       variant="contained"
+                      onClick={handleModalOpen}
                       sx={{
                         backgroundColor: "rgba(255,255,255,0.08)",
                         color: "white",
@@ -370,6 +393,17 @@ const TVShow = () => {
               seasons={data.seasons}
             />
           )}
+
+          {/* Add To WatchList Model */}
+          <GeneralModal open={modalopen} handleClose={handleModalClose}>
+            <AddToWatchList movie={data} handleClose={handleModalClose} />
+          </GeneralModal>
+
+          {/* Rating Modal */}
+          {
+            checked && <RatingModal movie={data} setChecked={setChecked} checked={checked} />
+          }
+
         </section>
       )}
     </>

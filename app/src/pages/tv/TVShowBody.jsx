@@ -44,7 +44,7 @@ const TVShowBody = ({ id, credits, data }) => {
                 className="arrow"
               />
             </h2>
-            <div className="tv-page-cast-items slider-container">
+            <div className="tv-page-cast-items slider-container removeminheight">
               <Slider
                 url={`https://api.themoviedb.org/3/tv/${id}/credits?language=en-US&api_key=ace3eeed99f6d9d19e61456a520cda0b`}
                 type="cast"
@@ -64,7 +64,7 @@ const TVShowBody = ({ id, credits, data }) => {
                 className="arrow"
               />
             </h2>
-            <div className="tv-page-images-items slider-container">
+            <div className="tv-page-images-items slider-container removeminheight">
               <Slider
                 url={`https://api.themoviedb.org/3/tv/${id}/images?api_key=ace3eeed99f6d9d19e61456a520cda0b`}
                 type="images"
@@ -406,7 +406,7 @@ const TVShowBody = ({ id, credits, data }) => {
         </div>
       </div>
       {/* Similar Tv Show Section */}
-      <div className="tv-page-similar-tv-section slider-container">
+      <div className="tv-page-similar-tv-section slider-container removeminheight">
         <h2
           className="provider-heading heading"
           style={{ marginBottom: "20px" }}

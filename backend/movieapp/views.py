@@ -22,7 +22,6 @@ class AddMovieToWatchlistView(generics.CreateAPIView):
 
     def perform_create(self, serializer):
         user = CustomUser.objects.get(id=self.request.user.id)
-        print(Addmovie.objects.filter(user=user, movie_id=self.request.data['movie_id']))
     # Check if the movie already exists
         if Addmovie.objects.filter(user=user, movie_id=self.request.data['movie_id']):
             print("Already Added")
@@ -100,6 +99,7 @@ class ReviewRetrieveUpdateDestroy(generics.RetrieveUpdateDestroyAPIView):
     permission_classes = [IsAuthenticated]
     
     def get_queryset(self):
+
         return Review.objects.filter(user=self.request.user)
 
 class ReviewReplyView(generics.ListCreateAPIView):

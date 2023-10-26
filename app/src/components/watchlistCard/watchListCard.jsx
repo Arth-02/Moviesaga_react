@@ -8,7 +8,7 @@ import StarIcon from "@mui/icons-material/Star";
 import { Button } from "@mui/material";
 import SnackbarContext from "../../contexts/Snackbar/snackbarContext";
 
-const WatchListCard = ({ movie }) => {
+const WatchListCard = ({ movie , getWatchList }) => {
   const { tokens } = useContext(AuthContext);
   const { setOpen, setMessage, setStatus } = useContext(SnackbarContext);
 
@@ -29,6 +29,7 @@ const WatchListCard = ({ movie }) => {
       setOpen(true);
       setMessage("Movie Removed from WatchList");
       setStatus("success");
+      getWatchList();
       // getWatchList();
     } else {
       setOpen(true);

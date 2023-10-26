@@ -43,11 +43,8 @@ const AuthProvider = ({ children }) => {
 
       if (response.ok) {
         const user = await response.json();
-        setOpen(true);
-        setMessage("Registration Successful");
-        setStatus("success");
-        setLoading(false);
-        navigate("/login");
+        navigate('/')
+        login(username , password , "Sign Up Successfully");
 
       } else {
         setOpen(true);
@@ -58,13 +55,12 @@ const AuthProvider = ({ children }) => {
     } catch (error) {
       console.error("An error occurred:", error);
     }
-    setLoading(false);
+    // setLoading(false);
   };
 
-  const login = async (username, password) => {
+
+  const login = async (username, password , message) => {
     // event.preventDefault();
-    console.log("Logging in");
-    console.log(username, password);
 
     try {
       setLoading(true);
@@ -93,7 +89,12 @@ const AuthProvider = ({ children }) => {
         setTokens(responseData);
         localStorage.setItem("tokens", JSON.stringify(responseData));
         setOpen(true);
-        setMessage("Login Successful");
+        if(message){
+          setMessage(message)
+        }
+        else{
+          setMessage("Login Successful");
+        }
         setStatus("success");
         setLoading(false);
 

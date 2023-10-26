@@ -123,7 +123,7 @@ const Watchlist = () => {
                 <div className="watchlist-movies">
                   {watchlist.movies.length > 0 ? (
                     watchlist.movies.map((movie, index) => {
-                      return <WatchListCard movie={movie} key={index} />;
+                      return <WatchListCard getWatchList={getWatchList} movie={movie} key={index} />;
                     })
                   ) : (
                     <div className="no-movies">
